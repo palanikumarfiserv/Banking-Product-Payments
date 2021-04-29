@@ -1,6 +1,6 @@
 {
-  "title": "Payments",
-  "name": "Payments",
+  "title": "Cards and Payments",
+  "name": "CardsandPayments",
   "brand": "Fiserv",
   "brandLogoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
   "solution": "openBanking",
