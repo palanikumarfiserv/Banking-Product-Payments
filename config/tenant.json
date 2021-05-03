@@ -1,52 +1,34 @@
 {
-  "title": "Payments",
-  "name": "Payments",
+  "title": "Cards and Payments",
+  "name": "CardsandPayments",
   "brand": "Fiserv",
   "brandLogoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
   "solution": "openBanking",
   "brandDescription": "Explore and use our APIs to build, test, certify, and deploy solutions pre-integrated to our market-leading account processing platforms.",
-  "categories": [
-    {
-      "name": "domains",
-      "value": "API Domains",
-      "subcategories": [
-        {
-          "name": "accounts",
-          "value": "Accounts"
-        },
-        {
-          "name": "lending",
-          "value": "Lending"
-        },
-        {
-          "name": "notifications",
-          "value": "Notifications"
-        },
-        {
-          "name": "Cards",
-          "value": "Cards"
-        }
-      ]
-    },
+  "categories": [    
     {
       "name": "bankingCores",
       "value": "Banking Cores",
       "subcategories": [
         {
-          "name": "premier",
-          "value": "Premier"
+          "name": "precision",
+          "value": "Precision",
+          "description": "Identify APIs that enable integration to the Precision bank platform"
         },
         {
-          "name": "precision",
-          "value": "Precision"
+          "name": "cleartouch",
+          "value": "Cleartouch",
+          "description": "Identify APIs that enable integration to the Cleartouch bank platform"
         },
         {
           "name": "signature",
-          "value": "Signature"
+          "value": "Signature",
+          "description": "Identify APIs that enable integration to the Signature bank platform"
         },
         {
           "name": "dNA",
-          "value": "DNA"
+          "value": "DNA",
+          "description": "Identify APIs that enable integration to the DNA platform"
         }
       ]
     },
@@ -56,11 +38,13 @@
       "subcategories": [
         {
           "name": "b2B",
-          "value": "B2B"
+          "value": "B2B",
+          "description": "Identify APIs that support business-to-business banking functions"
         },
         {
           "name": "b2C",
-          "value": "B2C"
+          "value": "B2C",
+          "description": "Identify APIs that support business-to-consumer banking functions"
         }
       ]
     }
@@ -68,8 +52,8 @@
   "product": {
     "featured": true,
     "logoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
-    "description": "This API grouping enables access to pertinent information about accounts within a financial institution, transactions related to those accounts and relationships between accounts and accountholders.",
-    "longDescription": "<p>This API grouping enables access to pertinent information about accounts within a financial institution, transactions related to those accounts and relationships between accounts and accountholders.</p><ul><li> Account lists</li><li> Transaction data</li><li> Balance information</li></ul>",
+    "description": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.",
+    "longDescription": "<p>Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.</p><ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
     "apiSpecification": "/v1/apis",
     "layout": "/v1/layouts",
     "documentation": "/v1/docs",
@@ -91,7 +75,7 @@
       },
       {
         "name": "editParameterAPIExplorer",
-        "value": false
+        "value": true
       }
     ]
   }
