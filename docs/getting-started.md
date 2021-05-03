@@ -1,6 +1,6 @@
 # Getting Started
 
-Welcome to the Fiserv Banking Developer Portal. This quick guide will help you to get  started with our APIs and allow you to begin integrating our services into your applications.
+Payment transaction-related APIs support connections to payment networks, central cash management and check processing. This quick guide will help you to get started with our Payment transaction APIs and enable you to integrate these into your applications.
 
 Following topics are covered in this guide:
 * Registration
@@ -18,7 +18,7 @@ To validate and deploy Fiserv banking APIs into production, you are required to 
 To set up an account on the Fiserv Developer Portal, follow the steps below:
 1.	Go to the Fiserv Developer Portal registration page
 2.	Follow the instructions on the screen to set up your account according to your integration requirements
-3.	Sign into your Fiserv Developer Portal account after it is activated.
+3.	Sign into your Fiserv Developer Portal account after it is activated
 
 ## Authentication
 
@@ -41,11 +41,12 @@ Follow these steps to authenticate your API build:
 The Sandbox allows you to simulate a production environment with mock users and transactions to test the application. Using the simulated environment, you can also view the HTTP requests and responses to gain an understanding of the behavior and capabilities of the APIs. 
 
 Follow these steps to test your application in the Sandbox environment:
-1.	Choose the Application: Access the Sandbox environment and choose an application to use for testing.
-2.	Create a mock user database: Create user accounts—a personal account that simulates a customer and a business account that simulates a merchant.
-3.	Create mock transactions: In the Sandbox environment, add transactions between the customer and the merchant.
-4.	Test the environment: With the mock data setup, you can now make API calls and test your application.
-Note: Use the Sandbox authorization code while making the API calls.
+1.	**Choose the Application:** Access the Sandbox environment and choose an application to use for testing
+2.	**Create a mock user database:** Create a mock user database: Create user accounts that reflect the sorts of banking accounts your application will be accessing
+3.	**Create mock transactions:** Create mock transactions: In the Sandbox environment, add transactions to simulate the kinds of transactions that occur on the banking accounts your application will be accessing
+4.	**Test the environment:** With the mock data setup, you can now make API calls and test your application
+
+> Note: Use the Sandbox authorization code while making the API calls.
 
 ## Certification
 
@@ -57,7 +58,20 @@ To get a certification for test environment, you are required to register for an
 
 ### Production Certification
 
-Upon successful application validation, your application will be ready for production.  Fiserv will issue you the endpoints available for your application.  
+Upon successful application validation, your application will be ready for production.  Fiserv will issue you the endpoints available for your application. 
+
+## Resources
+
+Refer to the following links for more information on the Fiserv Open Banking API integration:
+
+* [Open Baking Docs](https://dev.fiserv.com/openBanking/docs)
+* [API Docs](https://dev.fiserv.com/openBanking/docs/api) 
+* [Open Banking JS](https://dev.fiserv.com/openBanking/docs/js)
+* [GitHub repository](https://github.com/openBanking) 
+* [Product demos and dev tools](https://openBanking.dev/) 
+* [Open Banking CLI](https://dev.fiserv.com/openBanking/docs/openBanking-cli) 
+* [API libraries](http://swaggerhub.onefiserv.net/)
+
 
 ## Feedback and Support
 
