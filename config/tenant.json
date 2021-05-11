@@ -49,7 +49,7 @@
     "featured": true,
     "logoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
     "description": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.",
-    "longDescription": "<p>Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.</p><ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
+    "longDescription": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.<ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
     "apiSpecification": "/v1/apis",
     "layout": "/v1/layouts",
     "documentation": "/v1/docs",
