@@ -1,156 +1,313 @@
 openapi: 3.0.0
-info:
-  title: Debit Service
-  description: >
-   "This service domain is the debit facility for Accounts. A debit is performed with the use of a DebitAdd message. \_The client \_can use the DebitRev message to reverse the previous Debit request."
+info: 
+  title: Transfer Service
   contact:
-    name: Isabelle Mathon
-    email: Isabelle.Mathon@fiserv.com
+      name: "Isabelle Mathon"
+      email: "Isabelle.Mathon@fiserv.com"
   version: "11.0.0"
+  description: "The Transfer service supports operations related to managing the transfer of money between accounts. The service includes the description of the FROM and TO accounts, amount of the transfer, transfer fees and frequency of the transfer as it can be a one-time transfer or a recurring transfer."  
 paths:
-  /debits/{debitId}:
-    parameters:
+  /transfers:
+     parameters:
       - name: EFXHeader
         in: header
-        description: The message header request aggregate contains common information for all request messages
+        description: The message header request aggregate contains common information
+          for all request messages
         required: true
         schema:
-          $ref: '#/components/schemas/EFXHeader'   
-      - in: path
-        name: debitId
-        description: >
-          Debit Identifier. Unique debit object identifier.
-        required: true
-        schema:
-          maxLength: 36
-          type: string
-    get:
-      tags:
-      - Get Debit by Debit Id
-      summary: Retrieves a Debit Object
-      operationId: DebitInqOperById
-      parameters:
-        - in: query
-          name: acctId
-          description: >
-            Account Identifier.  Uniquely identifies an account held at a financial institution.
-          required: false
-          schema:
-            maxLength: 36
-            type: string     
-        - in: query
-          name: subAcctId
-          description: >
-            Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-          required: false
-          schema:
-            maxLength: 36
-            type: string 
-        - in: query
-          name: acctType
-          description: >
-            Account Type
-          required: false
-          schema:
-            type: string 
-        - in: query
-          name: acctIdentType
-          description: >
-            "Account Identification Type. Valid values include: AcctNum, Port, AcctTypeCode."
-          required: false
-          schema:
-            type: string 
-        - in: query
-          name: acctIdentValue
-          description: >
-            Account Identification Value.
-          required: false
-          schema:
-            maxLength: 36
-            type: string 
-        - in: query
-          name: curCodeType
-          description: >
-            Currency Code Type.
-          required: false
-          schema:
-            $ref: '#/components/schemas/CurCodeType'
-        - in: query
-          name: curCodeValue
-          description: >
-            Currency Code Value.
-          required: false
-          schema:
-            maxLength: 80
-            type: string 
-        - in: query
-          name: fIIdentType
-          description: >
-            Financial Institution Identification Type.
-          required: false
-          schema:
-            type: string 
-        - in: query
-          name: fIIdent
-          description: >
-            Financial Institution Identification.
-          required: false
-          schema:
-            maxLength: 34
-            type: string 
-        - in: query
-          name: branchIdent
-          description: >
-            Branch Identifier
-          required: false
-          schema:
-            maxLength: 22
-            type: string 
-        - in: query
-          name: debitType
-          description: >
-            Debit Type. Indicates the type of debit transaction being processed.
-          required: false
-          schema:
-            maxLength: 36
-            type: string 
-        - in: query
-          name: effDt
-          description: >
-            Effective Date
-          required: false
-          schema:
-            type: string  
-            format: date-time
-        - in: query
-          name: distributionType
-          description: >
-            Indicates the type of distribution for Health Savings and Retirement accounts.
-          required: false
-          schema:
-            maxLength: 36
-            type: string    
-        - in: query
-          name: distributionYr
-          description: >
-            Indicates the year of the distribution for Health Savings and Retirement accounts.
-          required: false
-          schema:
-            $ref: "#/components/schemas/DistributionYrType"            
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DebitInqRsType'
-        default: 
+          $ref: '#/components/schemas/EFXHeader'
+     get:
+        tags:
+          - Get Transfer
+        summary: Retrieve Transfer of funds Instructions
+        operationId: XferInqOper
+        description: "Unsecured - Only use with Voltage - This method retrieves transfer of funds instructions."        
+        parameters:
+         - name: $limit
+           in: query
+           description: >-
+             Maximum Record Limit. This is the maximum number of records that the
+             server should add to the result set which is available tosatisfy
+             this request.
+           required: false
+           schema:
+             type: string
+         - name: cursor
+           in: query
+           description: >-
+             Cursor. Next Record Pointer Included in the response only if
+             additional records are available.
+           required: false
+           schema:
+             type: string
+             maxLength: 250
+         - name: acctId
+           in: path
+           description: >-
+             Account Identifier.  Uniquely identifies an account held at a
+             financial institution. 
+           required: true
+           explode: true
+           schema:
+             type: string
+             maxLength: 36
+         - name: subAcctId
+           in: query
+           description: Sub Account Identifier. Also used as CostCenter for GLA Accounts.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 36
+         - name: acctType
+           in: query
+           description: AcctType.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             enum:
+               - CCA
+               - RRA
+               - LEAS
+               - CDA
+               - MLN
+               - CLA
+               - CRD
+               - DDA
+               - EQU
+               - GLA
+               - ILA
+               - AdultCashISA
+               - IRA
+               - RET
+               - EXT
+               - JuniorCashISA
+               - LIP
+               - LOAN
+               - LOC
+               - CLOC
+               - MLA
+               - PBA
+               - PORT
+               - SDA
+               - SDB
+               - MMA
+               - DDL
+         - name: cardId
+           in: query
+           description: Card Identifier.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 36
+         - name: cardNum
+           in: query
+           description: Card Number
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 32
+         - name: isoCode
+           in: query
+           description: ISO Code.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 36
+         - name: cardSeqNum
+           in: query
+           description: Card Sequence Number.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 3
+         - name: cardIdentType
+           in: query
+           description: 'Card Identification Type. Valid values include: PORT'
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             enum:
+               - PORT
+         - name: cardIdentValue
+           in: query
+           description: Card Identification Value.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 36             
+         - name: acctIdentValue
+           in: query
+           description: Account Identification Value.
+           required: true
+           explode: true
+           schema:
+             type: string
+             maxLength: 36
+         - name: acctIdentType
+           in: query
+           description: >-
+             Account Identification Type. Valid values include: AcctNum, Port,
+             AcctTypeCode.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             enum:
+               - AcctNum
+               - PORT
+               - AccessID
+               - PartyID
+               - AliasAcct
+               - AcctTypeCode
+               - CLOC
+         - name: fiIdentType
+           in: query
+           description: Financial Institution Identification Type.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             enum:
+               - ABA
+               - RoutingNum
+         - name: fiIdent
+           in: query
+           description: Financial Institution Identification.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 34
+         - name: branchIdent
+           in: query
+           description: Branch Identifier.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+             maxLength: 22             
+         - name: xferIdent
+           in: query
+           description: ' Transfer Identifier.'
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+         - name: transferType
+           in: query
+           description: Transfer Type.
+           required: false
+           style: form
+           explode: true
+           schema:
+             type: string
+        responses:
+          "200":
+            description: Ok
+            content:
+              application/xml:
+                schema:
+                 $ref: '#/components/schemas/XferInqRsType'
+          default: 
             description: "Unexpected error"
             content:
               application/json:
                 schema: 
-                  $ref: "#/components/schemas/Error"
-  /debits:
+                  $ref: '#/components/schemas/XferInqRsType'
+     put:
+      tags:
+          - Update Transfer  
+      summary: Modify Transfer of funds Instructions
+      operationId: XferModOper
+      description: "This method modifies a transfer of funds."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/XferModRqType'
+        required: true
+        x-send-file-in-body: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/XferModRsType'
+        default: 
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/XferModRsType"        
+     post:
+      tags:
+          - Add Transfer
+      summary: Add a one time or recurrent transfer of funds instruction
+      operationId: XferAddOper
+      description: "This method adds a one time or recurrent transfer of funds instruction."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/XferAddRqType'
+        required: true
+        x-send-file-in-body: false
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddRsType'
+        default: 
+          description: "See HTTP Status Code Standards"
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/XferAddRsType"
+     delete:
+      tags:
+          - Delete Transfer
+      summary: Delete a scheduled transfer of funds
+      operationId: XferDelOper
+      description: "Unsecured - Only use with Voltage - This method deletes a scheduled transfer of funds."
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/XferDelRsType'
+        default: 
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/XferDelRsType"        
+  
+  /transfers-list:
     parameters:
       - name: EFXHeader
         in: header
@@ -161,228 +318,95 @@ paths:
           $ref: '#/components/schemas/EFXHeader'
     post:
       tags:
-      - Add Debit
-      summary: Add a Debit Object
-      operationId: DebitAddOper
+          - Get Transfer List
+      summary: Retrieve a list of transfers of funds instructions
+      operationId: XferListInq
+      description: "This service operation retrieves a list of transfers of funds instructions."        
       requestBody:
         content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DebitAddRqType'
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DebitAddRsType'
-        default: 
-            description: "Unexpected error"
-            content:
-              application/json:
-                schema: 
-                  $ref: "#/components/schemas/Error"
-    put:
-      tags:
-        - Update Debit
-      summary: Modifies a Debit Object
-      operationId: DebitRevOper
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DebitRevRqType'
+         application/json:
+           schema:
+             $ref: '#/components/schemas/XferListInqRqType'
+        required: true
+        x-send-file-in-body: false      
       responses:
         "200":
           description: Ok
           content:
-            application/json:
+            application/xml:
               schema:
-                $ref: '#/components/schemas/DebitRevRsType'
+               $ref: '#/components/schemas/XferListInqRsType'
         default: 
-            description: "Unexpected error"
-            content:
-              application/json:
-                schema: 
-                  $ref: "#/components/schemas/Error"
-    get:
-      tags:
-        - Get Debit
-      summary: Retrieves a Debit Object
-      operationId: DebitInqOper
-      parameters:
-        - in: query
-          name: debitId
-          description: >
-            Debit Identifier. Unique debit object identifier.
-          required: true
-          schema:
-            maxLength: 36
-            type: string
-        - in: query
-          name: acctId
-          description: >
-            Account Identifier.  Uniquely identifies an account held at a financial institution.
-          required: false
-          schema:
-            maxLength: 36
-            type: string     
-        - in: query
-          name: subAcctId
-          description: >
-            Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-          required: false
-          schema:
-            maxLength: 36
-            type: string 
-        - in: query
-          name: acctType
-          description: >
-            Account Type
-          required: false
-          schema:
-            type: string 
-        - in: query
-          name: acctIdentType
-          description: >
-            "Account Identification Type. Valid values include: AcctNum, Port, AcctTypeCode."
-          required: false
-          schema:
-            type: string 
-        - in: query
-          name: acctIdentValue
-          description: >
-            Account Identification Value.
-          required: false
-          schema:
-            maxLength: 36
-            type: string 
-        - in: query
-          name: curCodeType
-          description: >
-            Currency Code Type.
-          required: false
-          schema:
-            $ref: '#/components/schemas/CurCodeType'
-        - in: query
-          name: curCodeValue
-          description: >
-            Currency Code Value.
-          required: false
-          schema:
-            maxLength: 80
-            type: string 
-        - in: query
-          name: fIIdentType
-          description: >
-            Financial Institution Identification Type.
-          required: false
-          schema:
-            type: string 
-        - in: query
-          name: fIIdent
-          description: >
-            Financial Institution Identification.
-          required: false
-          schema:
-            maxLength: 34
-            type: string 
-        - in: query
-          name: branchIdent
-          description: >
-            Branch Identifier
-          required: false
-          schema:
-            maxLength: 22
-            type: string 
-        - in: query
-          name: debitType
-          description: >
-            Debit Type. Indicates the type of debit transaction being processed.
-          required: false
-          schema:
-            maxLength: 36
-            type: string 
-        - in: query
-          name: effDt
-          description: >
-            Effective Date
-          required: false
-          schema:
-            type: string  
-            format: date-time
-        - in: query
-          name: distributionType
-          description: >
-            Indicates the type of distribution for Health Savings and Retirement accounts.
-          required: false
-          schema:
-            maxLength: 36
-            type: string    
-        - in: query
-          name: distributionYr
-          description: >
-            Indicates the year of the distribution for Health Savings and Retirement accounts.
-          required: false
-          schema:
-            $ref: "#/components/schemas/DistributionYrType"  
-      responses:
-        "200":
-          description: Ok
+          description: "Unexpected error"
           content:
             application/json:
-              schema:
-                $ref: '#/components/schemas/DebitInqRsType'
-        default: 
-            description: "Unexpected error"
-            content:
-              application/json:
-                schema: 
-                  $ref: "#/components/schemas/Error"
-  /debits/secured:
+              schema: 
+                $ref: '#/components/schemas/XferListInqRsType'
+  
+  /transfers/secure:
     parameters:
       - name: EFXHeader
         in: header
-        description: The message header request aggregate contains common information for all request messages
+        description: The message header request aggregate contains common information
+          for all request messages
         required: true
         schema:
-          $ref: '#/components/schemas/EFXHeader'   
+          $ref: '#/components/schemas/EFXHeader'
     post:
-      tags:
-        - Get Debit
-      summary: Retrieves a Debit Object Secured
-      operationId: DebitInqOperSecured
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/DebitInqRqType'      
-      responses:
-        "200":
-          description: Ok
+        tags:
+          - Get Transfer
+        summary: Retrieve Transfer of funds Instructions
+        operationId: SecuredXferInqOper
+        description: "This method retrieves transfer of funds instructions."        
+        requestBody:
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DebitInqRsType'
-        default: 
+           application/json:
+             schema:
+               $ref: '#/components/schemas/XferInqRqType'
+          required: true
+          x-send-file-in-body: false
+        responses:
+          "200":
+            description: Ok
+            content:
+              application/xml:
+                schema:
+                 $ref: '#/components/schemas/XferInqRsType'
+          default: 
             description: "Unexpected error"
             content:
               application/json:
                 schema: 
-                  $ref: "#/components/schemas/Error"
+                  $ref: '#/components/schemas/XferInqRsType'
+    put:
+      tags:
+          - Delete Transfer
+      summary: Delete a scheduled transfer of funds
+      operationId: SecuredXferDelOper
+      description: "This method deletes a scheduled transfer of funds."
+      requestBody:
+          content:
+           application/json:
+             schema:
+               $ref: '#/components/schemas/XferDelRqType'
+          required: true
+          x-send-file-in-body: false
+      responses:
+        "200":
+          description: Ok
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/XferDelRsType'
+        default: 
+          description: "Unexpected error"
+          content:
+            application/json:
+              schema: 
+                $ref: "#/components/schemas/XferDelRsType"        
+   
 components:
   schemas:
-    Error: 
-      type: "object"
-      properties: 
-        code: 
-          type: "integer"
-          format: "int32"
-        message: 
-          type: "string"
-        fields: 
-          type: "string"
-
     EFXHeader:
       type: string
       required:
@@ -609,6 +633,14 @@ components:
         - Maturity
       type: string
       description: ''
+    BillLastPmtCodeType:
+      title: BillLastPmtCodeType
+      enum:
+        - Bill
+        - NoBillDraftTotalDue
+        - NoBillExcludePrincipal
+      type: string
+      description: ''
     CurCodeTypeType:
       title: CurCodeTypeType
       enum:
@@ -665,23 +697,6 @@ components:
         - Sunday
       type: string
       description: ''
-    DebitStatusCodeType:
-      title: DebitStatusCodeType
-      enum:
-        - Reversed
-        - Posted
-        - Valid
-      type: string
-      description: ''
-    DistributionYrType:
-      title: DistributionYrType
-      enum:
-        - ThisYr
-        - PriorYr
-      type: string
-      description: >-
-        Indicates the year of the distribution for Health Savings and Retirement
-        accounts.
     EarlyPayoffTierTypeType:
       title: EarlyPayoffTierTypeType
       enum:
@@ -779,14 +794,6 @@ components:
         - UseDefault
       type: string
       description: ''
-    LoanPmtOptionType:
-      title: LoanPmtOptionType
-      enum:
-        - PrincipalOnly
-        - PayOff
-        - SystemPriority
-      type: string
-      description: ''
     MarginTypeType:
       title: MarginTypeType
       enum:
@@ -810,14 +817,6 @@ components:
         - MemberNum
         - OrgNum
         - PersonNum
-      type: string
-      description: ''
-    PassbkTrnTypeType:
-      title: PassbkTrnTypeType
-      enum:
-        - Debit
-        - Credit
-        - Interest
       type: string
       description: ''
     RateChangeRecurTypeType:
@@ -907,6 +906,7 @@ components:
         - Months
         - Years
         - Indefinite
+        - Unknown
       type: string
       description: ''
     TranHistoryOptionType:
@@ -948,6 +948,22 @@ components:
       enum:
         - FederalTax
         - StateTax
+      type: string
+      description: ''
+    XferStatusCodeType:
+      title: XferStatusCodeType
+      enum:
+        - Valid
+        - Rejected
+      type: string
+      description: ''
+    XferStatusTypeType:
+      title: XferStatusTypeType
+      enum:
+        - New
+        - Active
+        - Inactive
+        - Expired
       type: string
       description: ''
     AccessLevelDataType:
@@ -1033,6 +1049,15 @@ components:
             Adjustment Days Basis. Used in combination with Adjustment Days
             (AdjDays). It indicates a basis for an adjustment such as: Due Date
             (DueDt), Statement Date (StmtDt).
+        WeekendOption:
+          type: string
+          description: >-
+            Weekend Option. Describes how certain functionality, e.g. Transfers
+            are processed on the Weekend.
+        WeekendOptionEnumDesc:
+          maxLength: 80
+          type: string
+          description: WeekendOption Enumeration Description.
       description: ''
     AccrualFrequencyType:
       title: AccrualFrequencyType
@@ -1090,7 +1115,7 @@ components:
           description: Expiration Date.
           format: date
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
       description: ''
@@ -1235,14 +1260,14 @@ components:
               type: array
               items:
                 maxLength: 34
-                type: object
+                type: string
               description: Financial Institution Identification.
             BranchIdent:
               maxLength: 22
               type: array
               items:
                 maxLength: 22
-                type: object
+                type: string
               description: >-
                 Branch Identification. Other identification used as part of the
                 Branch object key.
@@ -1375,7 +1400,6 @@ components:
       type: object
       properties:
         AcctTitleType:
-          maxLength: 80
           type: string
           description: Account Title Type.
         AcctTitle:
@@ -1386,7 +1410,6 @@ components:
             responsibility for account and manner in which
             ownership/responsibility is assigned.
         AcctTitleOption:
-          maxLength: 80
           type: string
           description: >-
             Account Title Option. Indicates printing options for the Account
@@ -1448,7 +1471,7 @@ components:
           description: Expiration Date.
           format: date
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         RequiredFlag:
@@ -1752,6 +1775,11 @@ components:
             Margin. Percentage applied to BasedOnValue to calculate interest
             rate. For example, the BasedOnValue is the Prime rate, a percentage
             is added to/subtracted from the prime rate.
+        EffDt:
+          pattern: >-
+            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
+          type: string
+          description: Effective Date. The date that an associated action takes effect.
         IntAPY:
           type: number
           description: Interest APY.
@@ -2612,6 +2640,10 @@ components:
             PreferredPhone:
               type: boolean
               description: Preferred Phone.
+            Priority:
+              maxLength: 10
+              type: string
+              description: Priority Code.
             DoNotContactInd:
               type: boolean
               description: Do Not Contact Indicator.
@@ -2680,7 +2712,7 @@ components:
               type: array
               items:
                 maxLength: 36
-                type: object
+                type: string
               description: Name Identifier.
             AddressIdent:
               maxLength: 36
@@ -2704,6 +2736,18 @@ components:
               maxLength: 80
               type: string
               description: Address Format Type Enumeration Description.
+            FullName1:
+              maxLength: 96
+              type: string
+              description: Full Name Line 1.
+            FullName2:
+              maxLength: 96
+              type: string
+              description: Full Name Line 2.
+            FullName3:
+              maxLength: 96
+              type: string
+              description: Full Name Line 3.
             Addr1:
               maxLength: 64
               type: string
@@ -2749,15 +2793,6 @@ components:
               maxLength: 64
               type: string
               description: Street.
-            District:
-              maxLength: 32
-              type: string
-              description: District.
-            MilitaryRegion:
-              type: string
-              description: >-
-                Military Region. Identifier that replaces State and City for
-                military addresses
             LabelAddr:
               $ref: '#/components/schemas/LabelAddrType'
             AddrDefinedData:
@@ -2773,6 +2808,10 @@ components:
               maxLength: 32
               type: string
               description: County.
+            District:
+              maxLength: 32
+              type: string
+              description: District.
             StateProv:
               maxLength: 80
               type: string
@@ -2781,6 +2820,11 @@ components:
               maxLength: 80
               type: string
               description: State Province Enumeration Description.
+            MilitaryRegion:
+              type: string
+              description: >-
+                Military Region. Identifier that replaces State and City for
+                military addresses
             PostalCode:
               maxLength: 11
               type: string
@@ -2788,7 +2832,7 @@ components:
             Country:
               maxLength: 64
               type: string
-              description: County.
+              description: Country.
             CountryCode:
               $ref: '#/components/schemas/CountryCodeType'
             POBox:
@@ -3044,11 +3088,11 @@ components:
           description: Acquisition Date.
           format: date
         DebtDesc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Debt Description.
         PropertyDesc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Property Description.
       description: ''
@@ -3166,8 +3210,8 @@ components:
           maxLength: 80
           type: string
           description: >-
-            [FSVR]Waiver Reason Code. Code that provides the reason the waive of
-            the fee took place.
+            Waiver Reason Code. Code that provides the reason the waive of the
+            fee took place.
         WaiverReason:
           maxLength: 40
           type: string
@@ -3215,7 +3259,7 @@ components:
             Fee Plan. A fee plan makes reference to a predefined set to values
             used to calculate fees.
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         FeeType:
@@ -3349,7 +3393,7 @@ components:
         Company:
           maxLength: 60
           type: string
-          description: Company. Name of the insurance company.
+          description: Company. Name of the company.
         FaceValueAmt:
           $ref: '#/components/schemas/FaceValueAmtType'
         ReportingOptionCode:
@@ -3714,11 +3758,11 @@ components:
             Product Identifier. Identifies the processing parameters of the
             account or card.
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         AlternateProductDesc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Alternate Product Description.
         AcctType:
@@ -3752,7 +3796,7 @@ components:
         PromoCodeEnumDesc:
           maxLength: 80
           type: string
-          description: '[FSVR]Promotional Code Enumeration Description.'
+          description: Promotional Code Enumeration Description.
         AcctUse:
           type: string
           description: >-
@@ -3858,7 +3902,6 @@ components:
           type: string
           description: Nickname. Used to allow a customer to assign nicknames to objects.
         AcctTitleOption:
-          maxLength: 80
           type: string
           description: >-
             Account Title Option. Indicates printing options for the Account
@@ -4328,15 +4371,23 @@ components:
             restricted from posting until reviewed by bank officer. No hold,
             accept no payment, allow no advance and accept no payment and allow
             no advance.
+        PostingStatusEnumDesc:
+          maxLength: 80
+          type: string
+          description: Posting Payment Status Enumeration Description.
         RestrictionReasonCode:
           maxLength: 80
           type: string
           description: >-
             Restriction Reason Code. Code corresponding to the posting
             restriction reason.
+        RestrictionReasonCodeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Posting Restriction Reason Code Enumeration Description.
         RestrictionOvrdInd:
           type: boolean
-          description: '[FSVR]Posting Payment Restrictions Override Indicator.'
+          description: Posting Payment Restrictions Override Indicator.
       description: ''
     AdvPostingRestrictionsType:
       title: AdvPostingRestrictionsType
@@ -4351,7 +4402,7 @@ components:
             no advance.
         RestrictionOvrdInd:
           type: boolean
-          description: '[FSVR]Posting Payment Restrictions Override Indicator.'
+          description: Posting Payment Restrictions Override Indicator.
         RestrictionReasonCode:
           maxLength: 80
           type: string
@@ -4631,7 +4682,7 @@ components:
           type: array
           items:
             maxLength: 80
-            type: object
+            type: string
           description: Hold Reason. Description of the reason of the hold.
         BankAuth:
           maxLength: 80
@@ -4725,7 +4776,7 @@ components:
       type: object
       properties:
         Desc:
-          maxLength: 100
+          maxLength: 200
           type: string
           description: Description.
         Value:
@@ -4863,56 +4914,6 @@ components:
             relationship between one or more elements if the combination causes
             the status code.
       description: ''
-    BalAmtType:
-      title: BalAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    CashAmtType:
-      title: CashAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    CashInDataType:
-      title: CashInDataType
-      required:
-        - CashAmt
-      type: object
-      properties:
-        CashAmt:
-          $ref: '#/components/schemas/CashAmtType'
-      description: ''
-    CashOutDataType:
-      title: CashOutDataType
-      required:
-        - CashAmt
-      type: object
-      properties:
-        CashAmt:
-          $ref: '#/components/schemas/CashAmtType'
-      description: ''
-    ChkEnteredAmtType:
-      title: ChkEnteredAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    ChkOutDataType:
-      title: ChkOutDataType
-      type: object
-      properties:
-        ChkEnteredAmt:
-          $ref: '#/components/schemas/ChkEnteredAmtType'
-        ChkNum:
-          maxLength: 22
-          type: string
-          description: Check Number.
-        ChkType:
-          type: string
-          description: Check Type.
-      description: ''
     FeeChargeAllocType:
       title: FeeChargeAllocType
       type: object
@@ -4970,6 +4971,150 @@ components:
         RefData:
           $ref: '#/components/schemas/RefDataType'
       description: ''
+    ExcessAmtType:
+      title: ExcessAmtType
+      allOf:
+        - $ref: '#/components/schemas/CurAmtType'
+        - type: object
+      description: ''
+    ExtendedXferDataType:
+      title: ExtendedXferDataType
+      type: object
+      properties:
+        XferAmtCode:
+          type: string
+          description: >-
+            Transfer Amount Code. The Transfer Amount Code indicates whether the
+            Next Transfer Amount is fixed or variable, and how the Base
+            Distribution Amount is used to calculate the Next Transfer Amount
+        ACHInd:
+          type: boolean
+          description: ACH Indicator.
+        SameDayInd:
+          type: boolean
+          description: Same Day Indicator.
+        ACHCompanyId:
+          maxLength: 36
+          type: string
+          description: ACH Company Identifier.
+        ACHCompanyEntryDesc:
+          maxLength: 30
+          type: string
+          description: ACH Company Entry Description.
+        ACHAddtlDesc:
+          maxLength: 80
+          type: string
+          description: ACH Additional Description.
+        ACHEntryClass:
+          type: string
+          description: ACH Entry Class.
+        ACHReceivingType:
+          type: string
+          description: ACH Receiving Type.
+        LoanSchedInd:
+          type: boolean
+          description: >-
+            Loan Schedule Indicator.  Indicates whether the transfer amount is
+            based on the loan’s payment schedule amount instead of being
+            supplied as part of the transfer add message.
+        BillLastPmtCode:
+          $ref: '#/components/schemas/BillLastPmtCodeType'
+        AdvanceHoldDays:
+          type: integer
+          description: >-
+            Advance Hold Days. Typically applies to Loan Payments. Number of
+            days in advance to place a hold on the debit account.
+          format: int64
+        ExcessAmt:
+          $ref: '#/components/schemas/ExcessAmtType'
+        ExcessAmtCode:
+          type: string
+          description: >-
+            Excess Amount Code. Indicates the method excess amount payment is
+            applied to the loan.
+        NoticeData:
+          type: array
+          items:
+            $ref: '#/components/schemas/NoticeDataType'
+          description: Account Notice Data.
+        ForcePostInd:
+          type: boolean
+          description: >-
+            Force Post Indicator. Indicator that identifies whether to process a
+            transfer using the force pay transaction code
+        BalanceVerification:
+          type: string
+          description: >-
+            Balance Verification. Indicates the type of balance to use for
+            verification. Valid example of valid values are: "Book";
+            "Collected"; "Avail".
+        MaxCurAmt:
+          $ref: '#/components/schemas/MaxCurAmtType'
+        RetryTimes:
+          type: integer
+          description: Retry Times. Number of times this action has tried to post.
+          format: int64
+        RetryCount:
+          type: integer
+          description: Retry Count. Number of times to retry an action.
+          format: int64
+        FeeIdent:
+          maxLength: 36
+          type: string
+          description: Fee Identification.
+        WaiveFeeInd:
+          type: boolean
+          description: Waived Fee Indicator.
+        PostingPriority:
+          type: string
+          description: Posting Priority Code.
+        EarlyXferInd:
+          type: boolean
+          description: >-
+            Early transfer indicator.Indicates if the transaction is processed
+            in the early proces window of the CORE.
+        GraceDays:
+          type: integer
+          description: >-
+            Grace Days.Number of days by which a debtor or acceptor of a draft
+            may exceed the due date before being in default.
+          format: int64
+        IsTranRegDInd:
+          type: boolean
+          description: Is transaction subject to Regulation D.
+        IsCombinedCheckInd:
+          type: boolean
+          description: >-
+            Is Combined Check Indicator. Use to indicate that all credits to the
+            accounts must be combined into a single transfer credit.
+        PartyKeys:
+          $ref: '#/components/schemas/PartyKeysType'
+      description: ''
+    FinalCurAmtType:
+      title: FinalCurAmtType
+      allOf:
+        - $ref: '#/components/schemas/CurAmtType'
+        - type: object
+      description: ''
+    FromAcctRefType:
+      title: FromAcctRefType
+      allOf:
+        - $ref: '#/components/schemas/AcctRefType'
+        - type: object
+          properties:
+            TransferBalType:
+              type: string
+              description: >-
+                Transfer Balance Type. For some systems like DNA it is necessary
+                to indicate the balance type of the FROM account to generate the
+                transfer. These values will be defaulted when possible.
+            TrnCode:
+              maxLength: 80
+              type: string
+              description: >-
+                Transaction Code. The Service Provider Transaction Code posted
+                to the account.
+      description: ''
     OvrdElementType:
       title: OvrdElementType
       allOf:
@@ -5007,72 +5152,6 @@ components:
             $ref: '#/components/schemas/OverrideExceptionType'
           description: Override Exception.
       description: ''
-    FeeDataType:
-      title: FeeDataType
-      type: object
-      properties:
-        FeeType:
-          type: string
-          description: Fee Type.
-        FeeTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Fee Type Enumeration Description.
-        WaiverReason:
-          maxLength: 40
-          type: string
-          description: Waiver Reason.
-        WaiverCode:
-          maxLength: 80
-          type: string
-          description: Waiver Code.
-        WaiverCodeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Waiver Code Enumeration Description.
-      description: ''
-    MonetaryInstrAmtType:
-      title: MonetaryInstrAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    MonetaryInstrDataType:
-      title: MonetaryInstrDataType
-      type: object
-      properties:
-        MonetaryInstrType:
-          type: string
-          description: >-
-            Issued Check Type. Used to itemize Bank Checks that are issued as
-            part of a transaction.
-        MonetaryInstrNum:
-          maxLength: 17
-          type: string
-          description: Monetary Instrument Number.
-        MonetaryInstrAmt:
-          $ref: '#/components/schemas/MonetaryInstrAmtType'
-        OrigDt:
-          type: string
-          description: Original Date.
-          format: date
-        Memo:
-          maxLength: 255
-          type: string
-          description: Memo.
-      description: ''
-    OtherFundsInAmtType:
-      title: OtherFundsInAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    OtherFundsOutAmtType:
-      title: OtherFundsOutAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
     ToAcctRefType:
       title: ToAcctRefType
       allOf:
@@ -5086,285 +5165,185 @@ components:
                 Transaction Code. The Service Provider Transaction Code posted
                 to the account.
       description: ''
-    XferToAcctType:
-      title: XferToAcctType
-      required:
-        - ToAcctRef
+    RecurModelType:
+      title: RecurModelType
       type: object
       properties:
+        RecurRule:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecurRuleType'
+          description: Recurrence Rule.
+      description: ''
+    InitialCurAmtType:
+      title: InitialCurAmtType
+      allOf:
+        - $ref: '#/components/schemas/CurAmtType'
+        - type: object
+      description: ''
+    LastXferAmtType:
+      title: LastXferAmtType
+      allOf:
+        - $ref: '#/components/schemas/CurAmtType'
+        - type: object
+      description: ''
+    XferInfoType:
+      title: XferInfoType
+      type: object
+      properties:
+        TransferType:
+          type: string
+          description: Transfer Type. Use to specify the type of transfer transaction.
+        TransferTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Transfer Type Enumeration Description.
+        BranchIdent:
+          maxLength: 22
+          type: string
+          description: >-
+            Branch Identification. Other identification used as part of the
+            Branch object key.
+        FromAcctRef:
+          $ref: '#/components/schemas/FromAcctRefType'
         ToAcctRef:
           $ref: '#/components/schemas/ToAcctRefType'
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
+        BalPercent:
+          type: number
+          description: Balance Percent.
         CompositeCurAmt:
           type: array
           items:
             $ref: '#/components/schemas/CompositeCurAmtType'
           description: Composite Currency Amount.
-        Desc:
-          maxLength: 100
-          type: array
-          items:
-            maxLength: 100
-            type: object
-          description: Description.
-        LoanPmtOption:
-          $ref: '#/components/schemas/LoanPmtOptionType'
-        LoanCloseAcctInd:
-          type: boolean
-          description: >-
-            Loan Close Account Indicator. Indicates to close the account after
-            posting the transfer.
-      description: ''
-    FASBDisbDataType:
-      title: FASBDisbDataType
-      type: object
-      properties:
-        EarningMethod:
-          $ref: '#/components/schemas/EarningMethodType'
-        EarningMethodEnumDesc:
-          maxLength: 80
+        PriorityMethod:
           type: string
-          description: Earning Method Enumeration Description
-        Term:
-          $ref: '#/components/schemas/TermType'
-        FinancialChargeInd:
-          type: boolean
-          description: >-
-            Financial Charge Indicator.Used to indicate that the amount is a
-            finance charge.
-      description: ''
-    PayeeDataType:
-      title: PayeeDataType
-      type: object
-      properties:
-        TaxIdentType:
-          $ref: '#/components/schemas/TaxIdentTypeType'
-        TaxIdentTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Tax Identification Type Enumeration Description.
-        TaxIdent:
-          maxLength: 12
-          type: string
-          description: Tax Identification.
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-      description: ''
-    RemitterDataType:
-      title: RemitterDataType
-      type: object
-      properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-      description: ''
-    NetworkRefDataType:
-      title: NetworkRefDataType
-      type: object
-      properties:
-        TrnIdent:
-          maxLength: 36
-          type: string
-          description: >-
-            Transaction Identification. Also known as Trace Number or Sequence
-            in some systems.
-        ClientDt:
-          pattern: >-
-            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
-          type: string
-          description: >-
-            [FSVR]Client Date. The transaction date/time of the reference
-            transaction as reported by the client.
-      description: ''
-    PersonNameShortType:
-      title: PersonNameShortType
-      type: object
-      properties:
-        FamilyName:
-          maxLength: 40
-          type: string
-          description: Family Name.
-        GivenName:
-          maxLength: 40
-          type: string
-          description: Given Name. Person's first name.
-        MiddleName:
-          maxLength: 40
-          type: string
-          description: Middle Name. Person's middle name.
-      description: ''
-    PmtDataType:
-      title: PmtDataType
-      type: object
-      properties:
-        PersonNameShort:
-          $ref: '#/components/schemas/PersonNameShortType'
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        PostAddr:
-          $ref: '#/components/schemas/PostAddrType'
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-      description: ''
-    DebtorDataType:
-      title: DebtorDataType
-      type: object
-      properties:
-        PersonNameShort:
-          $ref: '#/components/schemas/PersonNameShortType'
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        PostAddr:
-          $ref: '#/components/schemas/PostAddrType'
-        AcctKeys:
-          $ref: '#/components/schemas/AcctKeysType'
-      description: ''
-    DebitInfoType:
-      title: DebitInfoType
-      required:
-        - DebitType
-        - CompositeCurAmt
-      type: object
-      properties:
-        DebitType:
-          type: string
-          description: Debit Type. Indicates the type of debit transaction to be performed.
-        AthId:
-          maxLength: 36
-          type: string
-          description: Authorization Identifier.
-        AdditionalCode:
-          maxLength: 80
-          type: string
-          description: >-
-            Additional Code. Further defines the transaction with an additional
-            code.
+          description: Priority Method.
         EffDt:
           pattern: >-
             [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
           type: string
           description: Effective Date. The date that an associated action takes effect.
-        PostedDt:
-          pattern: >-
-            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
-          type: string
-          description: Posted Date.
-        ReturnCode:
-          maxLength: 80
-          type: string
-          description: Return Code.
-        ReturnCodeDesc:
-          maxLength: 100
-          type: string
-          description: Return Code Description.
-        Desc:
-          maxLength: 100
-          type: array
-          items:
-            maxLength: 100
-            type: object
-          description: Description.
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        PatriotActInd:
+        RecurModel:
+          $ref: '#/components/schemas/RecurModelType'
+        InitialCurAmt:
+          $ref: '#/components/schemas/InitialCurAmtType'
+        FinalCurAmt:
+          $ref: '#/components/schemas/FinalCurAmtType'
+        Retention:
           type: boolean
           description: >-
-            Patriot Act Indicator. Indicates if this is a suspect transaction
-            that needs to be reported under the Patriot Act.
-        MediaType:
-          type: string
-          description: >-
-            Media Type. Indicates the media the transaction must be recorded on.
-            Allowed Values: Statement – Recorded on a statement, Passbook –
-            Recorded on a Passbook and NoBook – Recorded on a Passbook but
-            passbook not present.
+            Retention. Indicates whether the records are to be retained or
+            deleted based on Service Provider criteria.
         DistributionType:
           type: string
           description: >-
             Distribution Type. Indicates the type of distribution for Health
             Savings and Retirement accounts.
-        DistributionYr:
-          $ref: '#/components/schemas/DistributionYrType'
-        TaxIncentiveType:
+        DistributionTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Distribution Type Enumeration Description.
+        ReceivingContributionType:
+          maxLength: 80
           type: string
           description: >-
-            Tax Incentive Type. Indicates if the account is a tax incentive
-            account such as a Health Savings Account.
-        AcctRef:
-          $ref: '#/components/schemas/AcctRefType'
-        OtherAcctRef:
-          $ref: '#/components/schemas/OtherAcctRefType'
-        CompositeCurAmt:
+            Contribution Type. Used when transfers occurr to retirement
+            accounts.
+        ReceivingContributionTypeEnumDesc:
+          maxLength: 80
+          type: string
+          description: Contribution Type Enumeration Description.
+        RelationshipMgr:
           type: array
           items:
-            $ref: '#/components/schemas/CompositeCurAmtType'
-          description: Composite Currency Amount.
-        FeeData:
-          $ref: '#/components/schemas/FeeDataType'
-        CashInData:
-          type: array
-          items:
-            $ref: '#/components/schemas/CashInDataType'
+            $ref: '#/components/schemas/RelationshipMgrType'
           description: >-
-            Cash In Data.This optional repeating aggregate is used to specify
-            Cash In Data that comprised the credit transaction.
-        CashOutData:
-          type: array
-          items:
-            $ref: '#/components/schemas/CashOutDataType'
+            Relationship Manager. Stores information about the FI officers that
+            have management responsibility of the Party, the Account or the
+            Card.
+        ReportGroupCode:
+          maxLength: 80
+          type: string
           description: >-
-            Cash Out Data. Use to specify Cash Out Data that was dispensed as
-            part of the transaction.
-        ChkOutData:
+            Report Group Code. Indicates a user defined code used to group
+            accounts fro reporting purposes.
+        CSPRefIdent:
+          maxLength: 36
+          type: string
+          description: Customer Service Provider Reference Identifier.
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Nickname. Used to allow a customer to assign nicknames to objects.
+        Category:
+          maxLength: 40
+          type: string
+          description: Category. Modified by the client.
+        CategoryEnumDesc:
+          maxLength: 80
+          type: string
+          description: Category Enum Description
+        ExpediteInd:
+          type: boolean
+          description: Expedite Indicator.
+        ExtendedXferData:
+          $ref: '#/components/schemas/ExtendedXferDataType'
+        XferFromDesc:
+          maxLength: 80
           type: array
           items:
-            $ref: '#/components/schemas/ChkOutDataType'
-          description: >-
-            Check Out Data. Used to itemize Check items that comprise a
-            Withdrawal transaction.
-        MonetaryInstrData:
+            maxLength: 80
+            type: string
+          description: Transfer From Description.
+        XferToDesc:
+          maxLength: 80
           type: array
           items:
-            $ref: '#/components/schemas/MonetaryInstrDataType'
-          description: >-
-            Issued Check Data. Used to itemize Bank Checks that are issued as
-            part of a transaction.
-        OtherFundsInAmt:
-          $ref: '#/components/schemas/OtherFundsInAmtType'
-        OtherFundsOutAmt:
-          $ref: '#/components/schemas/OtherFundsOutAmtType'
-        XferToAcct:
+            maxLength: 80
+            type: string
+          description: Transfer To Description.
+        RefData:
           type: array
           items:
-            $ref: '#/components/schemas/XferToAcctType'
-          description: Transfer To Account.
-        FASBDisbData:
-          $ref: '#/components/schemas/FASBDisbDataType'
-        PayeeData:
-          $ref: '#/components/schemas/PayeeDataType'
-        RemitterData:
-          $ref: '#/components/schemas/RemitterDataType'
-        NetworkRefData:
-          $ref: '#/components/schemas/NetworkRefDataType'
-        PmtData:
-          $ref: '#/components/schemas/PmtDataType'
-        DebtorData:
-          $ref: '#/components/schemas/DebtorDataType'
+            $ref: '#/components/schemas/RefDataType'
+          description: Reference Data.
+        PostAddr:
+          $ref: '#/components/schemas/PostAddrType'
+        CreateDt:
+          pattern: >-
+            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
+          type: string
+          description: Create Date.
+        UpDt:
+          pattern: >-
+            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
+          type: string
+          description: Update Date.
+        NextXferDt:
+          type: string
+          description: Next transfer date.
+          format: date
+        LastXferDt:
+          pattern: >-
+            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
+          type: string
+          description: Last Transfer Date.
+        LastXferAmt:
+          $ref: '#/components/schemas/LastXferAmtType'
+        RemainingOccurrences:
+          type: integer
+          description: Remaining Occurrences.
+          format: int64
+        XferStatusType:
+          $ref: '#/components/schemas/XferStatusTypeType'
       description: ''
-    DebitAddRqType:
-      title: DebitAddRqType
+    XferAddRqType:
+      title: XferAddRqType
       required:
-        - DebitInfo
+        - XferInfo
       type: object
       properties:
         OvrdAutoAckInd:
@@ -5374,8 +5353,124 @@ components:
             charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
-        DebitInfo:
-          $ref: '#/components/schemas/DebitInfoType'
+        XferInfo:
+          $ref: '#/components/schemas/XferInfoType'
+      description: ''
+    XferKeysType:
+      title: XferKeysType
+      allOf:
+        - $ref: '#/components/schemas/BaseKeysType'
+        - type: object
+          properties:
+            SvcIdent:
+              $ref: '#/components/schemas/SvcIdentType'
+            XferId:
+              maxLength: 36
+              type: string
+              description: Transfer Identifier. Identifier of the Xfer object.
+            AcctKeys:
+              $ref: '#/components/schemas/AcctKeysType'
+            XferIdent:
+              maxLength: 36
+              type: string
+              description: Transfer Identification.
+            TransferType:
+              type: string
+              description: Transfer Type. Use to specify the type of transfer transaction.
+      description: ''
+    XferDelRqType:
+      title: XferDelRqType
+      required:
+        - XferKeys
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: >-
+            Override AutoAcknowledge Indicator. Used when the midleware is in
+            charge of  auto-acknowledgement of exceptions.
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+      description: ''
+    RecCtrlInType:
+      title: RecCtrlInType
+      type: object
+      properties:
+        MaxRecLimit:
+          type: integer
+          description: >-
+            Maximum Record Limit. This is the maximum number of records that the
+            server should add to the result set which is available to satisfy
+            this request.
+          format: int64
+        Cursor:
+          maxLength: 250
+          type: string
+          description: >-
+            Cursor. Next Record Pointer Included in the response only if
+            additional records are available.
+      description: ''
+    XferSelType:
+      title: XferSelType
+      type: object
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        AcctKeys:
+          $ref: '#/components/schemas/AcctKeysType'
+        TransferType:
+          type: string
+          description: Transfer Type. Use to specify the type of transfer transaction.
+      description: ''
+    XferInqRqType:
+      title: XferInqRqType
+      required:
+        - XferSel
+      type: object
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/RecCtrlInType'
+        XferSel:
+          $ref: '#/components/schemas/XferSelType'
+      description: ''
+    XferListSelType:
+      title: XferListSelType
+      type: object
+      properties:
+        AcctRef:
+          $ref: '#/components/schemas/AcctRefType'
+      description: ''
+    XferListInqRqType:
+      title: XferListInqRqType
+      required:
+        - XferListSel
+      type: object
+      properties:
+        RecCtrlIn:
+          $ref: '#/components/schemas/RecCtrlInType'
+        XferListSel:
+          $ref: '#/components/schemas/XferListSelType'
+      description: ''
+    XferModRqType:
+      title: XferModRqType
+      required:
+        - XferKeys
+        - XferInfo
+      type: object
+      properties:
+        OvrdAutoAckInd:
+          type: boolean
+          description: >-
+            Override AutoAcknowledge Indicator. Used when the midleware is in
+            charge of  auto-acknowledgement of exceptions.
+        OvrdExceptionData:
+          $ref: '#/components/schemas/OvrdExceptionDataType'
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferInfo:
+          $ref: '#/components/schemas/XferInfoType'
       description: ''
     StatusType:
       title: StatusType
@@ -5454,174 +5549,36 @@ components:
             Additional Status aggregate may appear once for each additional
             status that the server intends to provide.
       description: ''
-    DebitKeysType:
-      title: DebitKeysType
-      allOf:
-        - $ref: '#/components/schemas/BaseKeysType'
-        - type: object
-          properties:
-            SvcIdent:
-              $ref: '#/components/schemas/SvcIdentType'
-            DebitId:
-              maxLength: 36
-              type: string
-              description: Debit Identifier.
-            AcctKeys:
-              $ref: '#/components/schemas/AcctKeysType'
-      description: ''
-    DebitStatusType:
-      title: DebitStatusType
+    XferStatusType:
+      title: XferStatusType
       required:
-        - DebitStatusCode
+        - XferStatusCode
       type: object
       properties:
-        DebitStatusCode:
-          $ref: '#/components/schemas/DebitStatusCodeType'
+        XferStatusCode:
+          $ref: '#/components/schemas/XferStatusCodeType'
         EffDt:
           pattern: >-
             [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
           type: string
           description: Effective Date. The date that an associated action takes effect.
       description: ''
-    DebitStatusRecType:
-      title: DebitStatusRecType
+    XferStatusRecType:
+      title: XferStatusRecType
       required:
-        - DebitStatus
+        - XferKeys
+        - XferStatus
       type: object
       properties:
         SvcIdent:
           $ref: '#/components/schemas/SvcIdentType'
-        DebitKeys:
-          $ref: '#/components/schemas/DebitKeysType'
-        DebitStatus:
-          $ref: '#/components/schemas/DebitStatusType'
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferStatus:
+          $ref: '#/components/schemas/XferStatusType'
       description: ''
-    TrnAmtType:
-      title: TrnAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    ImmediateCreditAmtType:
-      title: ImmediateCreditAmtType
-      allOf:
-        - $ref: '#/components/schemas/CurAmtType'
-        - type: object
-      description: ''
-    ReceiptDtlType:
-      title: ReceiptDtlType
-      type: object
-      properties:
-        CompositeCurAmt:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompositeCurAmtType'
-          description: Composite Currency Amount.
-      description: ''
-    PassbkItemDetailType:
-      title: PassbkItemDetailType
-      type: object
-      properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        PostedDt:
-          pattern: >-
-            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
-          type: string
-          description: Posted Date.
-        EffDt:
-          pattern: >-
-            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
-          type: string
-          description: Effective Date. The date that an associated action takes effect.
-        ReversalInd:
-          type: boolean
-          description: >-
-            Reversal Indicator. Indicates if the transaction was reversed or
-            corrected.
-        PassbkTrnType:
-          $ref: '#/components/schemas/PassbkTrnTypeType'
-        CompositeCurAmt:
-          type: array
-          items:
-            $ref: '#/components/schemas/CompositeCurAmtType'
-          description: Composite Currency Amount.
-        BalAmt:
-          $ref: '#/components/schemas/BalAmtType'
-        Memo:
-          maxLength: 255
-          type: array
-          items:
-            maxLength: 255
-            type: object
-          description: Memo.
-      description: ''
-    ReceiptType:
-      title: ReceiptType
-      type: object
-      properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        TellerIdent:
-          maxLength: 80
-          type: string
-          description: Teller Identification.
-        OpenDt:
-          type: string
-          description: Open Date.
-          format: date
-        MaturityDt:
-          type: string
-          description: Maturity Date.
-          format: date
-        Rate:
-          type: number
-          description: Rate.
-        TrnAmt:
-          $ref: '#/components/schemas/TrnAmtType'
-        TrnIdent:
-          maxLength: 36
-          type: string
-          description: >-
-            Transaction Identification. Also known as Trace Number or Sequence
-            in some systems.
-        PostedDt:
-          pattern: >-
-            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
-          type: string
-          description: Posted Date.
-        AcctWarning:
-          $ref: '#/components/schemas/AcctWarningType'
-        AcctBal:
-          type: array
-          items:
-            $ref: '#/components/schemas/AcctBalType'
-          description: >-
-            Account Balance. Defines balances a financial institution account
-            may carry (ex: ledger, available, collected, etc.).
-        ImmediateCreditAmt:
-          $ref: '#/components/schemas/ImmediateCreditAmtType'
-        ReceiptDtl:
-          $ref: '#/components/schemas/ReceiptDtlType'
-        AcctHoldInfo:
-          type: array
-          items:
-            $ref: '#/components/schemas/AcctHoldInfoType'
-          description: Account Hold Information.
-        PassbkItemDetail:
-          type: array
-          items:
-            $ref: '#/components/schemas/PassbkItemDetailType'
-          description: >-
-            Passbook Item Detail. Details (e.g. line information) for this
-            passbook item
-      description: ''
-    DebitAddRsType:
-      title: DebitAddRsType
+    XferAddRsType:
+      title: XferAddRsType
       required:
         - Status
       type: object
@@ -5630,114 +5587,162 @@ components:
           $ref: '#/components/schemas/StatusType'
         AcctInfoDtl:
           $ref: '#/components/schemas/AcctInfoDtlType'
-        DebitStatusRec:
-          $ref: '#/components/schemas/DebitStatusRecType'
-        Receipt:
-          $ref: '#/components/schemas/ReceiptType'
+        XferStatusRec:
+          $ref: '#/components/schemas/XferStatusRecType'
       description: ''
-    DebitSelType:
-      title: DebitSelType
+    XferDelRsType:
+      title: XferDelRsType
       required:
-        - DebitKeys
+        - Status
       type: object
       properties:
-        DebitKeys:
-          $ref: '#/components/schemas/DebitKeysType'
-        DebitType:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        XferStatusRec:
+          $ref: '#/components/schemas/XferStatusRecType'
+      description: ''
+    RecCtrlOutType:
+      title: RecCtrlOutType
+      required:
+        - SentRecCount
+      type: object
+      properties:
+        SentRecCount:
+          type: integer
+          description: >-
+            Sent Record Count. Number of records matching the selection criteria
+            that are included in this message.
+          format: int64
+        MatchedRecCount:
+          type: integer
+          description: >-
+            Matched Record Count. Total number of records matching the selection
+            criteria.
+          format: int64
+        RemainRecCount:
+          type: integer
+          description: >-
+            Remain Record Count.  Total number of records matching the selection
+            criteria that have not been sent yet.
+          format: int64
+        Cursor:
+          maxLength: 250
           type: string
-          description: Debit Type. Indicates the type of debit transaction to be performed.
-        EffDt:
+          description: >-
+            Cursor. Next Record Pointer Included in the response only if
+            additional records are available.
+      description: ''
+    XferRecType:
+      title: XferRecType
+      required:
+        - XferKeys
+        - XferInfo
+        - XferStatus
+      type: object
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferInfo:
+          $ref: '#/components/schemas/XferInfoType'
+        XferStatus:
+          $ref: '#/components/schemas/XferStatusType'
+      description: ''
+    XferInqRsType:
+      title: XferInqRsType
+      required:
+        - Status
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        RecCtrlOut:
+          $ref: '#/components/schemas/RecCtrlOutType'
+        XferRec:
+          type: array
+          items:
+            $ref: '#/components/schemas/XferRecType'
+          description: Transfer Record.
+      description: ''
+    XferListInfoType:
+      title: XferListInfoType
+      required:
+        - CurAmt
+      type: object
+      properties:
+        FromAcctRef:
+          $ref: '#/components/schemas/FromAcctRefType'
+        ToAcctRef:
+          $ref: '#/components/schemas/ToAcctRefType'
+        CurAmt:
+          $ref: '#/components/schemas/CurAmtType'
+        StartDt:
           pattern: >-
             [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
           type: string
-          description: Effective Date. The date that an associated action takes effect.
-        DistributionType:
+          description: Start Date.
+        EndDt:
+          pattern: >-
+            [0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?
+          type: string
+          description: End Date.
+        RecurModel:
+          $ref: '#/components/schemas/RecurModelType'
+        XferAmtCode:
           type: string
           description: >-
-            Distribution Type. Indicates the type of distribution for Health
-            Savings and Retirement accounts.
-        DistributionYr:
-          $ref: '#/components/schemas/DistributionYrType'
-        CompositeCurAmt:
+            Transfer Amount Code. The Transfer Amount Code indicates whether the
+            Next Transfer Amount is fixed or variable, and how the Base
+            Distribution Amount is used to calculate the Next Transfer Amount
+        Nickname:
+          maxLength: 80
+          type: string
+          description: Nickname. Used to allow a customer to assign nicknames to objects.
+        Category:
+          maxLength: 40
+          type: string
+          description: Category. Modified by the client.
+        XferStatusType:
+          $ref: '#/components/schemas/XferStatusTypeType'
+      description: ''
+    XferListRecType:
+      title: XferListRecType
+      required:
+        - XferKeys
+        - XferListInfo
+        - XferStatus
+      type: object
+      properties:
+        XferKeys:
+          $ref: '#/components/schemas/XferKeysType'
+        XferListInfo:
+          $ref: '#/components/schemas/XferListInfoType'
+        XferStatus:
+          $ref: '#/components/schemas/XferStatusType'
+      description: ''
+    XferListInqRsType:
+      title: XferListInqRsType
+      required:
+        - Status
+      type: object
+      properties:
+        Status:
+          $ref: '#/components/schemas/StatusType'
+        RecCtrlOut:
+          $ref: '#/components/schemas/RecCtrlOutType'
+        XferListRec:
           type: array
           items:
-            $ref: '#/components/schemas/CompositeCurAmtType'
-          description: Composite Currency Amount.
+            $ref: '#/components/schemas/XferListRecType'
+          description: Transfer List Record.
       description: ''
-    DebitInqRqType:
-      title: DebitInqRqType
-      required:
-        - DebitSel
-      type: object
-      properties:
-        DebitSel:
-          $ref: '#/components/schemas/DebitSelType'
-      description: ''
-    DebitRecType:
-      title: DebitRecType
-      required:
-        - DebitKeys
-        - DebitInfo
-        - DebitStatus
-      type: object
-      properties:
-        DebitKeys:
-          $ref: '#/components/schemas/DebitKeysType'
-        DebitInfo:
-          $ref: '#/components/schemas/DebitInfoType'
-        DebitStatus:
-          $ref: '#/components/schemas/DebitStatusType'
-      description: ''
-    DebitInqRsType:
-      title: DebitInqRsType
+    XferModRsType:
+      title: XferModRsType
       required:
         - Status
       type: object
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        DebitRec:
-          $ref: '#/components/schemas/DebitRecType'
-      description: ''
-    DebitRevRqType:
-      title: DebitRevRqType
-      required:
-        - DebitInfo
-      type: object
-      properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: >-
-            Override AutoAcknowledge Indicator. Used when the midleware is in
-            charge of  auto-acknowledgement of exceptions.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        RevReasonCode:
-          type: string
-          description: >-
-            Reversal Reason Code. Used to specify a reversal reason code. A
-            value in this element indicates this is a previous-day reversal.
-        Desc:
-          maxLength: 100
-          type: string
-          description: Description.
-        DebitKeys:
-          $ref: '#/components/schemas/DebitKeysType'
-        DebitInfo:
-          $ref: '#/components/schemas/DebitInfoType'
-      description: ''
-    DebitRevRsType:
-      title: DebitRevRsType
-      required:
-        - Status
-      type: object
-      properties:
-        Status:
-          $ref: '#/components/schemas/StatusType'
-        AcctInfoDtl:
-          $ref: '#/components/schemas/AcctInfoDtlType'
-        DebitStatusRec:
-          $ref: '#/components/schemas/DebitStatusRecType'
-        Receipt:
-          $ref: '#/components/schemas/ReceiptType'
+        XferStatusRec:
+          $ref: '#/components/schemas/XferStatusRecType'
       description: ''
