@@ -1,59 +1,61 @@
 {
-  "title": "Cards and Payments",
+  "title": "Payments",
   "name": "CardsandPayments",
   "brand": "Fiserv",
   "brandLogoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
   "solution": "openBanking",
   "brandDescription": "Explore and use our APIs to build, test, certify, and deploy solutions pre-integrated to our market-leading account processing platforms.",
-  "categories": [    
+  "categories": [
     {
-      "name": "bankingCores",
-      "value": "Banking Cores",
+      "name": "businessFunction",
+      "value": "Business Function",
       "subcategories": [
         {
-          "name": "precision",
-          "value": "Precision",
-          "description": "Identify APIs that enable integration to the Precision bank platform"
+          "name": "deposits",
+	  "value": "Deposits",
+	  "description": "APIs that make it possible to create, modify or retrieve records for deposit accounts and transactions"
         },
         {
-          "name": "cleartouch",
-          "value": "Cleartouch",
-          "description": "Identify APIs that enable integration to the Cleartouch bank platform"
+          "name": "loans",
+	  "value": "Loans",
+	  "description": "APIs that make it possible to create, modify or retrieve records for loan accounts and transactions"
         },
         {
-          "name": "signature",
-          "value": "Signature",
-          "description": "Identify APIs that enable integration to the Signature bank platform"
+          "name": "bankServicing",
+	  "value": "Bank Servicing",
+	  "description": "APIs that support account processing functions in the back office, branch and call center"
         },
         {
-          "name": "dNA",
-          "value": "DNA",
-          "description": "Identify APIs that enable integration to the DNA platform"
-        }
-      ]
-    },
-    {
-      "name": "businessSegments",
-      "value": "Business Segments",
-      "subcategories": [
-        {
-          "name": "b2B",
-          "value": "B2B",
-          "description": "Identify APIs that support business-to-business banking functions"
+          "name": "cashManagement",
+	  "value": "Cash Management",
+	  "description": "APIs for managing cash flow and moving money between accounts for business or large retail customers"
         },
         {
-          "name": "b2C",
-          "value": "B2C",
-          "description": "Identify APIs that support business-to-consumer banking functions"
+          "name": "riskAndPerformance",
+	   "value": "Risk and Performance",
+	   "description": "APIs that support compliance, fraud mitigation and insights into financial performance"
+        },
+        {
+          "name": "treasury",
+	  "value": "Treasury",
+	  "description": "APIs for treasury products used to manage and forecast working capital of mid-market and corporate clients"
         }
       ]
     }
+  ],
+  "apiVersions": [
+      {
+        "version": "11.0.0",
+        "versionType": "major",
+        "releaseNotesPath": "/release-notes/release-notes-11.0.0.md",
+        "apiSpecFileNames": ["AccountTransactionService","CreditService","DebitService","TransferService"]
+      }
   ],
   "product": {
     "featured": true,
     "logoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
     "description": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.",
-    "longDescription": "<p>Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.</p><ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
+    "longDescription": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.<ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
     "apiSpecification": "/v1/apis",
     "layout": "/v1/layouts",
     "documentation": "/v1/docs",
@@ -70,7 +72,7 @@
     "feature": [
       {
         "name": "sandBox",
-        "value": false
+        "value": true
       },
       {
         "name": "plugins",

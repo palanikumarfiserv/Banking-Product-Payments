@@ -5,7 +5,7 @@ steps:
   learnSteps:
     - title: Learn
       description: >
-        Use the Fiserv Developer Portal to discover your next integration project. Developers can explore the APIs in our intelligent API Explorer.
+        Use the Fiserv Developer Studio to discover your next integration project. Developers can explore the APIs in our intelligent API Explorer.
       link:
   buildSteps:
     - title: Build
@@ -45,8 +45,8 @@ benefits:
 featuredAPIs:
   - name: Charges
     description: Used to submit a charge transaction.
-    type: POST
-    route: /payments/v1/charges
+    type: post
+    path: /payments/v1/charges
     codeSample: '[json
                   {
                      "amount":{
@@ -71,8 +71,8 @@ featuredAPIs:
     link: link to API Explorer
   - name: Tokenization
     description: Transaction data is protected by a randomly-generated identifier known as a "token".
-    type: POST
-    route: /payments-vas/v1/tokens
+    type: post
+    path: /payments-vas/v1/tokens
     codeSample: '[json
                   {
                      "amount":{
@@ -98,8 +98,8 @@ featuredAPIs:
     link: link to API Explorer 
   - name: Verifications
     description: Confirm account validity and provide notification.
-    type: POST
-    route: /payments-vas/v1/accounts/verification
+    type: post
+    path: /payments-vas/v1/accounts/verification
     codeSample: '[json
                   {
                      "source":{
@@ -115,8 +115,8 @@ featuredAPIs:
     link: link to API Explorer  
   - name: Capture
     description: Capture pending authorization for settlement post authorization.
-    type: POST
-    route: /payments/v1/charges/{transactionId}/capture
+    type: post
+    path: /payments/v1/charges/{transactionId}/capture
     codeSample: '[json
                   {
                     "amount": {
