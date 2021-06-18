@@ -1,75 +1,61 @@
 {
   "title": "Payments",
-  "name": "Payments",
+  "name": "CardsandPayments",
   "brand": "Fiserv",
   "brandLogoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
   "solution": "openBanking",
   "brandDescription": "Explore and use our APIs to build, test, certify, and deploy solutions pre-integrated to our market-leading account processing platforms.",
   "categories": [
     {
-      "name": "domains",
-      "value": "API Domains",
+      "name": "businessFunction",
+      "value": "Business Function",
       "subcategories": [
         {
-          "name": "accounts",
-          "value": "Accounts"
+          "name": "deposits",
+	  "value": "Deposits",
+	  "description": "APIs that make it possible to create, modify or retrieve records for deposit accounts and transactions"
         },
         {
-          "name": "lending",
-          "value": "Lending"
+          "name": "loans",
+	  "value": "Loans",
+	  "description": "APIs that make it possible to create, modify or retrieve records for loan accounts and transactions"
         },
         {
-          "name": "notifications",
-          "value": "Notifications"
+          "name": "bankServicing",
+	  "value": "Bank Servicing",
+	  "description": "APIs that support account processing functions in the back office, branch and call center"
         },
         {
-          "name": "Cards",
-          "value": "Cards"
-        }
-      ]
-    },
-    {
-      "name": "bankingCores",
-      "value": "Banking Cores",
-      "subcategories": [
-        {
-          "name": "premier",
-          "value": "Premier"
+          "name": "cashManagement",
+	  "value": "Cash Management",
+	  "description": "APIs for managing cash flow and moving money between accounts for business or large retail customers"
         },
         {
-          "name": "precision",
-          "value": "Precision"
+          "name": "riskAndPerformance",
+	   "value": "Risk and Performance",
+	   "description": "APIs that support compliance, fraud mitigation and insights into financial performance"
         },
         {
-          "name": "signature",
-          "value": "Signature"
-        },
-        {
-          "name": "dNA",
-          "value": "DNA"
-        }
-      ]
-    },
-    {
-      "name": "businessSegments",
-      "value": "Business Segments",
-      "subcategories": [
-        {
-          "name": "b2B",
-          "value": "B2B"
-        },
-        {
-          "name": "b2C",
-          "value": "B2C"
+          "name": "treasury",
+	  "value": "Treasury",
+	  "description": "APIs for treasury products used to manage and forecast working capital of mid-market and corporate clients"
         }
       ]
     }
   ],
+  "apiVersions": [
+      {
+        "version": "11.0.0",
+        "versionType": "major",
+        "releaseNotesPath": "/release-notes/release-notes-11.0.0.md",
+        "apiSpecFileNames": ["AccountTransactionService","CreditService","DebitService","TransferService"]
+      }
+  ],
   "product": {
     "featured": true,
     "logoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
-    "description": "This API grouping enables access to pertinent information about accounts within a financial institution, transactions related to those accounts and relationships between accounts and accountholders.",
-    "longDescription": "<p>This API grouping enables access to pertinent information about accounts within a financial institution, transactions related to those accounts and relationships between accounts and accountholders.</p><ul><li> Account lists</li><li> Transaction data</li><li> Balance information</li></ul>",
+    "description": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.",
+    "longDescription": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.<ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
     "apiSpecification": "/v1/apis",
     "layout": "/v1/layouts",
     "documentation": "/v1/docs",
@@ -79,7 +65,7 @@
     "feature": [
       {
         "name": "sandBox",
-        "value": false
+        "value": true
       },
       {
         "name": "plugins",
@@ -91,7 +77,7 @@
       },
       {
         "name": "editParameterAPIExplorer",
-        "value": false
+        "value": true
       }
     ]
   }

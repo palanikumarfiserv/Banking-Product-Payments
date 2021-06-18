@@ -5,7 +5,7 @@ steps:
   learnSteps:
     - title: Learn
       description: >
-        Use the Fiserv Developer Portal to discover your next integration project. Developers can explore the APIs in our intelligent API Explorer.
+        Use the Fiserv Developer Studio to discover your next integration project. Developers can explore the APIs in our intelligent API Explorer.
       link:
   buildSteps:
     - title: Build
@@ -23,23 +23,30 @@ steps:
         When your application is ready for deployment, submit it for our automated certification. Once certified, it can be deployed to the production.
       link:
 featuredFeatures:
-  - title: Accounts
+  - title: Industry Standards
     description: >
-      Provides pertinent information about accounts within a financial institution and relationships between accounts and accountholders
-  - title: Transactions
+      Our APIs leverage the common financial object definitions of the Afinis IFX 2.3 Business Messaging Specification (BMS).
+  - title: REST APIs
     description: >
-      Provides transactions related to those accounts.
+      Our lightweight, REST APIs are ideal for the digital channels consumers prefer.
+  - title: Functionality
+    description: >
+      The APIs in this domain enable credits, debits and transfers to be added or reversed and facilitate processing through our Fiserv enterprise payments hub and real-time network.
 benefits:
-  - title: Lists
+  - title: Market Reach
     description: >
-      Obtain a list of accounts, their balances and essential information.
-  - title: Analysis and alerting
-    description: Gather transaction data for analysis and alerting.
+      Pre-integrate your app to Fiserv platforms used by more than one in three financial institutions in the U.S. Reach 100 million digital banking users.
+  - title: Simplified Integration
+    description: >
+      More than 25,000 fields from Fiserv banking solutions are exposed through normalized APIs, enabling once-and-done integration. No point-to-point integration to individual platforms.
+  - title: Co-Innovation
+    description: >
+      Collaborate with financial institutions to create highly personalized touchpoints and customer journeys.
 featuredAPIs:
   - name: Charges
     description: Used to submit a charge transaction.
-    type: POST
-    route: /payments/v1/charges
+    type: post
+    path: /payments/v1/charges
     codeSample: '[json
                   {
                      "amount":{
@@ -64,8 +71,8 @@ featuredAPIs:
     link: link to API Explorer
   - name: Tokenization
     description: Transaction data is protected by a randomly-generated identifier known as a "token".
-    type: POST
-    route: /payments-vas/v1/tokens
+    type: post
+    path: /payments-vas/v1/tokens
     codeSample: '[json
                   {
                      "amount":{
@@ -91,8 +98,8 @@ featuredAPIs:
     link: link to API Explorer 
   - name: Verifications
     description: Confirm account validity and provide notification.
-    type: POST
-    route: /payments-vas/v1/accounts/verification
+    type: post
+    path: /payments-vas/v1/accounts/verification
     codeSample: '[json
                   {
                      "source":{
@@ -108,8 +115,8 @@ featuredAPIs:
     link: link to API Explorer  
   - name: Capture
     description: Capture pending authorization for settlement post authorization.
-    type: POST
-    route: /payments/v1/charges/{transactionId}/capture
+    type: post
+    path: /payments/v1/charges/{transactionId}/capture
     codeSample: '[json
                   {
                     "amount": {
@@ -123,11 +130,11 @@ featuredAPIs:
     language: Curl
     link: link to API Explorer   
 useCases:
-  - title: Business to business
-    subtitle: B2B
+  - title: Enterprise Disbursements
+    subtitle: Enterprise Disbursements
     description: > 
-      Obtain robust configuration and account details.
-  - title: Business to consumer
-    subtitle: B2C
+      Partner with financial institutions to serve companies that need real-time disbursements such as insurance claims payments, merchant rebates, loyalty rewards, employee bonuses, expense reimbursements, loan payouts, refunds and so forth.
+  - title: On-Demand Service Apps
+    subtitle: On-Demand Service Apps
     description: > 
-      For applications targeting consumers, our lightweight APIs provide essential account and transaction data in a smaller payload.
+      Create or integrate apps that serve fast-growing services markets such as ride share, grocery or food delivery, digital insurers, travel, vacation and other industries that require the ability to move money.
