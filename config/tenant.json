@@ -48,7 +48,7 @@
         "version": "11.0.0",
         "versionType": "major",
         "releaseNotesPath": "/release-notes/release-notes-11.0.0.md",
-        "apiSpecFileNames": ["AccountTransactionService","CreditService","DebitService","TransferService"]
+        "apiSpecFileNames": ["AcctTransactionResponseService","CreditService","DebitService","TransferService"]
       }
   ],
   "product": {
