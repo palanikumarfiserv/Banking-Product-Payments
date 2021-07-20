@@ -53,7 +53,7 @@
   ],
   "product": {
     "featured": true,
-    "logoURL": "https://s7d2.scene7.com/is/image/fiserv/GettyImages-838090142",
+    "logoURL": "https://raw.githubusercontent.com/Fiserv/Banking-Product-Payments/develop/assets/images/5_Payments-min%20copy.jpg",
     "description": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.",
     "longDescription": "Use the APIs in this domain to create or integrate applications that deliver frictionless money movement through novel channels.<ul><li> Credits and debits</li><li> Transfers</li><li> Connections to payments networks</li></ul>",
     "apiSpecification": "/v1/apis",
