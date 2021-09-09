@@ -12,316 +12,7 @@ servers:
 tags:
 - name: Credit Service
 paths:
-  /credits/{creditId}:
-    get:
-      tags:
-      - Get Credit by Credit Id
-      summary: Retrieves a Credit Object
-      operationId: CreditInqOperById
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: creditId
-        in: path
-        description: "Credit Identifier. Credit Identifier that uniquely identifies\
-          \ a Credit object. \n"
-        required: true
-        style: simple
-        explode: false
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctId
-        in: query
-        description: |
-          Account Identifier.  Uniquely identifies an account held at a financial institution.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: subAcctId
-        in: query
-        description: |
-          Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctType
-        in: query
-        description: |
-          Account Type
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: acctIdentType
-        in: query
-        description: |
-          "Account Identification Type. Valid values include: AcctNum, Port, AcctTypeCode."
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: acctIdentValue
-        in: query
-        description: |
-          Account Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: curCodeType
-        in: query
-        description: |
-          Currency Code Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          $ref: '#/components/schemas/CurCodeType'
-      - name: curCodeValue
-        in: query
-        description: |
-          Currency Code Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 80
-          type: string
-      - name: fIIdentType
-        in: query
-        description: |
-          Financial Institution Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: fIIdent
-        in: query
-        description: |
-          Financial Institution Identification.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 34
-          type: string
-      - name: branchIdent
-        in: query
-        description: |
-          Branch Identifier
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 22
-          type: string
-      - name: creditType
-        in: query
-        description: |
-          Credit Type. Indicates the type of Credit transaction being processed.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: effDt
-        in: query
-        description: |
-          Effective Date
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: date-time
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreditInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/CreditInqRsType'
   /credits:
-    get:
-      tags:
-      - Get Credit
-      summary: Retrieves a Credit Object
-      operationId: CreditInqOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: creditId
-        in: query
-        description: "Credit Identifier. Credit Identifier that uniquely identifies\
-          \ a Credit object. \n"
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctId
-        in: query
-        description: |
-          Account Identifier.  Uniquely identifies an account held at a financial institution.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: subAcctId
-        in: query
-        description: |
-          Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctType
-        in: query
-        description: |
-          Account Type
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: acctIdentType
-        in: query
-        description: |
-          "Account Identification Type. Valid values include: AcctNum, Port, AcctTypeCode."
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: acctIdentValue
-        in: query
-        description: |
-          Account Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: curCodeType
-        in: query
-        description: |
-          Currency Code Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          $ref: '#/components/schemas/CurCodeType'
-      - name: curCodeValue
-        in: query
-        description: |
-          Currency Code Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 80
-          type: string
-      - name: fIIdentType
-        in: query
-        description: |
-          Financial Institution Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: fIIdent
-        in: query
-        description: |
-          Financial Institution Identification.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 34
-          type: string
-      - name: branchIdent
-        in: query
-        description: |
-          Branch Identifier
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 22
-          type: string
-      - name: creditType
-        in: query
-        description: |
-          Credit Type. Indicates the type of Credit transaction being processed.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: effDt
-        in: query
-        description: |
-          Effective Date
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          format: date-time
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreditInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/CreditInqRsType'
     put:
       tags:
       - Update Credit
@@ -331,12 +22,17 @@ paths:
       - name: EFXHeader
         in: header
         description: The message header request aggregate contains common information
-          for all request messages
+          for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md">
+          EFX Header Parameters </a> are required to send as a JSON object in the
+          request message.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
+        examples:
+          Premier:
+            $ref: '#/components/examples/PremierHeaderExample'
       requestBody:
         content:
           application/json:
@@ -349,12 +45,50 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreditRevRsType'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditRevRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
         default:
           description: Unexpected error
           content:
             application/xml:
               schema:
                 $ref: '#/components/schemas/CreditRevRsType'
+      x-group-name: Credit Service
+      x-proxy-name: Update Credit
     post:
       tags:
       - Add Credit
@@ -364,17 +98,25 @@ paths:
       - name: EFXHeader
         in: header
         description: The message header request aggregate contains common information
-          for all request messages
+          for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md">
+          EFX Header Parameters </a> are required to send as a JSON object in the
+          request message.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
+        examples:
+          Premier:
+            $ref: '#/components/examples/PremierHeaderExample'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/CreditAddRqType'
+            examples:
+              Premier:
+                $ref: '#/components/examples/PremierCreditAddRequest'
       responses:
         "201":
           description: Created
@@ -382,47 +124,54 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreditAddRsType'
+              examples:
+                Premier:
+                  $ref: '#/components/examples/PremierCreditAddResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditAddRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditAddRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditAddRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreditAddRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
         default:
           description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/CreditAddRsType'
-  /credits/secured:
-    post:
-      tags:
-      - Get Credit
-      summary: Retrieves a Credit Object Secured
-      operationId: CreditInqOperBySecured
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/CreditInqRqType'
-        required: true
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/CreditInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/CreditInqRsType'
+      x-group-name: Credit Service
+      x-proxy-name: Add Credit
+  /credits/secured: {}
 components:
   schemas:
     EFXHeader:
@@ -453,6 +202,7 @@ components:
           type: string
           description: Indicates the channel used by the client application.
         ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Client date and time as reported by the client application
             that is making the service request.
@@ -603,6 +353,10 @@ components:
           enum:
           - Manual
           - Auto
+        TrnConductorIdent:
+          type: string
+        TrnGroupIdent:
+          type: string
     AddrFormatTypeType:
       title: AddrFormatTypeType
       type: string
@@ -1287,9 +1041,10 @@ components:
           type: string
           description: Date Type Enumeration Description.
         DateValue:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Date Value. Contains the value of the date.
+          format: date-time
         RefData:
           type: array
           description: Reference Data.
@@ -1668,9 +1423,10 @@ components:
             rate. For example, the BasedOnValue is the Prime rate, a percentage is
             added to/subtracted from the prime rate.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         IntAPY:
           type: number
           description: Interest APY.
@@ -1800,9 +1556,10 @@ components:
           type: boolean
           description: Compounding Indicator.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         ExpDt:
           type: string
           description: Expiration Date.
@@ -1870,13 +1627,15 @@ components:
           description: Promotional Rate Indicator. Provides information on whether
             the promotional rate is active or not.
         StartDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Start Date.
+          format: date-time
         EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: End Date.
+          format: date-time
         PromoDays:
           type: integer
           description: Number of Days of the Promotional Rate.
@@ -1916,9 +1675,10 @@ components:
           type: number
           description: Rate.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
     RateChangeRangeMaxMinType:
       title: RateChangeRangeMaxMinType
       type: object
@@ -2259,13 +2019,15 @@ components:
           type: number
           description: Rate.
         LastOccuranceDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Last Occurrence Date.
+          format: date-time
         FirstOccuranceDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: First Occurrence Date.
+          format: date-time
     TranCounterType:
       title: TranCounterType
       required:
@@ -2381,15 +2143,17 @@ components:
       type: object
       properties:
         StartDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Start Date.
+          format: date-time
         StartDayMonth:
           $ref: '#/components/schemas/StartDayMonthType'
         EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: End Date.
+          format: date-time
         EndDayMonth:
           $ref: '#/components/schemas/StartDayMonthType'
         Duration:
@@ -2444,9 +2208,10 @@ components:
           CountryCode:
             $ref: '#/components/schemas/CountryCodeType'
           UpDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Update Date.
+            format: date-time
     PostAddrType:
       title: PostAddrType
       allOf:
@@ -2657,9 +2422,10 @@ components:
             type: string
             description: Contact Method.
           UpDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Update Date.
+            format: date-time
           Comment:
             maxLength: 300
             type: string
@@ -2704,9 +2470,10 @@ components:
             type: string
             description: MSA Code Enumeration Description.
           MaintDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Maintenance Date.
+            format: date-time
           MaintBy:
             maxLength: 80
             type: string
@@ -2897,9 +2664,10 @@ components:
           type: string
           description: Earning Method Enumeration Description
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         ExpDt:
           type: string
           description: Expiration Date.
@@ -3296,9 +3064,10 @@ components:
           description: Number of Times Renewed.
           format: int64
         OrigIssueDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Original Issue Date.
+          format: date-time
         OrigMatDt:
           type: string
           description: Original Maturity Date.
@@ -3543,10 +3312,11 @@ components:
         FeeCollectedAmt:
           $ref: '#/components/schemas/FeeCollectedAmtType'
         LastContactDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Last Contact Date. Date the FI contacted the customer on regards
             to this account.
+          format: date-time
         DateData:
           type: array
           description: Date Data. Use to contain dates associated to the object.
@@ -4104,9 +3874,10 @@ components:
           items:
             $ref: '#/components/schemas/PmtCompositeAmtType'
         DueDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Payment Due Date.
+          format: date-time
     BillStatusType:
       title: BillStatusType
       required:
@@ -4157,9 +3928,10 @@ components:
           description: Interest Paid To Date.
           format: date
         PrincipalPaidToDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Principal Paid To Date.
+          format: date-time
     AcctSummInfoType:
       title: AcctSummInfoType
       allOf:
@@ -4220,9 +3992,10 @@ components:
             type: string
             description: Card Type Enum Description.
           IssueDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Issue Date.
+            format: date-time
           ExpDt:
             type: string
             description: Expiration Date.
@@ -4330,9 +4103,10 @@ components:
           type: string
           description: Check Number.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         DelayHoldInd:
           type: boolean
           description: Delay Hold Indicator. When the hold is to be applied on today's
@@ -4477,13 +4251,15 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes
-            that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated
-            with the EFX StatusCode.
+          description: Brief information about the EFX status code. Refer to the <a
+            href="../docs?path=docs/response-codes.md">Response Codes</a> for more
+            information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
@@ -4790,10 +4566,11 @@ components:
           description: Transaction Identification. Also known as Trace Number or Sequence
             in some systems.
         ClientDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: '[FSVR]Client Date. The transaction date/time of the reference
             transaction as reported by the client.'
+          format: date-time
     PersonNameShortType:
       title: PersonNameShortType
       type: object
@@ -4858,9 +4635,10 @@ components:
           description: Additional Code. Further defines the transaction with an additional
             code.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         ReturnCode:
           maxLength: 80
           type: string
@@ -4870,9 +4648,10 @@ components:
           type: string
           description: Return Code Description.
         PostedDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Posted Date.
+          format: date-time
         Desc:
           maxLength: 200
           type: array
@@ -4980,13 +4759,15 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes
-            that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated
-            with the EFX StatusCode.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section for more information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
@@ -5057,9 +4838,10 @@ components:
         CreditStatusCode:
           $ref: '#/components/schemas/CreditStatusCodeType'
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
     CreditStatusRecType:
       title: CreditStatusRecType
       required:
@@ -5093,13 +4875,15 @@ components:
           type: string
           description: Name.
         PostedDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Posted Date.
+          format: date-time
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         ReversalInd:
           type: boolean
           description: Reversal Indicator. Indicates if the transaction was reversed
@@ -5151,9 +4935,10 @@ components:
           description: Transaction Identification. Also known as Trace Number or Sequence
             in some systems.
         PostedDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Posted Date.
+          format: date-time
         AcctWarning:
           $ref: '#/components/schemas/AcctWarningType'
         AcctBal:
@@ -5203,9 +4988,10 @@ components:
           type: string
           description: Credit Type. Indicates the type of credit transaction.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
     CreditInqRqType:
       title: CreditInqRqType
       required:
@@ -5277,3 +5063,120 @@ components:
           $ref: '#/components/schemas/CreditStatusRecType'
         Receipt:
           $ref: '#/components/schemas/ReceiptType'
+  examples:
+    PremierHeaderExample:
+      value:
+        Context:
+          Channel: WEB
+        TrnId: "622182"
+        OrganizationId: PRMOrg10
+        VendorId: "112233"
+    "401-Premier":
+      value:
+        Status:
+          StatusCode: "1740"
+          StatusDesc: Authentication Failed
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "401"
+          ServerStatusDesc: Unauthorized
+    "422-Premier":
+      value:
+        Status:
+          StatusCode: "1090"
+          StatusDesc: Invalid Value
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "422"
+          ServerStatusDesc: Unprocessable Entity
+    "500-Premier":
+      value:
+        Status:
+          StatusCode: "100"
+          StatusDesc: General Error
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "500"
+          ServerStatusDesc: Internal Server Error
+    "503-Premier":
+      value:
+        Status:
+          StatusCode: "300"
+          StatusDesc: System Not Available
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "503"
+          ServerStatusDesc: Service Unavailable
+    PremierCreditAddRequest:
+      value:
+        OvrdAutoAckInd: false
+        CreditInfo:
+          CreditType: Credit
+          Desc:
+          - Credit Transaction
+          AcctRef:
+            AcctKeys:
+              AcctId: "1040"
+              AcctType: DDA
+          CompositeCurAmt:
+          - CurAmt:
+              Amt: 200
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          CashInData:
+          - CashAmt:
+              Amt: 5
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          ChkInData:
+          - ChkType: NoFloat
+            FloatData:
+            - FloatDetails:
+              - CheckFloatAmt:
+                  Amt: 195
+                  CurCode:
+                    CurCodeType: ISO4217-Alpha
+                    CurCodeValue: USD
+    PremierCreditAddResponse:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        CreditStatusRec:
+          CreditKeys:
+            AcctKeys:
+              AcctId: "1040"
+              AcctType: DDA
+          CreditStatus:
+            CreditStatusCode: Posted
+            EffDt: 2021-08-19T12:20:44.661-06:00
+        Receipt:
+          AcctBal:
+          - BalType: PrevLedger
+            CurAmt:
+              Amt: 4355.9
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: PrevAvail
+            CurAmt:
+              Amt: 4055.9
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: MemoLedger
+            CurAmt:
+              Amt: 4555.9
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
+          - BalType: Avail
+            CurAmt:
+              Amt: 4255.9
+              CurCode:
+                CurCodeType: ISO4217-Alpha
+                CurCodeValue: USD
