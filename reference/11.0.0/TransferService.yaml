@@ -13,273 +13,6 @@ servers:
 - url: /
 paths:
   /transfers:
-    get:
-      tags:
-      - Get Transfer
-      summary: Retrieve Transfer of funds Instructions
-      description: Unsecured - Only use with Voltage - This method retrieves transfer
-        of funds instructions.
-      operationId: XferInqOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: $limit
-        in: query
-        description: Maximum Record Limit. This is the maximum number of records that
-          the server should add to the result set which is available tosatisfy this
-          request.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: cursor
-        in: query
-        description: Cursor. Next Record Pointer Included in the response only if
-          additional records are available.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 250
-          type: string
-      - name: acctId
-        in: path
-        description: 'Account Identifier.  Uniquely identifies an account held at
-          a financial institution. '
-        required: true
-        style: simple
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: subAcctId
-        in: query
-        description: Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctType
-        in: query
-        description: AcctType.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - CCA
-          - RRA
-          - LEAS
-          - CDA
-          - MLN
-          - CLA
-          - CRD
-          - DDA
-          - EQU
-          - GLA
-          - ILA
-          - AdultCashISA
-          - IRA
-          - RET
-          - EXT
-          - JuniorCashISA
-          - LIP
-          - LOAN
-          - LOC
-          - CLOC
-          - MLA
-          - PBA
-          - PORT
-          - SDA
-          - SDB
-          - MMA
-          - DDL
-      - name: cardId
-        in: query
-        description: Card Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: cardNum
-        in: query
-        description: Card Number
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 32
-          type: string
-      - name: isoCode
-        in: query
-        description: ISO Code.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: cardSeqNum
-        in: query
-        description: Card Sequence Number.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 3
-          type: string
-      - name: cardIdentType
-        in: query
-        description: 'Card Identification Type. Valid values include: PORT'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - PORT
-      - name: cardIdentValue
-        in: query
-        description: Card Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctIdentValue
-        in: query
-        description: Account Identification Value.
-        required: true
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctIdentType
-        in: query
-        description: 'Account Identification Type. Valid values include: AcctNum,
-          Port, AcctTypeCode.'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - AcctNum
-          - PORT
-          - AccessID
-          - PartyID
-          - AliasAcct
-          - AcctTypeCode
-          - CLOC
-      - name: fiIdentType
-        in: query
-        description: Financial Institution Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - ABA
-          - RoutingNum
-      - name: fiIdent
-        in: query
-        description: Financial Institution Identification.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 34
-          type: string
-      - name: branchIdent
-        in: query
-        description: Branch Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 22
-          type: string
-      - name: xferIdent
-        in: query
-        description: ' Transfer Identifier.'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: transferType
-        in: query
-        description: Transfer Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XferInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/XferInqRsType'
-    put:
-      tags:
-      - Update Transfer
-      summary: Modify Transfer of funds Instructions
-      description: This method modifies a transfer of funds.
-      operationId: XferModOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/XferModRqType'
-        required: true
-        x-send-file-in-body: false
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XferModRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/XferModRsType'
     post:
       tags:
       - Add Transfer
@@ -290,17 +23,25 @@ paths:
       - name: EFXHeader
         in: header
         description: The message header request aggregate contains common information
-          for all request messages
+          for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md">
+          EFX Header Parameters </a> are required to send as a JSON object in the
+          request message.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
+        examples:
+          Premier:
+            $ref: '#/components/examples/PremierHeaderExample'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/XferAddRqType'
+            examples:
+              Premier:
+                $ref: '#/components/examples/PremierXferAddRequest-TMS'
         required: true
         x-send-file-in-body: false
       responses:
@@ -310,152 +51,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/XferAddRsType'
+              examples:
+                Premier:
+                  $ref: '#/components/examples/PremierXferAddResponse-TMS'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/XferAddRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
         default:
           description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/XferAddRsType'
-    delete:
-      tags:
-      - Delete Transfer
-      summary: Delete a scheduled transfer of funds
-      description: Unsecured - Only use with Voltage - This method deletes a scheduled
-        transfer of funds.
-      operationId: XferDelOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XferDelRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/XferDelRsType'
-  /transfers-list:
-    post:
-      tags:
-      - Get Transfer List
-      summary: Retrieve a list of transfers of funds instructions
-      description: This service operation retrieves a list of transfers of funds instructions.
-      operationId: XferListInq
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/XferListInqRqType'
-        required: true
-        x-send-file-in-body: false
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XferListInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/XferListInqRsType'
-  /transfers/secure:
-    put:
-      tags:
-      - Delete Transfer
-      summary: Delete a scheduled transfer of funds
-      description: This method deletes a scheduled transfer of funds.
-      operationId: SecuredXferDelOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/XferDelRqType'
-        required: true
-        x-send-file-in-body: false
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XferDelRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/XferDelRsType'
-    post:
-      tags:
-      - Get Transfer
-      summary: Retrieve Transfer of funds Instructions
-      description: This method retrieves transfer of funds instructions.
-      operationId: SecuredXferInqOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/XferInqRqType'
-        required: true
-        x-send-file-in-body: false
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/xml:
-              schema:
-                $ref: '#/components/schemas/XferInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/XferInqRsType'
+      x-group-name: Transfer Service
+      x-proxy-name: Add Transfer
 components:
   schemas:
     EFXHeader:
@@ -486,6 +128,7 @@ components:
           type: string
           description: Indicates the channel used by the client application.
         ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Client date and time as reported by the client application
             that is making the service request.
@@ -636,6 +279,364 @@ components:
           enum:
           - Manual
           - Auto
+    AccountingMethodType:
+      title: AccountingMethodType
+      type: string
+      enum:
+      - Class
+      - CostCenter
+      - AcctType
+    AccrualMethodType:
+      title: AccrualMethodType
+      type: string
+      enum:
+      - None
+      - Simple
+      - AddOn
+      - TrueSimple
+      - Daily
+      - Continuous
+      - Rule78th
+      - SimpleMonthly
+      - Amortized
+      - Rule78thFirstPeriodSimple
+      - Actuarial
+      - Rule78th_15DayDelay
+      - SimpleMonthlyFirstPmtDt
+      - AmortizedFirstPmtDt
+      - AmortizedBalance
+      - SimpleAvg
+      - DailyAvg
+      - ContinuousAvg
+      - PrincipalAndInterest
+      - PrincipalPlusInterest
+      - NegativeAmortization
+    AccrualOnBalanceType:
+      title: AccrualOnBalanceType
+      type: string
+      enum:
+      - Ledger
+      - Avail
+      - MinAvail
+      - AvgAvail
+      - AvgMinLedger
+      - AvgLedger
+      - MinLedger
+      - None
+    AcctAmtTypeType:
+      title: AcctAmtTypeType
+      type: string
+      enum:
+      - NonIntFinanceCharge
+      - NonAccrualInt
+      - IntDue
+      - AddtlIntDue
+      - AccidentPaid
+      - Transactions
+      - AccrueOnBalance
+      - AdvAmt
+      - ForfeitureAmt
+      - AvgAvail
+      - AvgChkDebit
+      - AvgDeposit
+      - AvgLedger
+      - AvgCollected
+      - AggLedger
+      - ACHCredit
+      - Credit
+      - CashIn
+      - IntAccrued
+      - CashOut
+      - ChargeOff
+      - ChkDebit
+      - ChkCredit
+      - ClosingFees
+      - DaysAvailOverdraft
+      - DaysNSF
+      - DaysOverdraft
+      - DealerIntEarned
+      - DealerIntPaid
+      - Debit
+      - DeferredCostEarned
+      - DeferredCostEarnedTotal
+      - DeferredFeeEarned
+      - DeferredFeeEarnedTotal
+      - Deposit
+      - EscrowDisb
+      - EscrowInterest
+      - EscrowPaid
+      - EscrowPMIPaid
+      - EscrowTaxesPaid
+      - FederalWithhold
+      - FeeAccrued
+      - FeeAssessed
+      - FeeEarned
+      - FeePaid
+      - FeeUnearned
+      - FeeWaived
+      - Hold
+      - HSA
+      - InsuranceEarned
+      - InsurancePaid
+      - InsuranceWaived
+      - IntEarned
+      - IntCarryOver
+      - IntEscEarned
+      - IntEscPaid
+      - IntOtherEscEarned
+      - IntOtherEscPaid
+      - IntPaid
+      - IntPaidOut
+      - IntReported
+      - OIDIntReported
+      - IntPrepaid
+      - IntWaived
+      - LateFeeEarned
+      - LateFeePaid
+      - LateFeeWaived
+      - LifePaid
+      - LoanPmt
+      - MinLedger
+      - NegAmorPaid
+      - NegAmorAssessed
+      - MinPmt
+      - MMAThirdParty
+      - MMAThirdPartyAllow
+      - MMAWithdrawal
+      - MMAWithdrawalAllow
+      - NegativeAvail
+      - NegativeLedger
+      - NSFFeePaid
+      - NSFFeeRefunded
+      - NSFFeeReturned
+      - NSFFeeWaived
+      - NSFPaid
+      - NSFPresented
+      - NSFReturned
+      - ExceptionItemFeePaid
+      - ExceptionItemFeeWaived
+      - OpenStatement
+      - CloseStatement
+      - OtherChargePaid
+      - OtherChargeWaived
+      - OtherFeeEarned
+      - OtherInsPaid
+      - OtherMiscFee
+      - Overdraft
+      - OverdraftFee
+      - PositiveAvail
+      - PositiveLedger
+      - PrincipalCurtailment
+      - PrincipalPaid
+      - PmtDue
+      - ReappliedCurtailment
+      - RegDType
+      - Statement
+      - StateWithhold
+      - StopCheck
+      - SubscriptionLimit
+      - Subscription
+      - SvcCharge
+      - SvcChargeEarned
+      - SvcChargePaid
+      - SvcChargeWaived
+      - Transfer
+      - TemporaryOverdraftLimit
+      - UnusedLimit
+      - Withhold
+      - EmployerContribution
+      - ExcessContribution
+      - RefundedContribution
+      - RefundedEmployerContribution
+      - NonReportableDistribution
+      - DisabilityDistribution
+      - DeathDistribution
+      - QualifiedDistribution
+      - ExcessDistribution
+      - EarningExcessContribution
+      - Contribution
+      - RentPaid
+      - PenaltyPaid
+      - BelowBalanceThreshold
+    AcctDtlStatusType:
+      title: AcctDtlStatusType
+      type: string
+      enum:
+      - Active
+      - ActiveNoRenew
+      - Approved
+      - Assumed
+      - Bankruptcy
+      - BankUse
+      - ChargedOff
+      - ClientControlled
+      - Closed
+      - ClosedReopenDeposit
+      - ClosedToAdvances
+      - ClosedToday
+      - ClosedToPosting
+      - ClosedWithBalances
+      - CoolingOff
+      - Decease
+      - Delinquent
+      - Denied
+      - Dormant
+      - Drill
+      - EarlyCollection
+      - Escheated
+      - Foreclosure
+      - Hold
+      - HotCard
+      - Inactive
+      - Matured
+      - New
+      - NewThisMonth
+      - NoCreditPost
+      - NoDebitPost
+      - NonAccrual
+      - NoWithdrawal
+      - Originating
+      - Other
+      - PastDue
+      - PendingClosed
+      - Probate
+      - Purge
+      - Rented
+      - Repossession
+      - Surrendered
+      - TransferredOut
+      - Unusable
+      - Vacant
+      - Void
+    AcctHoldOptionType:
+      title: AcctHoldOptionType
+      type: string
+      enum:
+      - FixedAmt
+      - CurrentBal
+      - AvailBal
+      - LedgerBal
+      - PayOff
+      - HoldAll
+    AcctIdentTypeType:
+      title: AcctIdentTypeType
+      type: string
+      enum:
+      - AcctNum
+      - PORT
+      - AccessId
+      - PartyId
+      - AliasAcct
+      - AcctTypeCode
+      - CLOC
+    AcctMajorTypeType:
+      title: AcctMajorTypeType
+      type: string
+      enum:
+      - Mortgage
+      - Student
+      - FloorPlan
+      - Commercial
+      - LetterOfCredit
+      - Lease
+      - MasterLine
+      - Consumer
+      - CreditLine
+      - PersonalLineOfCredit
+      - CheckCredit
+    AcctMemoTypeType:
+      title: AcctMemoTypeType
+      type: string
+      enum:
+      - Teller
+      - Warning
+      - LockOut
+    AcctPeriodTypeType:
+      title: AcctPeriodTypeType
+      type: string
+      enum:
+      - CTD
+      - LTD
+      - MTD
+      - NextCycle
+      - PriorCycle
+      - PriorTwoCycle
+      - PriorMonth
+      - PriorYr
+      - PrevToPriorYr
+      - Today
+      - YTD
+      - Anniversary
+      - AnniversaryTD
+      - RollingYTD
+    AcctTitleOptionType:
+      title: AcctTitleOptionType
+      type: string
+      enum:
+      - SecondLine
+      - FirstAvailAddrLine
+      - ReplaceNameAddrLine
+      - None
+      - OnlyforInquiry
+    AcctTitleTypeType:
+      title: AcctTitleTypeType
+      type: string
+      enum:
+      - FirstTitle
+      - SecondTitle
+      - ThirdTitle
+    AcctTypeType:
+      title: AcctTypeType
+      type: string
+      enum:
+      - CCA
+      - RRA
+      - LEAS
+      - CDA
+      - MLN
+      - CLA
+      - CRD
+      - DDA
+      - EQU
+      - GLA
+      - ILA
+      - AdultCashISA
+      - IRA
+      - RET
+      - EXT
+      - JuniorCashISA
+      - LIP
+      - LOAN
+      - LOC
+      - CLOC
+      - MLA
+      - PBA
+      - PORT
+      - SDA
+      - SDB
+      - MMA
+      - DDL
+    AcctUseType:
+      title: AcctUseType
+      type: string
+      enum:
+      - Business
+      - Retail
+      - Both
+    ACHEntryClassType:
+      title: ACHEntryClassType
+      type: string
+      enum:
+      - PPD
+      - CCD
+      - WEB
+      - CIE
+    ACHReceivingTypeType:
+      title: ACHReceivingTypeType
+      type: string
+      enum:
+      - Person
+      - Organization
     AddrFormatTypeType:
       title: AddrFormatTypeType
       type: string
@@ -652,6 +653,112 @@ components:
       - Seasonal
       - Previous
       - Physical
+    AddrUseType:
+      title: AddrUseType
+      type: string
+      enum:
+      - Business
+      - Home
+      - Personal
+      - Government
+      - LegalTitle
+      - StmtPrimary
+      - StmtAddtl
+      - Inquiry
+      - Mailing
+      - Check
+      - Dividend
+      - Physical
+      - Tax
+      - Stmt
+      - Beneficiary
+      - MultipleMailer
+      - Miscellaneous
+      - Tickler
+      - Indirect
+      - Closed
+      - 1098Tax
+      - 1099ATax
+      - 1099BTax
+      - 1099Tax
+      - 1099DIVTax
+      - 1099INTTax
+      - 1099MISCTax
+      - 1099OIDTax
+      - 1099RTax
+      - 1099STax
+      - 5498Tax
+      - TaxBNotice
+      - 1099CTax
+      - 1099ETax
+      - 1042STax
+      - NoteCollateral
+      - NoteCosigner
+      - NoteEscrow
+      - NoteTaxEscrow
+      - NoteInsuranceEscrow
+      - LineCollateral
+      - FinancialPropertyStmt
+      - LineCosigner
+      - LineCommitment
+      - PaidNote
+      - Property
+      - Appraiser
+      - Broker
+      - Builder
+      - InsuranceAgency
+      - InsuranceCompany
+      - Landlord
+      - LienHolder
+      - CollateralLocation
+      - PolicyHolder
+      - Seller
+      - Trustee
+      - Issuer
+    AdjDaysBasisType:
+      title: AdjDaysBasisType
+      type: string
+      enum:
+      - DueDt
+      - EndOfMonth
+      - StmtDt
+    AgreementTypeType:
+      title: AgreementTypeType
+      type: string
+      enum:
+      - VRU
+      - CARD
+      - eAgreement
+    AlternateStmtOptionType:
+      title: AlternateStmtOptionType
+      type: string
+      enum:
+      - None
+      - Stmt
+      - StmtAndInt
+      - StmtAndSvcChg
+      - StmtAndIntAndSvcChg
+    ApartmentNumTypeType:
+      title: ApartmentNumTypeType
+      type: string
+      enum:
+      - APT
+      - BLDG
+      - DEPT
+      - FL
+      - HNGR
+      - KEY
+      - LOT
+      - OFC
+      - PH
+      - PIER
+      - RM
+      - SLIP
+      - SPC
+      - STOP
+      - STE
+      - TRLR
+      - UNIT
     APYRecurTypeType:
       title: APYRecurTypeType
       type: string
@@ -664,6 +771,100 @@ components:
       - Weekly
       - BiWeekly
       - Maturity
+    BalanceVerificationType:
+      title: BalanceVerificationType
+      type: string
+      enum:
+      - Avail
+      - Current
+      - Ledger
+      - Collected
+      - Sweep
+    BalCutOffTypeType:
+      title: BalCutOffTypeType
+      type: string
+      enum:
+      - Avail
+      - AvgAvail
+      - AvgLedger
+      - AvgMinLedger
+      - Ledger
+      - MinLedger
+      - None
+    BalTypeType:
+      title: BalTypeType
+      type: string
+      enum:
+      - Accident
+      - Avail
+      - AvailChk
+      - AvailCredit
+      - AvailTomorrow
+      - AvgCollected
+      - ChargeOff
+      - PartChargeOff
+      - Closing
+      - ClosingLedger
+      - ClosingOutstanding
+      - CreditLimit
+      - Current
+      - CustCollected
+      - DealerInterest
+      - BalanceLastStatement
+      - DeferredFee
+      - DeferredLateFee
+      - Escrow
+      - EscrowDue
+      - EscrowInterest
+      - ExternalFund
+      - ExternalAcctBal
+      - Fee
+      - Hold
+      - Float
+      - InterestAccrued
+      - InterestDue
+      - PartInterestDue
+      - IndirectLiability
+      - DirectLiability
+      - Guaranteed
+      - LateFee
+      - Ledger
+      - Life
+      - LIP
+      - LoanExposure
+      - Memo
+      - MemoAvailODP
+      - MemoLedger
+      - MMDAExcess
+      - OpeningOutstanding
+      - Orig
+      - OtherIns
+      - OtherTransfers
+      - OverdraftBanking
+      - OverdraftLimit
+      - PastDue
+      - PayOffAmt
+      - Paydown
+      - PendAuthAmt
+      - PmtDue
+      - PrevAvail
+      - PrevAvailCash
+      - PrevAvailChk
+      - PrevInterestAccrued
+      - PrevLedger
+      - PrevSvcChg
+      - Principal
+      - PartPrincipal
+      - PrincipalPmtDue
+      - SvcChg
+      - Sweep
+      - Secured
+      - Unsecured
+      - Unapplied
+      - RentDue
+      - Passbook
+      - PledgedAmount
+      - Tax
     BillLastPmtCodeType:
       title: BillLastPmtCodeType
       type: string
@@ -671,12 +872,246 @@ components:
       - Bill
       - NoBillDraftTotalDue
       - NoBillExcludePrincipal
+    BillStatusCodeType:
+      title: BillStatusCodeType
+      type: string
+      enum:
+      - Billed
+      - Projected
+    CardIdentTypeType:
+      title: CardIdentTypeType
+      type: string
+      enum:
+      - PORT
+    CashMgmtRelTypeType:
+      title: CashMgmtRelTypeType
+      type: string
+      enum:
+      - EntityConcentration
+      - InvestmentFinalFunding
+      - Master
+      - ZBA
+    CombinedStmtCodeType:
+      title: CombinedStmtCodeType
+      type: string
+      enum:
+      - Primary
+      - Secondary
+      - SecondaryDDA
+      - SecondarySDA
+      - DoNotCombine
+    CompositeCurAmtTypeType:
+      title: CompositeCurAmtTypeType
+      type: string
+      enum:
+      - AccidentIns
+      - PmtDue
+      - ActivationFee
+      - AccruedInt
+      - AdjustmentFee
+      - ATMFee
+      - BuyerFee
+      - CardReplacementFee
+      - CapitalizedFee
+      - CashAdvFee
+      - CheckFee
+      - ClientDefFee
+      - ClosingFee
+      - CollateralIns
+      - ChargeOff
+      - CollectionFee
+      - Current
+      - DealerDisability
+      - DealerInterest
+      - DealerLife
+      - DealerMiscellaneous
+      - DelinquentFee
+      - Deduction
+      - DeferredFee
+      - DeferredLateFee
+      - DisabilityIns
+      - Disbursement
+      - Escrow
+      - EscrowInterest
+      - EscrowVariance
+      - ExtensionFee
+      - FASBCost
+      - FASBFee
+      - FASBOriginalFee
+      - Fee
+      - OriginalFee
+      - FeePaid
+      - FeeWaived
+      - FeeAssessed
+      - InactivityFee
+      - Interest
+      - IntWaive
+      - Insurance
+      - LateFee
+      - LegalFee
+      - LoanFee
+      - LoanPayment
+      - LifeIns
+      - LostStolenFee
+      - MaintenanceFee
+      - MiscellaneousIns
+      - MiscellaneousFee
+      - NegBalFee
+      - NSFFee
+      - NSFAttemptFee
+      - OverdraftFee
+      - OverlimitFee
+      - Penalty
+      - OtherIns
+      - OtherEscrow
+      - Passbook
+      - PrepaymentFee
+      - Principal
+      - PurchaseFee
+      - ReturnedChkFee
+      - ReturnedPaymentFee
+      - StatementFee
+      - StopChkFee
+      - SellerFee
+      - ServiceFee
+      - TellerFee
+      - Rent
+      - Tax
+      - TransactionFee
+      - UnavailAttemptFee
+      - UnemploymentIns
+      - Unapplied
+      - Withholding
+      - Total
+      - LastPmt
+    CountryCodeSourceType:
+      title: CountryCodeSourceType
+      type: string
+      enum:
+      - FIPS-10
+      - ISO3166-Numeric
+      - ISO3166-Alpha-3
+      - ISO3166-Alpha-2
+      - IRS
+      - SPCountryCode
     CurCodeTypeType:
       title: CurCodeTypeType
       type: string
       enum:
       - ISO4217-Alpha
       - ISO4217-Numeric
+    DailyAccrualType:
+      title: DailyAccrualType
+      type: string
+      enum:
+      - Standard360
+      - Standard361
+      - Standard365
+      - Standard366
+      - Standard364
+      - Actual364
+      - Actual365
+      - Actual360
+      - Actual366
+      - Daily365
+      - Daily360
+      - Current365
+      - Current360
+      - Equal365
+      - Equal360
+    DataClassTypeType:
+      title: DataClassTypeType
+      type: string
+      enum:
+      - Portfolio
+      - Contact
+      - Name
+    DataTypeType:
+      title: DataTypeType
+      type: string
+      enum:
+      - Alpha
+      - Boolean
+      - Currency
+      - CurrencySymbol
+      - Date
+      - Numeric
+      - NumericSymbol
+      - Rate
+      - RateSymbol
+      - BCD
+      - BIN
+      - BLOB
+      - BMP
+      - CLOB
+      - DRVD
+      - DTTM
+      - EXPR
+      - FDTA
+      - GDT
+      - GIF
+      - HHMM
+      - HTM
+      - HTML
+      - INTG
+      - JDAY
+      - JDT
+      - JPEG
+      - JPG
+      - JSON
+      - MIX
+      - MMDD
+      - MMYY
+      - MULT
+      - OBJ
+      - OCUR
+      - OTYL
+      - OTYP
+      - PDF
+      - SDT
+      - STR
+      - TIF
+      - TIFF
+      - TIME
+      - TXT
+      - VC
+      - null
+    DateTypeType:
+      title: DateTypeType
+      type: string
+      enum:
+      - LastTrn
+      - RewardsExpDt
+      - Dormant
+      - LastActivity
+      - LastLoanActivity
+      - Anniversary
+      - LastAccess
+      - LastOverdraft
+      - OverdraftEnroll
+      - LastPrc
+      - eStmt
+      - PreviousStmt
+      - CurrentPrc
+      - NextPrc
+      - IRALastStmt
+      - System
+      - LastPrcThru
+      - LastFileMaint
+      - ChargeOff
+      - NonAccrual
+      - BankruptcyFiling
+      - Foreclosure
+      - OriginalIssued
+      - OldestHold
+      - Disbursement
+      - Accrual
+      - Contract
+      - DateFirstPmt
+      - FirstAccess
+      - SafeDepositKeyPaid
+      - AnticipatedPayoff
+      - Recorded
     DayOfMonthType:
       title: DayOfMonthType
       type: integer
@@ -724,6 +1159,65 @@ components:
       - Friday
       - Saturday
       - Sunday
+    DischargeEventCodeType:
+      title: DischargeEventCodeType
+      type: string
+      enum:
+      - None
+      - Bankruptcy
+      - OtherLegalDebtRelief
+      - OtherJudicialLegal
+      - StatuteOfLimitations
+      - Foreclosure
+      - FromProbate
+      - ByAgreement
+      - DebtCollection
+      - DiscountinuedCollection
+      - OtherDischarge
+    DistributionTypeType:
+      title: DistributionTypeType
+      type: string
+      enum:
+      - 1035Exchange
+      - CoverdellESADeath
+      - CoverdellESADisability
+      - CoverdellESADistr
+      - CoverdellESAExcessDistr
+      - CoverdellESAProhibited
+      - CoverdellESATrusteeXfer
+      - CurrLifeInsCost
+      - Death
+      - DeathNonSpouse
+      - DirectRollover
+      - DirectRolloverRothIRA
+      - Disability
+      - EarlyDistrException
+      - EarlyDistrExceptionDivorce
+      - EarlyDistrExceptionRothIRA
+      - EarlyDistrNoException
+      - EarlyDistrNoExceptionDivorce
+      - EarlyDistrNoExceptionRothIRA
+      - ESOPDividends
+      - ExcessAnnualAdditions
+      - ExcessContribution
+      - ExcessContributionEarnings
+      - ExcessContributionEmployer
+      - FederalTax
+      - Fee
+      - NonDeductible
+      - NonReportable
+      - Normal
+      - Other
+      - Prohibited
+      - QualifiedRothIRA
+      - QualifyTenAveraging
+      - Recharacterized
+      - Reinvest
+      - Simple
+      - StateTax
+      - Xfer
+      - XferDivorce
+      - XferSource
     EarlyPayoffTierTypeType:
       title: EarlyPayoffTierTypeType
       type: string
@@ -744,6 +1238,26 @@ components:
       - None
       - NotUsed
       - Discounted
+    ElectronicBankingOptType:
+      title: ElectronicBankingOptType
+      type: string
+      enum:
+      - InquiryOnly
+      - Enabled
+      - Disable
+    ExcessAmtCodeType:
+      title: ExcessAmtCodeType
+      type: string
+      enum:
+      - ProductDefaults
+      - ApplyToBalance
+    FeeAggregationOptionType:
+      title: FeeAggregationOptionType
+      type: string
+      enum:
+      - None
+      - FeeBal
+      - PrincipalBal
     FeeBillingOptionType:
       title: FeeBillingOptionType
       type: string
@@ -802,6 +1316,56 @@ components:
       - FlatFeeBalanceinExcess
       - SBARecoupment
       - SBACurtailment
+    FeeOptionType:
+      title: FeeOptionType
+      type: string
+      enum:
+      - Analysis
+      - Charge
+      - DoNotCharge
+      - SvcChg
+      - SvcChgCreditBack
+      - Waive
+      - Rebatable
+    FeePriorityOptionType:
+      title: FeePriorityOptionType
+      type: string
+      enum:
+      - HigherAmt
+      - LowerAmt
+      - Combine
+    FeeTypeType:
+      title: FeeTypeType
+      type: string
+      enum:
+      - AnalysisSvcChg
+      - ATMFee
+      - BillPmt
+      - DormantFee
+      - EIM
+      - FDIC
+      - FeeCharge
+      - Other
+      - OtherNonTax
+      - OverdraftFee
+      - OverdraftInt
+      - Recurring
+      - Payoff
+      - FASB
+      - FASBCost
+      - UnusedLimit
+      - Prepayment
+      - LateFee
+      - Deduction
+      - NSFFee
+      - CustomerFee
+      - NonCustomerFee
+    FIIdentTypeType:
+      title: FIIdentTypeType
+      type: string
+      enum:
+      - ABA
+      - RoutingNum
     HandlingCodeOptionType:
       title: HandlingCodeOptionType
       type: string
@@ -816,18 +1380,183 @@ components:
       - DoNotPrint
       - UsePortfolio
       - UseDefault
+    HoldTypeType:
+      title: HoldTypeType
+      type: string
+      enum:
+      - Auth
+      - POS
+      - Hold
+      - Mgmt
+      - Extended
+      - Credit
+      - NoChkHold
+      - NoMgmtHold
+      - Caution
+      - ACH
+    IntRateCalcOptionType:
+      title: IntRateCalcOptionType
+      type: string
+      enum:
+      - FirstDisbursement
+      - NewAccountOpen
+    IntReportingCodeType:
+      title: IntReportingCodeType
+      type: string
+      enum:
+      - None
+      - 1099-INT
+      - 1099-OID
+      - 1099-A
+      - 1099-C
+      - 1099-AC-Combined
+      - 1042-S
+    IRSReportOptionType:
+      title: IRSReportOptionType
+      type: string
+      enum:
+      - Primary
+      - Secondary
+      - Both
+    LeadDaysOptionType:
+      title: LeadDaysOptionType
+      type: string
+      enum:
+      - Business
+      - Calendar
     MarginTypeType:
       title: MarginTypeType
       type: string
       enum:
       - Variance
       - Factor
+    MaturityIntRateTypeType:
+      title: MaturityIntRateTypeType
+      type: string
+      enum:
+      - CurrentRate
+      - CurrentRateInPeriod
+      - MaturityIntRate
+      - RateAdjuster
+      - RatePlusAdjuster
+      - RatePlusAdjusterPct
+      - RateAdjusterOverrideFloorCeiling
+      - RatePlusAdjusterOverrideFloorCeiling
+      - RatePlusAdjusterPctOverrideFloorCeiling
     MaturityIntRecurTypeType:
       title: MaturityIntRecurTypeType
       type: string
       enum:
       - Daily
       - Maturity
+    MemoPostProcessOptOvrdType:
+      title: MemoPostProcessOptOvrdType
+      type: string
+      enum:
+      - Detail
+      - DetailEnhanced
+      - Summary
+      - None
+    MilitaryRegionType:
+      title: MilitaryRegionType
+      type: string
+      enum:
+      - APO AA
+      - APO AE
+      - APO AP
+      - FPO AA
+      - FPO AE
+      - FPO AP
+    NextEarningDateOptionType:
+      title: NextEarningDateOptionType
+      type: string
+      enum:
+      - LastEarning
+      - OpenDate
+      - LastDateOfPeriod
+    NextRenewalDateOptionType:
+      title: NextRenewalDateOptionType
+      type: string
+      enum:
+      - LastMaturity
+      - LastEarning
+    NicknameOptionType:
+      title: NicknameOptionType
+      type: string
+      enum:
+      - Printed
+      - NotPrinted
+    NoticeOptionType:
+      title: NoticeOptionType
+      type: string
+      enum:
+      - NoNotice
+      - GenerateNotice
+      - NoticeSent
+      - NoOverride
+    NoticeTypeType:
+      title: NoticeTypeType
+      type: string
+      enum:
+      - RegularNotice
+      - ACHNotice
+      - ChargeBack
+      - PayeeChanges
+      - BalanceOnReceipt
+      - IntNotice
+      - MaturityNotice
+      - RateChangeNotice
+      - RegCCNotice
+      - DrillNotice
+      - PmtChgNotice
+      - NSFNotice
+      - PastDueNotice
+      - BillingNotice
+      - LoanAdvanceNotice
+      - RatePmtChangeNotice
+      - TicklerNotice
+      - PastDueNotice1
+      - PastDueNotice2
+      - PastDueNoticeGuarantor
+      - HUDNotice
+      - CreditBureauNotice
+      - AutoPmtNotice
+    OEDCodeType:
+      title: OEDCodeType
+      type: string
+      enum:
+      - Director
+      - Employee
+      - ExecutiveOfficer
+      - FamilyMember
+      - FiservOfficerOrEmployee
+      - MainShareHolder
+      - Officer
+      - RelInterest
+      - SubsidaryEmployee
+      - SvcCorpEmployee
+      - Other
+      - NoRelationship
+      - OfficerOtherBank
+    OpenMethodType:
+      title: OpenMethodType
+      type: string
+      enum:
+      - InPerson
+      - Internet
+      - Mail
+      - Phone
+      - Mobile
+      - Email
+      - Fax
+      - PostOffice
+    OwnershipType:
+      title: OwnershipType
+      type: string
+      enum:
+      - Individual
+      - JointAnd
+      - JointOr
     PartyIdentTypeType:
       title: PartyIdentTypeType
       type: string
@@ -838,6 +1567,91 @@ components:
       - MemberNum
       - OrgNum
       - PersonNum
+    PhoneTypeType:
+      title: PhoneTypeType
+      type: string
+      enum:
+      - Fax-Foreign
+      - Work-Foreign
+      - Mobile-Foreign
+      - EvePhone
+      - DayPhone
+      - EveFax
+      - DayFax
+      - Home
+      - Work
+      - Mobile
+      - Fax
+      - Pager
+      - Modem
+      - Other
+    PostingPriorityType:
+      title: PostingPriorityType
+      type: string
+      enum:
+      - First
+      - Last
+    PostingStatusType:
+      title: PostingStatusType
+      type: string
+      enum:
+      - NoHold
+      - AcceptNoPmt
+      - AllowNoAdvance
+      - NoPmtNoAdvance
+    PriorityMethodType:
+      title: PriorityMethodType
+      type: string
+      enum:
+      - UseGreatestAmt
+      - UseSmallestAmt
+      - UseAmt
+      - UsePercent
+    RateCalcMethodType:
+      title: RateCalcMethodType
+      type: string
+      enum:
+      - Comparison
+      - PreviousIndex
+      - VarianceFactor
+    RateCarryOverOptionType:
+      title: RateCarryOverOptionType
+      type: string
+      enum:
+      - None
+      - Shortage
+      - Excess
+      - ExcessAndShortage
+    RateChangeControlType:
+      title: RateChangeControlType
+      type: string
+      enum:
+      - Fixed
+      - RateIndex
+      - BaseIndexRate
+      - IndexFreq
+      - StepFreq
+      - Renewal
+      - BalanceTableReview
+      - PeriodReview
+      - AtMaturity
+      - Manual
+      - BalanceRateTable
+      - OnSchedule
+      - None
+    RateChangeIntervalOptionType:
+      title: RateChangeIntervalOptionType
+      type: string
+      enum:
+      - FirstTermOnly
+      - EachTerm
+      - RateTerm
+    RateChangeRangeType:
+      title: RateChangeRangeType
+      type: string
+      enum:
+      - Down
+      - Up
     RateChangeRecurTypeType:
       title: RateChangeRecurTypeType
       type: string
@@ -860,6 +1674,57 @@ components:
       - Debit
       - Stmt
       - StmtDebit
+    RatePricingMethodType:
+      title: RatePricingMethodType
+      type: string
+      enum:
+      - Step
+      - TermBalance
+      - TermBalanceVariance
+      - IndexRate
+    RecurTypeType:
+      title: RecurTypeType
+      type: string
+      enum:
+      - Daily
+      - Maturity
+      - InterestCycle
+      - Monthly
+      - BiMonthly
+      - Once
+      - SemiMonthly
+      - TwiceMonthly
+      - Weekly
+      - BiWeekly
+      - Yearly
+      - SemiYearly
+      - Cycle
+      - None
+      - PayOff
+      - Anniversary
+      - PmtRecalculation
+      - Quarterly
+      - CycleAndQuarterly
+      - SvcChgCycle
+    RefTypeType:
+      title: RefTypeType
+      type: string
+      enum:
+      - PayeeDesc
+      - ReceivingAcctName
+      - PayorDesc
+      - GLAccount
+      - XferDesc
+      - PmtRef
+      - InsuranceCompany
+      - CardStock
+      - CardImage
+      - IVRRefNum
+      - ATMRefNum
+      - Photo
+      - Signature
+      - SerialNum
+      - TranCode
     RegDDAPYCodeType:
       title: RegDDAPYCodeType
       type: string
@@ -876,6 +1741,30 @@ components:
       - ThirdOfficer
       - FourthOfficer
       - ReferralOfficer
+    ReminderCategoryType:
+      title: ReminderCategoryType
+      type: string
+      enum:
+      - Memo
+      - MemoRequired
+      - Tickler
+      - TicklerRequired
+    RenewalOptionType:
+      title: RenewalOptionType
+      type: string
+      enum:
+      - AutomaticRenewal
+      - NoRenewalAllowed
+      - Reinvest
+      - None
+    ReportAmtTypeType:
+      title: ReportAmtTypeType
+      type: string
+      enum:
+      - DebtDischarge
+      - IntCanceled
+      - FairMarketValue
+      - Principal
     RetentionOptionType:
       title: RetentionOptionType
       type: string
@@ -883,6 +1772,31 @@ components:
       - None
       - DoNotRetain
       - Retain
+    RewardDispositionTypeType:
+      title: RewardDispositionTypeType
+      type: string
+      enum:
+      - TransferToAcct
+      - Check
+      - Capitalize
+      - None
+    RewardTypeType:
+      title: RewardTypeType
+      type: string
+      enum:
+      - TranferCents
+      - CashBack
+    RiskCategoryType:
+      title: RiskCategoryType
+      type: string
+      enum:
+      - RiskScore1
+      - RiskScore2
+      - CreditScore
+      - RiskCode
+      - RatingCode1
+      - RatingCode2
+      - RatingCode3
     RoundingOptionType:
       title: RoundingOptionType
       type: string
@@ -899,6 +1813,118 @@ components:
       - Error
       - Warning
       - Info
+    SpecialHandlingType:
+      title: SpecialHandlingType
+      type: string
+      enum:
+      - ACH
+      - ATM
+      - AssessFee
+      - AdditionalFunds
+      - Advance
+      - Automatic
+      - AvailAmt
+      - BillAmt
+      - Capitalize
+      - ChargeOff
+      - CloseAcct
+      - CollectFee
+      - Dealer
+      - Domestic
+      - DecreaseOriginal
+      - DecreaseAccrued
+      - ExcessToEsc
+      - ExcessToPrin
+      - Extension
+      - FederalTax
+      - ForceDistribution
+      - ForceOD
+      - FromBalAmt
+      - FromWdAmt
+      - IgnoreBillingSplit
+      - IgnoreOriginal
+      - IncreaseAccrued
+      - IncreaseOriginal
+      - IncreasePrinDue
+      - International
+      - IRS
+      - Irregular
+      - Journal
+      - Manual
+      - Memo
+      - NegAm
+      - NoCurtailment
+      - NoDLA
+      - NoFASBFee
+      - NonRebatable
+      - NoPenalty
+      - NoStmtYTD
+      - PayFee
+      - PayFirst
+      - PayLast
+      - Penalty
+      - PostCalcInterest
+      - Premature
+      - Prepaid
+      - Prepetition
+      - Rebatable
+      - Recovery
+      - Refund
+      - ReOpen
+      - Replacement
+      - RepaidLoan
+      - ReturnedItem
+      - SalesTax
+      - Shortage
+      - SplitSchedule
+      - StateTax
+      - UnappliedFunds
+      - Unpaid
+      - Unscheduled
+      - VerifyAccrued
+      - WaiveFee
+      - WaiveInt
+      - WaiveIns
+      - FedWire
+      - SWIFT
+      - RTP
+      - YTDOnly
+      - CustomerRequestedRefund
+      - UnclaimedFundsRefund
+    SpecialStmtCodeType:
+      title: SpecialStmtCodeType
+      type: string
+      enum:
+      - Transcript
+      - FinalStmt
+      - None
+      - DropTransactions
+    StmtOptionTypeType:
+      title: StmtOptionTypeType
+      type: string
+      enum:
+      - DailyEndingBal
+      - OverdraftReturnCharge
+    StmtOptionValueType:
+      title: StmtOptionValueType
+      type: string
+      enum:
+      - Print
+      - DoNotPrint
+    SubjectRoleType:
+      title: SubjectRoleType
+      type: string
+      enum:
+      - Teller
+      - Supervisor
+    TaxExemptType:
+      title: TaxExemptType
+      type: string
+      enum:
+      - NotTaxExempt
+      - NonProfit
+      - Government
+      - TaxExempt
     TaxIdentTypeType:
       title: TaxIdentTypeType
       type: string
@@ -910,6 +1936,31 @@ components:
       - ITIN
       - ATIN
       - Other
+    TaxIncentiveTypeType:
+      title: TaxIncentiveTypeType
+      type: string
+      enum:
+      - HSAFamily
+      - HSAIndividual
+      - HSA
+      - MQP
+      - QP
+      - MSA
+      - Keogh
+      - IRA
+      - None
+      - RothIRA
+      - SepIRA
+      - CoverdeIIESA
+      - DeferComp
+    TaxTypeType:
+      title: TaxTypeType
+      type: string
+      enum:
+      - StateTax
+      - FederalTax
+      - StateFederalTax
+      - SalesTax
     TermUnitsType:
       title: TermUnitsType
       type: string
@@ -920,6 +1971,33 @@ components:
       - Years
       - Indefinite
       - Unknown
+    TierAmtTypeType:
+      title: TierAmtTypeType
+      type: string
+      enum:
+      - Ledger
+      - Avail
+      - MinAvail
+      - AvgAvail
+      - AvgMinLedger
+      - AvgLedger
+      - MinLedger
+      - None
+    TierTypeType:
+      title: TierTypeType
+      type: string
+      enum:
+      - Whole
+      - Split
+      - Dynamic
+      - Compare
+    TranCounterTypeType:
+      title: TranCounterTypeType
+      type: string
+      enum:
+      - RegD3
+      - RegD6
+      - TranMTD
     TranHistoryOptionType:
       title: TranHistoryOptionType
       type: string
@@ -927,6 +2005,37 @@ components:
       - None
       - DoNotRetain
       - Retain
+    TransferBalTypeType:
+      title: TransferBalTypeType
+      type: string
+      enum:
+      - Principal
+      - Escrow
+      - Note
+      - Interest
+    TransferTypeType:
+      title: TransferTypeType
+      type: string
+      enum:
+      - EscrowPayment
+      - InsurancePayment
+      - InterestPayment
+      - PrincipalPayment
+      - RegularPayment
+      - LateChargePayment
+      - FundsTransfer
+      - LoanAdvance
+    UnitType:
+      title: UnitType
+      type: string
+      enum:
+      - Seconds
+      - Minutes
+      - Hours
+      - Days
+      - Weeks
+      - Months
+      - Years
     UnitsType:
       title: UnitsType
       type: string
@@ -941,6 +2050,22 @@ components:
       - Account
       - All
       - None
+    USATaxIdCertCodeType:
+      title: USATaxIdCertCodeType
+      type: string
+      enum:
+      - CertNotOnFile
+      - CertOnFile
+      - AccountOpenedAfter1987
+      - AccountOpened1984-1987
+      - AccountOpenBefore1984
+      - Certified
+      - Uncertified
+      - CertifiedPending
+      - Notice1
+      - Notice2
+      - CertNotRequired[
+      - IRSMandatedWithholding
     VarianceFactorTypeType:
       title: VarianceFactorTypeType
       type: string
@@ -950,12 +2075,44 @@ components:
       - Factor
       - Factor+Variance
       - VarianceXFactor
+    WarningTypeType:
+      title: WarningTypeType
+      type: string
+      enum:
+      - Warning
+      - Lockout
+      - LOCLockout
+    WeekendOptionType:
+      title: WeekendOptionType
+      type: string
+      enum:
+      - BuildOnFriday
+      - BuildOnSaturday
+      - BuildOnMonday
+      - BuildOnFridayAndMonday
+      - BuildOnSaturdayAndMonday
+    WithholdingOptionType:
+      title: WithholdingOptionType
+      type: string
+      enum:
+      - None
+      - StateTax
+      - FederalTax
+      - StateFederalTax
     WithholdingTypeType:
       title: WithholdingTypeType
       type: string
       enum:
       - FederalTax
       - StateTax
+    XferAmtCodeType:
+      title: XferAmtCodeType
+      type: string
+      enum:
+      - Fixed
+      - Variable
+      - IntPlusDistribution
+      - BalanceMinusDistribution
     XferStatusCodeType:
       title: XferStatusCodeType
       type: string
@@ -987,8 +2144,7 @@ components:
       type: object
       properties:
         RecurType:
-          type: string
-          description: Recurrence Type. Indicates the pattern of recurrence.
+          $ref: '#/components/schemas/RecurTypeType'
         RecurTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1043,14 +2199,9 @@ components:
             AdjDaysBasis).
           format: int64
         AdjDaysBasis:
-          type: string
-          description: 'Adjustment Days Basis. Used in combination with Adjustment
-            Days (AdjDays). It indicates a basis for an adjustment such as: Due Date
-            (DueDt), Statement Date (StmtDt).'
+          $ref: '#/components/schemas/AdjDaysBasisType'
         WeekendOption:
-          type: string
-          description: Weekend Option. Describes how certain functionality, e.g. Transfers
-            are processed on the Weekend.
+          $ref: '#/components/schemas/WeekendOptionType'
         WeekendOptionEnumDesc:
           maxLength: 80
           type: string
@@ -1094,8 +2245,7 @@ components:
       type: object
       properties:
         BalType:
-          type: string
-          description: Balance Type.
+          $ref: '#/components/schemas/BalTypeType'
         BalTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1136,8 +2286,7 @@ components:
       type: object
       properties:
         CardIdentType:
-          type: string
-          description: 'Card Identification Type. Valid values include: PORT.'
+          $ref: '#/components/schemas/CardIdentTypeType'
         CardIdentValue:
           maxLength: 36
           type: string
@@ -1177,9 +2326,7 @@ components:
       type: object
       properties:
         AcctIdentType:
-          type: string
-          description: 'Account Identification Type. Valid values include: AcctNum,
-            AliasAcct, PORT, etc.'
+          $ref: '#/components/schemas/AcctIdentTypeType'
         AcctIdentValue:
           maxLength: 36
           type: string
@@ -1201,11 +2348,7 @@ components:
             type: string
             description: Sub Account Identifier.
           AcctType:
-            type: string
-            description: Account Type. Classifies the type of product with which an
-              account is associated. This element is required when adding a new account
-              and by using this value we can identify if the account is a savings,
-              a checking, a time deposit, loan account, etc.
+            $ref: '#/components/schemas/AcctTypeType'
           CardKeys:
             type: array
             description: Card Keys.  Contains data that describes the key of the Card
@@ -1228,7 +2371,7 @@ components:
             type: array
             description: Financial Institution Identification Type.
             items:
-              type: object
+              $ref: '#/components/schemas/FIIdentTypeType'
           FIIdent:
             maxLength: 34
             type: array
@@ -1299,8 +2442,7 @@ components:
       type: object
       properties:
         RefType:
-          type: string
-          description: Reference Type. Type of reference information used.
+          $ref: '#/components/schemas/RefTypeType'
         RefTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1319,17 +2461,16 @@ components:
       type: object
       properties:
         DateType:
-          type: string
-          description: Date Type. Indicates the type of date contained in the Date
-            Value.
+          $ref: '#/components/schemas/DateTypeType'
         DateTypeEnumDesc:
           maxLength: 80
           type: string
           description: Date Type Enumeration Description.
         DateValue:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Date Value. Contains the value of the date.
+          format: date-time
         RefData:
           type: array
           description: Reference Data.
@@ -1361,8 +2502,7 @@ components:
       type: object
       properties:
         AcctTitleType:
-          type: string
-          description: Account Title Type.
+          $ref: '#/components/schemas/AcctTitleTypeType'
         AcctTitle:
           maxLength: 255
           type: string
@@ -1370,9 +2510,7 @@ components:
             or responsibility for account and manner in which ownership/responsibility
             is assigned.
         AcctTitleOption:
-          type: string
-          description: Account Title Option. Indicates printing options for the Account
-            Title.
+          $ref: '#/components/schemas/AcctTitleOptionType'
         DBAInd:
           type: boolean
           description: Doing Business As Indicator. Adds prefix DBA to the title when
@@ -1388,9 +2526,7 @@ components:
       type: object
       properties:
         DataClassType:
-          type: string
-          description: Data Class Type. Application the data belongs, this is client
-            defined value.
+          $ref: '#/components/schemas/DataClassTypeType'
         DataClassTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1405,8 +2541,7 @@ components:
           type: string
           description: Data Identifier Enumeration Description.
         DataType:
-          type: string
-          description: Data Type. Indicates the type of client defined data.
+          $ref: '#/components/schemas/DataTypeType'
         DataTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1462,8 +2597,7 @@ components:
               statement time frame refers to the alternate statement cycle  the value
               is set to true.
           AlternateStmtOption:
-            type: string
-            description: Alternate Statement Option.
+            $ref: '#/components/schemas/AlternateStmtOptionType'
     StmtDisclosureDataType:
       title: StmtDisclosureDataType
       type: object
@@ -1484,11 +2618,9 @@ components:
       type: object
       properties:
         StmtOptionType:
-          type: string
-          description: Statement Option Type.
+          $ref: '#/components/schemas/StmtOptionTypeType'
         StmtOptionValue:
-          type: string
-          description: Statement Option Value.
+          $ref: '#/components/schemas/StmtOptionValueType'
     AcctStmtDataType:
       title: AcctStmtDataType
       type: object
@@ -1525,8 +2657,7 @@ components:
             the tax owner share account. In DNA the Combined Statement Ident is the
             primary statement lead account.
         CombinedStmtCode:
-          type: string
-          description: Combined Statement Code. Primary and Secondary.
+          $ref: '#/components/schemas/CombinedStmtCodeType'
         CombinedStmtCodeEnumDesc:
           maxLength: 80
           type: string
@@ -1536,9 +2667,7 @@ components:
           description: Additional Statement Count.
           format: int64
         SpecialStmtCode:
-          type: string
-          description: 'Special Statement Code. Used to indicate a special statement
-            drop. Valid values: FinalStmt, Transcript, None.'
+          $ref: '#/components/schemas/SpecialStmtCodeType'
         SpecialStmtCodeEnumDesc:
           maxLength: 80
           type: string
@@ -1627,15 +2756,13 @@ components:
       type: object
       properties:
         NoticeType:
-          type: string
-          description: Account Notice Type.
+          $ref: '#/components/schemas/NoticeTypeType'
         NoticeTypeEnumDesc:
           maxLength: 80
           type: string
           description: Account Notice Type Enumeration Description.
         NoticeOption:
-          type: string
-          description: Notice Option.
+          $ref: '#/components/schemas/NoticeOptionType'
         NoticeOptionEnumDesc:
           maxLength: 80
           type: string
@@ -1708,9 +2835,10 @@ components:
             rate. For example, the BasedOnValue is the Prime rate, a percentage is
             added to/subtracted from the prime rate.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         IntAPY:
           type: number
           description: Interest APY.
@@ -1733,9 +2861,7 @@ components:
       type: object
       properties:
         BalCutOffType:
-          type: string
-          description: Balance CutOff Balance Type.  The Balance Cutoff Type indicates
-            the account balance that is compared with the Balance CutOff Amount.
+          $ref: '#/components/schemas/BalCutOffTypeType'
         BalCutOffTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1795,8 +2921,7 @@ components:
         APYRecurType:
           $ref: '#/components/schemas/APYRecurTypeType'
         AccrualMethod:
-          type: string
-          description: 'Accrual Method. For example: Daily, Simple, Continuous.'
+          $ref: '#/components/schemas/AccrualMethodType'
         AccrualMethodEnumDesc:
           maxLength: 80
           type: string
@@ -1811,18 +2936,13 @@ components:
           type: string
           description: Accrual Code Enumeration Description.
         AccrualOnBalance:
-          type: string
-          description: Accrual On Balance. Identifies the type of amount used for
-            calculate interest.
+          $ref: '#/components/schemas/AccrualOnBalanceType'
         AccrualOnBalanceEnumDesc:
           maxLength: 80
           type: string
           description: Accrual On Balance Enumeration Description.
         DailyAccrual:
-          type: string
-          description: 'Daily Accrual. Indicates how ''daily'' is determined when
-            interest is accrued on a daily basis. Valid values: Standard360, Actual365,
-            Actual366.'
+          $ref: '#/components/schemas/DailyAccrualType'
         DailyAccrualEnumDesc:
           maxLength: 80
           type: string
@@ -1840,25 +2960,22 @@ components:
           type: boolean
           description: Compounding Indicator.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         ExpDt:
           type: string
           description: Expiration Date.
           format: date
         TierType:
-          type: string
-          description: Tier Types. Indicates if the tier uses whole tier balance,
-            split tier balance or dynamic tier balance methods.
+          $ref: '#/components/schemas/TierTypeType'
         TierTypeEnumDesc:
           maxLength: 80
           type: string
           description: Tier Types Enumeration Description.
         TierAmtType:
-          type: string
-          description: Tier Amount Type.Identifies the type of amount used in the
-            tier.
+          $ref: '#/components/schemas/TierAmtTypeType'
         TierAmtTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1868,18 +2985,13 @@ components:
         SplitRateData:
           $ref: '#/components/schemas/SplitRateDataType'
         IntRateCalcOption:
-          type: string
-          description: Interest Rate Calculation Option. Indicates whether the interest
-            rate should be calculated at the time of the first disbursement or when
-            the loan account is opened.
+          $ref: '#/components/schemas/IntRateCalcOptionType'
     MaturityIntCalcDataType:
       title: MaturityIntCalcDataType
       type: object
       properties:
         MaturityIntRateType:
-          type: string
-          description: Maturity Interest Rate Type. Indicates the type of rate to
-            use to accrue interest after maturity.
+          $ref: '#/components/schemas/MaturityIntRateTypeType'
         MaturityIntRateTypeEnumDesc:
           maxLength: 80
           type: string
@@ -1910,13 +3022,15 @@ components:
           description: Promotional Rate Indicator. Provides information on whether
             the promotional rate is active or not.
         StartDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Start Date.
+          format: date-time
         EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: End Date.
+          format: date-time
         PromoDays:
           type: integer
           description: Number of Days of the Promotional Rate.
@@ -1956,17 +3070,16 @@ components:
           type: number
           description: Rate.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
     RateChangeRangeMaxMinType:
       title: RateChangeRangeMaxMinType
       type: object
       properties:
         RateChangeRange:
-          type: string
-          description: Change Range Maximum and Minimum. Used for systems that define
-            min and maxium up and down rate changes.
+          $ref: '#/components/schemas/RateChangeRangeType'
         MinRateChange:
           type: number
           description: Minimum Range Change. Minimum amount that the interest rate
@@ -1984,27 +3097,19 @@ components:
           type: string
           description: Rate Change Identifier.
         RateChangeControl:
-          type: string
-          description: 'Interest Rate Change Control. Used to indicate the type of
-            interest rate for example: Fixed, Index, IndexReview, StepReview, etc.'
+          $ref: '#/components/schemas/RateChangeControlType'
         RateChangeControlEnumDesc:
           maxLength: 80
           type: string
           description: Interest Change Control Enumeration Description.
         RateCalcMethod:
-          type: string
-          description: Rate Calculation Method. Code that indicates how the system
-            calculates the interest rate when the rate changes with Index at Review.
+          $ref: '#/components/schemas/RateCalcMethodType'
         RateCalcMethodEnumDesc:
           maxLength: 80
           type: string
           description: Rate Calculation Method Enumeration Description.
         RatePricingMethod:
-          type: string
-          description: Rate Pricing Method. Indicates whether accounts within this
-            product type use a step table, term/balance table, term/balance/variance
-            matrix, balance/rate table or it uses an interest plan to determine initial
-            rate and rate at renewal.
+          $ref: '#/components/schemas/RatePricingMethodType'
         RatePricingMethodEnumDesc:
           maxLength: 80
           type: string
@@ -2029,10 +3134,7 @@ components:
           description: Number of Rate Changes per term.
           format: int64
         RateChangeIntervalOption:
-          type: string
-          description: Number of Rate Changes Interval Option. Indicates if the number
-            of rate changes applies to the first term only, to each term or is limited
-            to what is specified in the Step Rate Table.
+          $ref: '#/components/schemas/RateChangeIntervalOptionType'
         BasedOnCode:
           maxLength: 80
           type: string
@@ -2117,9 +3219,7 @@ components:
           description: Rounding Factor. Used with the RoundingOption to establish
             the rounding percentage.
         RateCarryOverOption:
-          type: string
-          description: Carry Over Option. Indicates the method used to handle the
-            interest rate excess or shortage carryover from previous rate review periods.
+          $ref: '#/components/schemas/RateCarryOverOptionType'
         RateCarryOverOptionEnumDesc:
           maxLength: 80
           type: string
@@ -2172,8 +3272,7 @@ components:
           description: Lead Days. Number of days prior to a specified date.
           format: int64
         LeadDaysOption:
-          type: string
-          description: Lead Days Option.
+          $ref: '#/components/schemas/LeadDaysOptionType'
         RecurStartDate:
           type: string
           description: Recurrence Start Date.
@@ -2256,8 +3355,7 @@ components:
       type: object
       properties:
         AcctAmtType:
-          type: string
-          description: Account Amount Type.
+          $ref: '#/components/schemas/AcctAmtTypeType'
         AmtSeqId:
           maxLength: 10
           type: string
@@ -2269,9 +3367,7 @@ components:
           type: string
           description: Account Amount Type Enumeration Description.
         AcctPeriodType:
-          type: string
-          description: Account Period Type. Indicates the time period for example
-            CTD- Cycle to Date, LTD- Life to Day, PriorMonth, etc.
+          $ref: '#/components/schemas/AcctPeriodTypeType'
         AcctPeriodTypeEnumDesc:
           maxLength: 80
           type: string
@@ -2299,13 +3395,15 @@ components:
           type: number
           description: Rate.
         LastOccuranceDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Last Occurrence Date.
+          format: date-time
         FirstOccuranceDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: First Occurrence Date.
+          format: date-time
     TranCounterType:
       title: TranCounterType
       required:
@@ -2318,9 +3416,7 @@ components:
             on the units specified.
           format: int64
         TranCounterType:
-          type: string
-          description: Transaction Counter Type. Used for Regulation D transaction
-            counter.
+          $ref: '#/components/schemas/TranCounterTypeType'
     LocatorType:
       title: LocatorType
       type: string
@@ -2377,9 +3473,7 @@ components:
       type: object
       properties:
         CountryCodeSource:
-          type: string
-          description: Country Code Source. Used with CountryCodeValue to indicate
-            the Country Code Source table.
+          $ref: '#/components/schemas/CountryCodeSourceType'
         CountryCodeValue:
           maxLength: 80
           type: string
@@ -2410,8 +3504,7 @@ components:
             on the units specified.
           format: int64
         Unit:
-          type: string
-          description: Unit.
+          $ref: '#/components/schemas/UnitType'
         UnitEnumDesc:
           maxLength: 80
           type: string
@@ -2421,15 +3514,17 @@ components:
       type: object
       properties:
         StartDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Start Date.
+          format: date-time
         StartDayMonth:
           $ref: '#/components/schemas/StartDayMonthType'
         EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: End Date.
+          format: date-time
         EndDayMonth:
           $ref: '#/components/schemas/StartDayMonthType'
         Duration:
@@ -2448,8 +3543,7 @@ components:
         type: object
         properties:
           PhoneType:
-            type: string
-            description: Phone Type.
+            $ref: '#/components/schemas/PhoneTypeType'
           PhoneTypeEnumDesc:
             maxLength: 80
             type: string
@@ -2484,9 +3578,10 @@ components:
           CountryCode:
             $ref: '#/components/schemas/CountryCodeType'
           UpDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Update Date.
+            format: date-time
     PostAddrType:
       title: PostAddrType
       allOf:
@@ -2546,9 +3641,7 @@ components:
               an address. Other identification used as part of the Address object
               key.
           AddrUse:
-            type: string
-            description: Address Use. Indicates the use of the address for example
-              Business or Home, Statement, Check, Government, etc.
+            $ref: '#/components/schemas/AddrUseType'
           AddrUseEnumDesc:
             maxLength: 80
             type: string
@@ -2600,9 +3693,7 @@ components:
             type: string
             description: Apartment Number.
           ApartmentNumType:
-            type: string
-            description: Apartment Number Type. This is an identifier of the type
-              of number provided in the Apartment Number field.
+            $ref: '#/components/schemas/ApartmentNumTypeType'
           HouseNum:
             maxLength: 15
             type: string
@@ -2643,9 +3734,7 @@ components:
             type: string
             description: State Province Enumeration Description.
           MilitaryRegion:
-            type: string
-            description: Military Region. Identifier that replaces State and City
-              for military addresses
+            $ref: '#/components/schemas/MilitaryRegionType'
           PostalCode:
             maxLength: 11
             type: string
@@ -2694,12 +3783,12 @@ components:
             description: Move In Date.
             format: date
           ContactMethod:
-            type: string
-            description: Contact Method.
+            $ref: '#/components/schemas/OpenMethodType'
           UpDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Update Date.
+            format: date-time
           Comment:
             maxLength: 300
             type: string
@@ -2744,9 +3833,10 @@ components:
             type: string
             description: MSA Code Enumeration Description.
           MaintDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Maintenance Date.
+            format: date-time
           MaintBy:
             maxLength: 80
             type: string
@@ -2774,8 +3864,7 @@ components:
           type: string
           description: Organization.
         TaxType:
-          type: string
-          description: Tax Type.
+          $ref: '#/components/schemas/TaxTypeType'
         TaxTypeEnumDesc:
           maxLength: 80
           type: string
@@ -2813,9 +3902,7 @@ components:
       type: object
       properties:
         USATaxIdCertCode:
-          type: string
-          description: USA Tax Identification Certification Code.Certification Code
-            for a tax identification number.
+          $ref: '#/components/schemas/USATaxIdCertCodeType'
         USATaxIdCertCodeEnumDesc:
           maxLength: 80
           type: string
@@ -2853,8 +3940,7 @@ components:
       type: object
       properties:
         ReportAmtType:
-          type: string
-          description: Report Amount Type.
+          $ref: '#/components/schemas/ReportAmtTypeType'
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
     IntReporting1099DataType:
@@ -2862,14 +3948,9 @@ components:
       type: object
       properties:
         IRSReportOption:
-          type: string
-          description: 'IRS Report Option. Indicates the people must be included in
-            the report: Primary, Secondary and Both.'
+          $ref: '#/components/schemas/IRSReportOptionType'
         DischargeEventCode:
-          type: string
-          description: Discharge Event Code. Indicates why the debt was discharged.
-            This field is only available when the Report 1099-C or Report Combined
-            1099-CA.
+          $ref: '#/components/schemas/DischargeEventCodeType'
         EventDt:
           type: string
           description: Event Date.
@@ -2937,9 +4018,10 @@ components:
           type: string
           description: Earning Method Enumeration Description
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         ExpDt:
           type: string
           description: Expiration Date.
@@ -3044,22 +4126,19 @@ components:
           type: string
           description: Description.
         FeeType:
-          type: string
-          description: Fee Type.
+          $ref: '#/components/schemas/FeeTypeType'
         FeeTypeEnumDesc:
           maxLength: 80
           type: string
           description: Fee Type Enumeration Description.
         FeeOption:
-          type: string
-          description: Fee Option. Processing option or method used for the fee type.
+          $ref: '#/components/schemas/FeeOptionType'
         FeeOptionEnumDesc:
           maxLength: 80
           type: string
           description: Fee Option Enumeration Description.
         FeePriorityOption:
-          type: string
-          description: Fee Priority Option. Processing option used for the fee type.
+          $ref: '#/components/schemas/FeePriorityOptionType'
         FeeCalcOption:
           $ref: '#/components/schemas/FeeCalcOptionType'
         FeeCalcOptionEnumDesc:
@@ -3076,9 +4155,7 @@ components:
           type: string
           description: Fee Calculation Balance Enumeration Description.
         FeeAggregationOption:
-          type: string
-          description: Fee Aggregation Option. Indicates how the fee amount is applied
-            in the loan account.
+          $ref: '#/components/schemas/FeeAggregationOptionType'
         FeeAggregationOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3114,7 +4191,7 @@ components:
         MaxCurAmt:
           $ref: '#/components/schemas/MaxCurAmtType'
         DailyAccrual:
-          type: string
+          type: object
           description: 'Daily Accrual. Indicates how ''daily'' is determined when
             interest is accrued on a daily basis. Valid values: Standard360, Actual365,
             Actual366.'
@@ -3193,8 +4270,7 @@ components:
           description: Sequence Number.
           format: int64
         RiskCategory:
-          type: string
-          description: Risk Category. Indicates the credit Risk category for party.
+          $ref: '#/components/schemas/RiskCategoryType'
         RiskCategoryEnumDesc:
           maxLength: 80
           type: string
@@ -3257,11 +4333,7 @@ components:
       type: object
       properties:
         CashMgmtRelType:
-          type: string
-          description: Cash Management Relationship Type Code. Indicates the relationship
-            of the account within a Cash Management Relationship (CMR) Structure.
-            The account can be a Master Account, Zero Balance Account, a Concentration
-            Account or a Final Investment Account.
+          $ref: '#/components/schemas/CashMgmtRelTypeType'
         CashMgmtRelTypeEnumDesc:
           maxLength: 80
           type: string
@@ -3288,8 +4360,7 @@ components:
       type: object
       properties:
         ReminderCategory:
-          type: string
-          description: Reminder Category.
+          $ref: '#/components/schemas/ReminderCategoryType'
         ReminderCategoryEnumDesc:
           maxLength: 80
           type: string
@@ -3306,8 +4377,7 @@ components:
           type: string
           description: Account Memo Identifier.
         AcctMemoType:
-          type: string
-          description: Account Memo Type.
+          $ref: '#/components/schemas/AcctMemoTypeType'
         AcctMemoCode:
           maxLength: 80
           type: string
@@ -3336,9 +4406,10 @@ components:
           description: Number of Times Renewed.
           format: int64
         OrigIssueDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Original Issue Date.
+          format: date-time
         OrigMatDt:
           type: string
           description: Original Maturity Date.
@@ -3347,11 +4418,9 @@ components:
           type: number
           description: Original Issue  Rate.
         RenewalOption:
-          type: string
-          description: Renewal Option.
+          $ref: '#/components/schemas/RenewalOptionType'
         NextRenewalDateOption:
-          type: string
-          description: Next Renewal Date Option.
+          $ref: '#/components/schemas/NextRenewalDateOptionType'
         GraceDays:
           type: integer
           description: Grace Days.Number of days by which a debtor or acceptor of
@@ -3366,8 +4435,7 @@ components:
           type: string
           description: Renewal Option Enumeration Description.
         NextEarningDateOption:
-          type: string
-          description: Next Earning Date Option.
+          $ref: '#/components/schemas/NextEarningDateOptionType'
         RenewalFrequency:
           $ref: '#/components/schemas/RenewalFrequencyType'
         LastRenewalDt:
@@ -3415,8 +4483,7 @@ components:
       type: object
       properties:
         AgreementType:
-          type: string
-          description: Agreement Type.
+          $ref: '#/components/schemas/AgreementTypeType'
         AgreementIdent:
           maxLength: 36
           type: string
@@ -3433,11 +4500,9 @@ components:
       type: object
       properties:
         RewardType:
-          type: string
-          description: Reward Type.
+          $ref: '#/components/schemas/RewardTypeType'
         RewardDispositionType:
-          type: string
-          description: Reward Disposition Type. Indicates how the reward is cashed.
+          $ref: '#/components/schemas/RewardDispositionTypeType'
         RewardAcct:
           $ref: '#/components/schemas/RewardAcctType'
         PromoPeriods:
@@ -3458,9 +4523,7 @@ components:
           description: Good Thru Date. Indicates the processing date of the system.
           format: date
         AcctDtlStatus:
-          type: string
-          description: Account Detail Status. Indicates the current status of the
-            account.
+          $ref: '#/components/schemas/AcctDtlStatusType'
         AcctDtlStatusEnumDesc:
           maxLength: 80
           type: string
@@ -3485,8 +4548,7 @@ components:
           description: Campaign Identifier. Indicates sales campaign from which correspondence
             was generated.
         Ownership:
-          type: string
-          description: '[IFX]Ownership. Valid values: Individual, JointAnd, JointOr.'
+          $ref: '#/components/schemas/OwnershipType'
         OwnershipEnumDesc:
           maxLength: 80
           type: string
@@ -3511,7 +4573,7 @@ components:
           type: string
           description: Alternate Product Description.
         AcctType:
-          type: string
+          type: object
           description: Account Type. Classifies the type of product with which an
             account is associated. This element is required when adding a new account
             and by using this value we can identify if the account is a savings, a
@@ -3525,9 +4587,7 @@ components:
           type: string
           description: Account Sub Type Value Enum Description.
         TaxIncentiveType:
-          type: string
-          description: Tax Incentive Type. Indicates if the account is a tax incentive
-            account such as a Health Savings Account.
+          $ref: '#/components/schemas/TaxIncentiveTypeType'
         TaxIncentiveTypeEnumDesc:
           maxLength: 80
           type: string
@@ -3541,9 +4601,7 @@ components:
           type: string
           description: Promotional Code Enumeration Description.
         AcctUse:
-          type: string
-          description: 'Account Use. U.S. Institutions should use this for Regulation
-            D reporting purposes. Valid values include: Business, Retail'
+          $ref: '#/components/schemas/AcctUseType'
         AcctUseEnumDesc:
           maxLength: 80
           type: string
@@ -3583,10 +4641,11 @@ components:
         FeeCollectedAmt:
           $ref: '#/components/schemas/FeeCollectedAmtType'
         LastContactDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Last Contact Date. Date the FI contacted the customer on regards
             to this account.
+          format: date-time
         DateData:
           type: array
           description: Date Data. Use to contain dates associated to the object.
@@ -3625,9 +4684,7 @@ components:
           type: string
           description: Responsible Branch Enumeration Description.
         NicknameOption:
-          type: string
-          description: Nickname Option. Indicates printing options for the account
-            Nickname.
+          $ref: '#/components/schemas/NicknameOptionType'
         NicknameOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3637,9 +4694,7 @@ components:
           type: string
           description: Nickname. Used to allow a customer to assign nicknames to objects.
         AcctTitleOption:
-          type: string
-          description: Account Title Option. Indicates printing options for the Account
-            Title.
+          $ref: '#/components/schemas/AcctTitleOptionType'
         AcctTitleOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3671,9 +4726,7 @@ components:
           type: string
           description: Handling Code Enumeration Description.
         OEDCode:
-          type: string
-          description: Officer, Employee, DIrector Code. Indicates if the party is
-            an employee of the Bank.
+          $ref: '#/components/schemas/OEDCodeType'
         OEDCodeEnumDesc:
           maxLength: 80
           type: string
@@ -3683,9 +4736,7 @@ components:
           description: Employee Indicator. Indicates that the account holder is employee
             of the FI.
         AccountingMethod:
-          type: string
-          description: Accounting Method. The Accounting Method indicates the method
-            by which accounts are integrated into the general ledger.
+          $ref: '#/components/schemas/AccountingMethodType'
         AccountingMethodEnumDesc:
           maxLength: 80
           type: string
@@ -3714,8 +4765,7 @@ components:
           type: string
           description: Account Type Enumeration Description.
         AcctOpenMethod:
-          type: string
-          description: Account Open Method. The method used to open the account.
+          $ref: '#/components/schemas/OpenMethodType'
         AcctOpenMethodEnumDesc:
           maxLength: 80
           type: string
@@ -3828,9 +4878,7 @@ components:
           description: Tax Identifier Application Date.
           format: date
         TaxExempt:
-          type: string
-          description: Tax Exempt. Indicates the party  owner of the account is Tax
-            Exempt.
+          $ref: '#/components/schemas/TaxExemptType'
         TaxExemptEnumDesc:
           maxLength: 80
           type: string
@@ -3838,9 +4886,7 @@ components:
         USATaxIdCert:
           $ref: '#/components/schemas/USATaxIdCertType'
         WithholdingOption:
-          type: string
-          description: Withholding Option.Identifies what tax should be withheld for
-            the Party.
+          $ref: '#/components/schemas/WithholdingOptionType'
         WithholdingOptionEnumDesc:
           maxLength: 80
           type: string
@@ -3856,8 +4902,7 @@ components:
           description: Interest Reporting Indicator. Identifies what tax should be
             reported for the Party.
         IntReportingCode:
-          type: string
-          description: Interest Reporting Code.
+          $ref: '#/components/schemas/IntReportingCodeType'
         IntReportingCodeEnumDesc:
           maxLength: 80
           type: string
@@ -3908,17 +4953,13 @@ components:
           type: boolean
           description: No Credit Post Indicator.
         MemoPostProcessOptOvrd:
-          type: string
-          description: Memo Post Process Option Override. Indicates whether memo post
-            transactions are posted as summary or detailed transactions.
+          $ref: '#/components/schemas/MemoPostProcessOptOvrdType'
         MemoPostProcessOptOvrdEnumDesc:
           maxLength: 80
           type: string
           description: Memo Post Process Option Override Enum Description.
         ElectronicBankingOpt:
-          type: string
-          description: Electronic Banking Option. Used to indicate services available
-            via Electronic Banking.
+          $ref: '#/components/schemas/ElectronicBankingOptType'
         ElectronicBankingOptEnumDesc:
           maxLength: 80
           type: string
@@ -4028,8 +5069,7 @@ components:
         RenewalData:
           $ref: '#/components/schemas/RenewalDataType'
         AcctMajorType:
-          type: string
-          description: Account Major Type.
+          $ref: '#/components/schemas/AcctMajorTypeType'
         AcctMajorTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4064,10 +5104,7 @@ components:
       type: object
       properties:
         PostingStatus:
-          type: string
-          description: Posting Status. Indicates that account will be booked but will
-            be restricted from posting until reviewed by bank officer. No hold, accept
-            no payment, allow no advance and accept no payment and allow no advance.
+          $ref: '#/components/schemas/PostingStatusType'
         PostingStatusEnumDesc:
           maxLength: 80
           type: string
@@ -4089,10 +5126,7 @@ components:
       type: object
       properties:
         PostingStatus:
-          type: string
-          description: Posting Status. Indicates that account will be booked but will
-            be restricted from posting until reviewed by bank officer. No hold, accept
-            no payment, allow no advance and accept no payment and allow no advance.
+          $ref: '#/components/schemas/PostingStatusType'
         RestrictionOvrdInd:
           type: boolean
           description: Posting Payment Restrictions Override Indicator.
@@ -4117,9 +5151,7 @@ components:
       type: object
       properties:
         CompositeCurAmtType:
-          type: string
-          description: Composite Currency Amount Type. Composite Currency Amount Type
-            to apply the transaction amount to.
+          $ref: '#/components/schemas/CompositeCurAmtTypeType'
         CompositeCurAmtTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4144,9 +5176,10 @@ components:
           items:
             $ref: '#/components/schemas/PmtCompositeAmtType'
         DueDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Payment Due Date.
+          format: date-time
     BillStatusType:
       title: BillStatusType
       required:
@@ -4154,8 +5187,7 @@ components:
       type: object
       properties:
         BillStatusCode:
-          type: string
-          description: Bill Status code.
+          $ref: '#/components/schemas/BillStatusCodeType'
         BillStatusCodeEnumDesc:
           maxLength: 80
           type: string
@@ -4197,9 +5229,10 @@ components:
           description: Interest Paid To Date.
           format: date
         PrincipalPaidToDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Principal Paid To Date.
+          format: date-time
     AcctSummInfoType:
       title: AcctSummInfoType
       allOf:
@@ -4260,9 +5293,10 @@ components:
             type: string
             description: Card Type Enum Description.
           IssueDt:
-            pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
             type: string
             description: Issue Date.
+            format: date-time
           ExpDt:
             type: string
             description: Expiration Date.
@@ -4317,8 +5351,7 @@ components:
         AcctRef:
           $ref: '#/components/schemas/AcctRefType'
         HoldType:
-          type: string
-          description: Hold Type. Identifies the type of hold.
+          $ref: '#/components/schemas/HoldTypeType'
         HoldTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4370,9 +5403,10 @@ components:
           type: string
           description: Check Number.
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         DelayHoldInd:
           type: boolean
           description: Delay Hold Indicator. When the hold is to be applied on today's
@@ -4386,8 +5420,7 @@ components:
           type: boolean
           description: Waived Fee Indicator.
         AcctHoldOption:
-          type: string
-          description: Account Hold Option. Indicates how the hold amount is determined.
+          $ref: '#/components/schemas/AcctHoldOptionType'
         AcctHoldOptionEnumDesc:
           maxLength: 80
           type: string
@@ -4421,8 +5454,7 @@ components:
       type: object
       properties:
         WarningType:
-          type: string
-          description: Warning Type.
+          $ref: '#/components/schemas/WarningTypeType'
         WarningCode:
           maxLength: 80
           type: string
@@ -4517,13 +5549,15 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes
-            that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated
-            with the EFX StatusCode.
+          description: Brief information about the EFX status code. Refer to the <a
+            href="../docs?path=docs/response-codes.md">Response Codes</a> for more
+            information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
@@ -4572,9 +5606,7 @@ components:
           type: string
           description: Composite Current Amount Identification.
         CompositeCurAmtType:
-          type: string
-          description: Composite Currency Amount Type. Composite Currency Amount Type
-            to apply the transaction amount to.
+          $ref: '#/components/schemas/CompositeCurAmtTypeType'
         CompositeCurAmtTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4594,7 +5626,7 @@ components:
           description: Special Handling. Used to define any special instructions that
             should occur for the Transaction Amount.
           items:
-            type: object
+            $ref: '#/components/schemas/SpecialHandlingType'
         Memo:
           maxLength: 255
           type: string
@@ -4615,10 +5647,7 @@ components:
       type: object
       properties:
         XferAmtCode:
-          type: string
-          description: Transfer Amount Code. The Transfer Amount Code indicates whether
-            the Next Transfer Amount is fixed or variable, and how the Base Distribution
-            Amount is used to calculate the Next Transfer Amount
+          $ref: '#/components/schemas/XferAmtCodeType'
         ACHInd:
           type: boolean
           description: ACH Indicator.
@@ -4638,11 +5667,9 @@ components:
           type: string
           description: ACH Additional Description.
         ACHEntryClass:
-          type: string
-          description: ACH Entry Class.
+          $ref: '#/components/schemas/ACHEntryClassType'
         ACHReceivingType:
-          type: string
-          description: ACH Receiving Type.
+          $ref: '#/components/schemas/ACHReceivingTypeType'
         LoanSchedInd:
           type: boolean
           description: Loan Schedule Indicator.  Indicates whether the transfer amount
@@ -4658,9 +5685,7 @@ components:
         ExcessAmt:
           $ref: '#/components/schemas/ExcessAmtType'
         ExcessAmtCode:
-          type: string
-          description: Excess Amount Code. Indicates the method excess amount payment
-            is applied to the loan.
+          $ref: '#/components/schemas/ExcessAmtCodeType'
         NoticeData:
           type: array
           description: Account Notice Data.
@@ -4671,10 +5696,7 @@ components:
           description: Force Post Indicator. Indicator that identifies whether to
             process a transfer using the force pay transaction code
         BalanceVerification:
-          type: string
-          description: 'Balance Verification. Indicates the type of balance to use
-            for verification. Valid example of valid values are: "Book"; "Collected";
-            "Avail".'
+          $ref: '#/components/schemas/BalanceVerificationType'
         MaxCurAmt:
           $ref: '#/components/schemas/MaxCurAmtType'
         RetryTimes:
@@ -4693,8 +5715,7 @@ components:
           type: boolean
           description: Waived Fee Indicator.
         PostingPriority:
-          type: string
-          description: Posting Priority Code.
+          $ref: '#/components/schemas/PostingPriorityType'
         EarlyXferInd:
           type: boolean
           description: Early transfer indicator.Indicates if the transaction is processed
@@ -4725,10 +5746,7 @@ components:
       - type: object
         properties:
           TransferBalType:
-            type: string
-            description: Transfer Balance Type. For some systems like DNA it is necessary
-              to indicate the balance type of the FROM account to generate the transfer.
-              These values will be defaulted when possible.
+            $ref: '#/components/schemas/TransferBalTypeType'
           TrnCode:
             maxLength: 80
             type: string
@@ -4744,8 +5762,7 @@ components:
       type: object
       properties:
         SubjectRole:
-          type: string
-          description: Subject Role.
+          $ref: '#/components/schemas/SubjectRoleType'
         SubjectIdent:
           maxLength: 36
           type: string
@@ -4802,8 +5819,7 @@ components:
       type: object
       properties:
         TransferType:
-          type: string
-          description: Transfer Type. Use to specify the type of transfer transaction.
+          $ref: '#/components/schemas/TransferTypeType'
         TransferTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4828,12 +5844,12 @@ components:
           items:
             $ref: '#/components/schemas/CompositeCurAmtType'
         PriorityMethod:
-          type: string
-          description: Priority Method.
+          $ref: '#/components/schemas/PriorityMethodType'
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
         RecurModel:
           $ref: '#/components/schemas/RecurModelType'
         InitialCurAmt:
@@ -4845,9 +5861,7 @@ components:
           description: Retention. Indicates whether the records are to be retained
             or deleted based on Service Provider criteria.
         DistributionType:
-          type: string
-          description: Distribution Type. Indicates the type of distribution for Health
-            Savings and Retirement accounts.
+          $ref: '#/components/schemas/DistributionTypeType'
         DistributionTypeEnumDesc:
           maxLength: 80
           type: string
@@ -4915,21 +5929,24 @@ components:
         PostAddr:
           $ref: '#/components/schemas/PostAddrType'
         CreateDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Create Date.
+          format: date-time
         UpDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Update Date.
+          format: date-time
         NextXferDt:
           type: string
           description: Next transfer date.
           format: date
         LastXferDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Last Transfer Date.
+          format: date-time
         LastXferAmt:
           $ref: '#/components/schemas/LastXferAmtType'
         RemainingOccurrences:
@@ -4971,8 +5988,7 @@ components:
             type: string
             description: Transfer Identification.
           TransferType:
-            type: string
-            description: Transfer Type. Use to specify the type of transfer transaction.
+            $ref: '#/components/schemas/TransferTypeType'
     XferDelRqType:
       title: XferDelRqType
       required:
@@ -5011,7 +6027,7 @@ components:
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
         TransferType:
-          type: string
+          type: object
           description: Transfer Type. Use to specify the type of transfer transaction.
     XferInqRqType:
       title: XferInqRqType
@@ -5070,13 +6086,15 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes
-            that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated
-            with the EFX StatusCode.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section for more information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
@@ -5101,8 +6119,7 @@ components:
           description: Override Exception Indicator indicates whether the exception
             can be overridden by resubmitting the request message.
         SubjectRole:
-          type: string
-          description: Subject Role.
+          $ref: '#/components/schemas/SubjectRoleType'
         SubjectElement:
           type: array
           description: Subject Element aggregate provides information about which
@@ -5132,9 +6149,10 @@ components:
         XferStatusCode:
           $ref: '#/components/schemas/XferStatusCodeType'
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
     XferStatusRecType:
       title: XferStatusRecType
       required:
@@ -5238,20 +6256,19 @@ components:
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
         StartDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Start Date.
+          format: date-time
         EndDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: End Date.
+          format: date-time
         RecurModel:
           $ref: '#/components/schemas/RecurModelType'
         XferAmtCode:
-          type: string
-          description: Transfer Amount Code. The Transfer Amount Code indicates whether
-            the Next Transfer Amount is fixed or variable, and how the Base Distribution
-            Amount is used to calculate the Next Transfer Amount
+          $ref: '#/components/schemas/XferAmtCodeType'
         Nickname:
           maxLength: 80
           type: string
@@ -5301,3 +6318,89 @@ components:
           $ref: '#/components/schemas/StatusType'
         XferStatusRec:
           $ref: '#/components/schemas/XferStatusRecType'
+  examples:
+    PremierHeaderExample:
+      value:
+        Context:
+          Channel: WEB
+        TrnId: "622182"
+        OrganizationId: PRMOrg10
+        VendorId: "112233"
+    "401-Premier":
+      value:
+        Status:
+          StatusCode: "1740"
+          StatusDesc: Authentication Failed
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "401"
+          ServerStatusDesc: Unauthorized
+    "422-Premier":
+      value:
+        Status:
+          StatusCode: "1090"
+          StatusDesc: Invalid Value
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "422"
+          ServerStatusDesc: Unprocessable Entity
+    "500-Premier":
+      value:
+        Status:
+          StatusCode: "100"
+          StatusDesc: General Error
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "500"
+          ServerStatusDesc: Internal Server Error
+    "503-Premier":
+      value:
+        Status:
+          StatusCode: "300"
+          StatusDesc: System Not Available
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "503"
+          ServerStatusDesc: Service Unavailable
+    PremierXferAddRequest-TMS:
+      value:
+        OvrdAutoAckInd: false
+        XferInfo:
+          TransferType: FundsTransfer
+          FromAcctRef:
+            AcctKeys:
+              AcctId: "2020"
+              AcctType: SDA
+            TrnCode: "137"
+          ToAcctRef:
+            AcctKeys:
+              AcctId: "1010000306"
+              AcctType: GLA
+            TrnCode: "209"
+          CurAmt:
+            Amt: 200
+            CurCode:
+              CurCodeType: ISO_4217_ALPHA
+              CurCodeValue: USD
+          EffDt: 2021-08-17
+          ExpediteInd: true
+          XferFromDesc:
+          - Transfer from SDA to GLA
+          XferToDesc:
+          - Transfer to GLA from SDA
+          CreateDt: 2021-08-17T21:23
+    PremierXferAddResponse-TMS:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        XferStatusRec:
+          XferKeys:
+            AcctKeys:
+              AcctId: "2020"
+              AcctType: SDA
+          XferStatus:
+            XferStatusCode: Valid
+            EffDt: 2021-08-17T21:24:16.473
