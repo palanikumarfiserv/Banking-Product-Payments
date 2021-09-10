@@ -6,243 +6,10 @@ info:
   contact:
     name: Vaida Dadla
     email: Vaida.Dadla@Fiserv.com
-  version: "11.0"
+  version: 11.0.0
 servers:
 - url: /
 paths:
-  /accttrnresponse:
-    get:
-      tags:
-      - Account Transaction Response Inquiry
-      summary: Retrieves a Account Transaction Response Object
-      description: This method provides the original transaction response by providing
-        the transaction identifier.
-      operationId: AcctTrnResponseInqOper
-      parameters:
-      - name: EFXHeader
-        in: header
-        description: The message header request aggregate contains common information
-          for all request messages
-        required: true
-        style: simple
-        explode: false
-        schema:
-          $ref: '#/components/schemas/EFXHeader'
-      - name: acctTrnResponseId
-        in: query
-        description: Account Transaction Response Id.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctId
-        in: query
-        description: Account Identifier. Uniquely identifies an account held at a
-          financial institution.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: subAcctId
-        in: query
-        description: Sub Account Identifier. Also used as CostCenter for GLA Accounts.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctType
-        in: query
-        description: Account Type
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - CCA
-          - RRA
-          - LEAS
-          - CDA
-          - MLN
-          - CLA
-          - CRD
-          - DDA
-          - EQU
-          - GLA
-          - ILA
-          - AdultCashISA
-          - IRA
-          - RET
-          - EXT
-          - JuniorCashISA
-          - LIP
-          - LOAN
-          - LOC
-          - CLOC
-          - MLA
-          - PBA
-          - PORT
-          - SDA
-          - SDB
-          - MMA
-          - DDL
-      - name: acctIdentValue
-        in: query
-        description: Account Identification Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: acctIdentType
-        in: query
-        description: 'Account Identification Type. Valid values include: AcctNum,
-          Port, AcctTypeCode.'
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - AcctNum
-          - PORT
-          - AccessID
-          - PartyID
-          - AliasAcct
-          - AcctTypeCode
-          - CLOC
-      - name: fIIdentType
-        in: query
-        description: Financial Institution Identification Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - ABA
-          - RoutingNum
-      - name: fiIdent
-        in: query
-        description: Financial Institution Identification.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 34
-          type: string
-      - name: branchIdent
-        in: query
-        description: Branch Identifier.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 22
-          type: string
-      - name: acctKeysCurCodeType
-        in: query
-        description: Currency Code Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - ISO4217-Alpha
-          - ISO4217-Numeric
-      - name: acctKeysCurCodeTypeEnumDesc
-        in: query
-        description: Currency Code Type Enumeration Description.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 80
-          type: string
-      - name: acctKeysCurCodeValue
-        in: query
-        description: Currency Code Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: amt
-        in: query
-        description: TrnAmt - Amount.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: number
-      - name: trnAmtCurCodeType
-        in: query
-        description: Currency Code Type.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-          enum:
-          - ISO4217-Alpha
-          - ISO4217-Numeric
-      - name: trnAmtCurCodeTypeEnumDesc
-        in: query
-        description: Currency Code Type Enumeration Description.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 80
-          type: string
-      - name: trnAmtCurCodeValue
-        in: query
-        description: Currency Code Value.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      - name: trnIdent
-        in: query
-        description: Client Transaction Identification used to reference a previous
-          transaction.
-        required: false
-        style: form
-        explode: true
-        schema:
-          maxLength: 36
-          type: string
-      - name: clientDt
-        in: query
-        description: Client Date. The transaction date/time of the reference transaction
-          as reported by the client.
-        required: false
-        style: form
-        explode: true
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Ok
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
-        default:
-          description: Unexpected error
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
   /accttrnresponse/secured:
     post:
       tags:
@@ -255,17 +22,25 @@ paths:
       - name: EFXHeader
         in: header
         description: The message header request aggregate contains common information
-          for all request messages
+          for all request messages. <a href="../docs?path=docs/api-ref-EFX-header.md">
+          EFX Header Parameters </a> are required to send as a JSON object in the
+          request message.
         required: true
         style: simple
         explode: false
         schema:
           $ref: '#/components/schemas/EFXHeader'
+        examples:
+          Premier:
+            $ref: '#/components/examples/PremierHeaderExample'
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/AcctTrnResponseInqRqType'
+            examples:
+              Premier:
+                $ref: '#/components/examples/PremierAcctTrnResponseRequest'
         required: true
       responses:
         "200":
@@ -274,12 +49,53 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                Premier:
+                  $ref: '#/components/examples/PremierAcctTrnResponseResponse'
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "401":
+                  $ref: '#/components/examples/401-Premier'
+        "422":
+          description: Un-processable Entity
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "422":
+                  $ref: '#/components/examples/422-Premier'
+        "500":
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "500":
+                  $ref: '#/components/examples/500-Premier'
+        "503":
+          description: Service Unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+              examples:
+                "503":
+                  $ref: '#/components/examples/503-Premier'
         default:
           description: See HTTP Status Code Standards
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AcctTrnResponseInqRsType'
+      x-group-name: Account Transaction Response Service
+      x-proxy-name: Account Transaction Response Inquiry
 components:
   schemas:
     EFXHeader:
@@ -310,6 +126,7 @@ components:
           type: string
           description: Indicates the channel used by the client application.
         ClientDateTime:
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Client date and time as reported by the client application
             that is making the service request.
@@ -663,13 +480,15 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes
-            that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated
-            with the EFX StatusCode.
+          description: Brief information about the EFX status code. Refer to the <a
+            href="../docs?path=docs/response-codes.md">Response Codes</a> for more
+            information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
@@ -792,10 +611,11 @@ components:
           description: Transaction Identification. Also known as Trace Number or Sequence
             in some systems.
         ClientDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: '[FSVR]Client Date. The transaction date/time of the reference
             transaction as reported by the client.'
+          format: date-time
     AcctTrnResponseSelType:
       title: AcctTrnResponseSelType
       type: object
@@ -828,13 +648,15 @@ components:
         StatusCode:
           maxLength: 20
           type: string
-          description: Status Code is used to indicate the EFX Standard Status Codes
-            that tells the consumer of the service the result of the operation.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section to view the list of all possible status codes.
         StatusDesc:
           maxLength: 255
           type: string
-          description: Status Description is the explanatory EFX standard text associated
-            with the EFX StatusCode.
+          description: EFX Standard Status code for the result of API response. Refer
+            to the <a href="../docs?path=docs/response-codes.md">Response Codes</a>
+            section for more information.
         Severity:
           $ref: '#/components/schemas/SeverityType'
         SvcProviderName:
@@ -888,9 +710,10 @@ components:
         AcctTrnResponseStatusCode:
           $ref: '#/components/schemas/AcctTrnResponseStatusCodeType'
         EffDt:
-          pattern: '[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?'
+          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
           description: Effective Date. The date that an associated action takes effect.
+          format: date-time
     AcctTrnResponseRecType:
       title: AcctTrnResponseRecType
       required:
@@ -915,3 +738,82 @@ components:
           $ref: '#/components/schemas/StatusType'
         AcctTrnResponseRec:
           $ref: '#/components/schemas/AcctTrnResponseRecType'
+  examples:
+    PremierHeaderExample:
+      value:
+        Context:
+          Channel: WEB
+        TrnId: "622182"
+        OrganizationId: PRMOrg10
+        VendorId: "112233"
+    "401-Premier":
+      value:
+        Status:
+          StatusCode: "1740"
+          StatusDesc: Authentication Failed
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "401"
+          ServerStatusDesc: Unauthorized
+    "422-Premier":
+      value:
+        Status:
+          StatusCode: "1090"
+          StatusDesc: Invalid Value
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "422"
+          ServerStatusDesc: Unprocessable Entity
+    "500-Premier":
+      value:
+        Status:
+          StatusCode: "100"
+          StatusDesc: General Error
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "500"
+          ServerStatusDesc: Internal Server Error
+    "503-Premier":
+      value:
+        Status:
+          StatusCode: "300"
+          StatusDesc: System Not Available
+          Severity: Error
+          SvcProviderName: Premier
+          ServerStatusCode: "503"
+          ServerStatusDesc: Service Unavailable
+    PremierAcctTrnResponseRequest:
+      value:
+        AcctTrnResponseSel:
+          AcctTrnResponseKeys:
+            AcctKeys:
+              AcctId: "1000"
+              AcctType: DDA
+          NetworkRefData:
+            TrnIdent: "1"
+          TrnAmt:
+            Amt: 100
+    PremierAcctTrnResponseResponse:
+      value:
+        Status:
+          StatusCode: "0"
+          StatusDesc: Success
+          Severity: Info
+          SvcProviderName: Premier
+        AcctTrnResponseRec:
+          AcctTrnResponseKeys:
+            AcctKeys:
+              AcctId: "1000"
+              AcctType: DDA
+          AcctTrnResponseInfo:
+            OriginalTrnStatus:
+              StatusCode: "0"
+              StatusDesc: Success
+              Severity: Info
+              ServerStatusCode: "9"
+              ServerStatusDesc: Reversal
+              SvcProviderName: Premier
+            TrnIdent: "1"
+          AcctTrnResponseStatus:
+            AcctTrnResponseStatusCode: Posted
+            EffDt: 2021-08-03T15:58:38.381
