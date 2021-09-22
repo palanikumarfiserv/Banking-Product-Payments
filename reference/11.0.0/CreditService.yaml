@@ -782,10 +782,6 @@ components:
       properties:
         CurCodeType:
           $ref: '#/components/schemas/CurCodeTypeType'
-        CurCodeTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Currency Code Type Enumeration Description.
         CurCodeValue:
           maxLength: 80
           type: string
@@ -810,20 +806,8 @@ components:
         BalType:
           type: string
           description: Balance Type.
-        BalTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Balance Type Enumeration Description.
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
-        ExpDt:
-          type: string
-          description: Expiration Date.
-          format: date
-        Desc:
-          maxLength: 200
-          type: string
-          description: Description.
     BaseKeysType:
       title: BaseKeysType
       type: string
@@ -859,33 +843,13 @@ components:
     CardKeysType:
       title: CardKeysType
       allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
-          ISOCode:
-            maxLength: 80
-            type: string
-            description: ISO Card Code. Some systems like Precision instead of ISO
-              Number they use a code to refer to the ISO Number of the card.
-          CardNum:
-            maxLength: 32
-            type: string
-            description: Card Number. This number does not include the ISO component
-              of the card identification.
           CardId:
             maxLength: 36
             type: string
             description: Card Identifier. Uniquely identifies a card held at a financial
               institution (this is the card number as it appears on the card).
-          CardSeqNum:
-            maxLength: 3
-            type: string
-            description: Card Sequence Number. Typically refers to the member number
-              (if applicable).
-          CardIdent:
-            $ref: '#/components/schemas/CardIdentType'
     AcctIdentType:
       title: AcctIdentType
       type: object
@@ -902,7 +866,6 @@ components:
     AcctKeysType:
       title: AcctKeysType
       allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
           AcctId:
@@ -910,10 +873,6 @@ components:
             type: string
             description: Account Identifier. Uniquely identifies an account held at
               a financial institution.
-          SubAcctId:
-            maxLength: 36
-            type: string
-            description: Sub Account Identifier.
           AcctType:
             type: string
             description: Account Type. Classifies the type of product with which an
@@ -926,38 +885,11 @@ components:
               record.
             items:
               $ref: '#/components/schemas/CardKeysType'
-          AcctIdent:
-            type: array
-            description: Account Identification. Other account identification used
-              as part of the Account object key in addition to the Account Identifier
-              (AcctId).
-            items:
-              $ref: '#/components/schemas/AcctIdentType'
           CurCode:
             type: array
             description: Currency Code.
             items:
               $ref: '#/components/schemas/CurCodeType'
-          FIIdentType:
-            type: array
-            description: Financial Institution Identification Type.
-            items:
-              type: object
-          FIIdent:
-            maxLength: 34
-            type: array
-            description: Financial Institution Identification.
-            items:
-              maxLength: 34
-              type: object
-          BranchIdent:
-            maxLength: 22
-            type: array
-            description: Branch Identification. Other identification used as part
-              of the Branch object key.
-            items:
-              maxLength: 22
-              type: object
     AcctPrefType:
       title: AcctPrefType
       type: object
@@ -1015,19 +947,11 @@ components:
         RefType:
           type: string
           description: Reference Type. Type of reference information used.
-        RefTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Reference Type Enumeration Description.
         RefIdent:
           maxLength: 36
           type: string
           description: Reference Identifier.  In combination with the reference type
             identifies the reference data.
-        RefDesc:
-          maxLength: 1024
-          type: string
-          description: Reference Description.
     DateDataType:
       title: DateDataType
       type: object
@@ -2215,283 +2139,35 @@ components:
     PostAddrType:
       title: PostAddrType
       allOf:
-      - $ref: '#/components/schemas/LocatorType'
       - required:
         - AddrType
         type: object
         properties:
-          OpenDt:
-            type: string
-            description: Open Date.
-            format: date
-          RelationshipMgr:
-            type: array
-            description: Relationship Manager. Stores information about the FI officers
-              that have management responsibility of the Party, the Account or the
-              Card.
-            items:
-              $ref: '#/components/schemas/RelationshipMgrType'
-          OriginatingBranch:
-            maxLength: 32
-            type: string
-            description: Originating Branch. Branch first originated the relationship
-              with party or created the account.
-          OriginatingBranchEnumDesc:
-            maxLength: 80
-            type: string
-            description: Originating Branch Enumeration Description.
-          PreferredBranch:
-            maxLength: 32
-            type: string
-            description: Preferred Branch. The branch preferred by the customer to
-              conduct business.
-          PreferredBranchEnumDesc:
-            maxLength: 80
-            type: string
-            description: Preferred Branch Enumeration Description.
-          ResponsibleBranch:
-            maxLength: 32
-            type: string
-            description: Responsible Branch. Branch responsible for the relationship.
-          ResponsibleBranchEnumDesc:
-            maxLength: 80
-            type: string
-            description: Responsible Branch Enumeration Description.
-          NameIdent:
-            maxLength: 36
-            type: array
-            description: Name Identifier.
-            items:
-              maxLength: 36
-              type: object
-          AddressIdent:
-            maxLength: 36
-            type: string
-            description: Address Identification. Used as pointer to a reference of
-              an address. Other identification used as part of the Address object
-              key.
-          AddrUse:
-            type: string
-            description: Address Use. Indicates the use of the address for example
-              Business or Home, Statement, Check, Government, etc.
-          AddrUseEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Use  Enumeration Description.
-          AddrFormatType:
-            $ref: '#/components/schemas/AddrFormatTypeType'
-          AddrFormatTypeEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Format Type Enumeration Description.
-          FullName1:
-            maxLength: 96
-            type: string
-            description: Full Name Line 1.
-          FullName2:
-            maxLength: 96
-            type: string
-            description: Full Name Line 2.
-          FullName3:
-            maxLength: 96
-            type: string
-            description: Full Name Line 3.
           Addr1:
             maxLength: 64
             type: string
             description: Address Line 1.
-          Addr2:
-            maxLength: 64
-            type: string
-            description: Address Line 2.
-          Addr3:
-            maxLength: 64
-            type: string
-            description: Address Line 3.
-          Addr4:
-            maxLength: 64
-            type: string
-            description: Address Line 4.
-          Addr5:
-            maxLength: 64
-            type: string
-            description: Address Line 5.
-          Addr6:
-            maxLength: 64
-            type: string
-            description: Address Line 6.
-          ApartmentNum:
-            maxLength: 15
-            type: string
-            description: Apartment Number.
-          ApartmentNumType:
-            type: string
-            description: Apartment Number Type. This is an identifier of the type
-              of number provided in the Apartment Number field.
-          HouseNum:
-            maxLength: 15
-            type: string
-            description: House Number.
-          HouseName:
-            maxLength: 64
-            type: string
-            description: House Name.
-          Street:
-            maxLength: 64
-            type: string
-            description: Street.
-          LabelAddr:
-            $ref: '#/components/schemas/LabelAddrType'
-          AddrDefinedData:
-            type: array
-            description: Address Defined Data.
-            items:
-              $ref: '#/components/schemas/AddrDefinedDataType'
           City:
             maxLength: 32
             type: string
             description: City.
-          County:
-            maxLength: 32
-            type: string
-            description: County.
-          District:
-            maxLength: 32
-            type: string
-            description: District.
           StateProv:
             maxLength: 80
             type: string
             description: State/Province. ISO 3166-2:US codes.
-          StateProvEnumDesc:
-            maxLength: 80
-            type: string
-            description: State Province Enumeration Description.
-          MilitaryRegion:
-            type: string
-            description: Military Region. Identifier that replaces State and City
-              for military addresses
           PostalCode:
             maxLength: 11
             type: string
             description: Postal Code. ZipCode in the US.
-          Country:
-            maxLength: 64
-            type: string
-            description: Country.
           CountryCode:
             $ref: '#/components/schemas/CountryCodeType'
-          POBox:
-            maxLength: 16
-            type: string
-            description: PO Box.
           AddrType:
             $ref: '#/components/schemas/AddrTypeType'
-          AddrTypeEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Type Enumeration Description.
           AddrLocation:
             maxLength: 255
             type: string
             description: Address Location. Indicates if the address location is a
               Business or Home.
-          AddrLocationEnumDesc:
-            maxLength: 80
-            type: string
-            description: Address Location Enumeration Description.
-          TimeFrame:
-            $ref: '#/components/schemas/TimeFrameType'
-          ExpDt:
-            type: string
-            description: Expiration Date.
-            format: date
-          Retention:
-            type: boolean
-            description: Retention. Indicates whether the records are to be retained
-              or deleted based on Service Provider criteria.
-          RevertToPartyAddr:
-            type: boolean
-            description: Revert to Party Address. Indicates for account alternate
-              addresses if the address must be reverted to the Party name and address.
-          MoveInDt:
-            type: string
-            description: Move In Date.
-            format: date
-          ContactMethod:
-            type: string
-            description: Contact Method.
-          UpDt:
-            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-            type: string
-            description: Update Date.
-            format: date-time
-          Comment:
-            maxLength: 300
-            type: string
-            description: Comment. A comment entered in history.
-          CensusTract:
-            maxLength: 20
-            type: string
-            description: Census Track. Contains the census tract number assigned to
-              the address.
-          CensusBlock:
-            maxLength: 20
-            type: string
-            description: Census Block. Contains the census block group designation
-              for the block where the address is within a census tract.
-          ForeignFlag:
-            type: boolean
-            description: Foreign Flag. Indicator that tells if an item (an address
-              for example) is foreign or not.
-          HandlingCode:
-            maxLength: 80
-            type: string
-            description: Handling Code .Indicates special handling of notification
-              and statement forms.
-          HandlingCodeEnumDesc:
-            maxLength: 80
-            type: string
-            description: Handling Code Enumeration Description.
-          HandlingCodeOption:
-            $ref: '#/components/schemas/HandlingCodeOptionType'
-          HandlingCodeOptionEnumDesc:
-            maxLength: 80
-            type: string
-            description: Handling Code Option Enumeration Description.
-          MSACode:
-            type: integer
-            description: MSA Code. MSAs are defined by the U.S. Office of Management
-              and Budget (OMB), and used by the U.S. Census Bureau and other federal
-              government agencies for statistical purposes
-            format: int64
-          MSACodeEnumDesc:
-            maxLength: 80
-            type: string
-            description: MSA Code Enumeration Description.
-          MaintDt:
-            pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-            type: string
-            description: Maintenance Date.
-            format: date-time
-          MaintBy:
-            maxLength: 80
-            type: string
-            description: Maintained By.
-          MaintByEnumDesc:
-            maxLength: 80
-            type: string
-            description: Maintained By Enumeration Description.
-          AddrInUseInd:
-            type: boolean
-            description: Address In Use.
-          PhoneNum:
-            type: array
-            description: Phone Number.
-            items:
-              $ref: '#/components/schemas/PhoneNumType'
-          IncAddrFormat:
-            type: boolean
     TaxDataType:
       title: TaxDataType
       type: object
@@ -4018,8 +3694,6 @@ components:
       properties:
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
-        AcctSummInfo:
-          $ref: '#/components/schemas/AcctSummInfoType'
     SecuredAcctRefType:
       title: SecuredAcctRefType
       allOf:
@@ -4349,33 +4023,12 @@ components:
       title: FloatDetailsType
       type: object
       properties:
-        FloatDays:
-          type: integer
-          description: Float Days.
-          format: int64
         CheckFloatAmt:
           $ref: '#/components/schemas/CheckFloatAmtType'
-        CashFloatAmt:
-          $ref: '#/components/schemas/CashFloatAmtType'
     FloatDataType:
       title: FloatDataType
       type: object
       properties:
-        FloatType:
-          type: string
-          description: Float Type.
-        FloatTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Float Type Enumeration Description.
-        ExceptionFloatInd:
-          type: boolean
-          description: Exception Float Indicator.
-        FundsAvailInd:
-          type: boolean
-          description: Funds Available Indicator.
-        ImmediateCreditAmt:
-          $ref: '#/components/schemas/ImmediateCreditAmtType'
         FloatDetails:
           type: array
           description: Float Details.
@@ -4416,12 +4069,6 @@ components:
       - ChkEnteredAmt
       type: object
       properties:
-        ChkEnteredAmt:
-          $ref: '#/components/schemas/ChkEnteredAmtType'
-        ChkNum:
-          maxLength: 22
-          type: string
-          description: Check Number.
         ChkType:
           type: string
           description: Check Type.
@@ -4430,12 +4077,6 @@ components:
           description: Float Data.
           items:
             $ref: '#/components/schemas/FloatDataType'
-        ExtendedFloatData:
-          type: array
-          description: Extended Float Data.This optional repeating aggregate is used
-            to specify Extended Float Data for the check deposit.
-          items:
-            $ref: '#/components/schemas/ExtendedFloatDataType'
     FeeChargeAllocType:
       title: FeeChargeAllocType
       type: object
@@ -4448,42 +4089,18 @@ components:
       - CurAmt
       type: object
       properties:
-        CompositeCurAmtIdent:
-          maxLength: 36
-          type: string
-          description: Composite Current Amount Identification.
         CompositeCurAmtType:
           type: string
           description: Composite Currency Amount Type. Composite Currency Amount Type
             to apply the transaction amount to.
-        CompositeCurAmtTypeEnumDesc:
-          maxLength: 80
-          type: string
-          description: Composite Currency Amount Type Enumeration Description.
-        CompositeSeqId:
-          maxLength: 10
-          type: string
-          description: Composite Sequence Identifier. Used to sequence multiple occurrences
-            of the same Composite Currency Amount Type. For example if multiple CompositeCurAmtType
-            = “Fee” this element would sequence the Fee. E.g. Fee1, Fee2, etc.
         CurAmt:
           $ref: '#/components/schemas/CurAmtType'
-        FeeChargeAlloc:
-          $ref: '#/components/schemas/FeeChargeAllocType'
         SpecialHandling:
           type: array
           description: Special Handling. Used to define any special instructions that
             should occur for the Transaction Amount.
           items:
             type: object
-        Memo:
-          maxLength: 255
-          type: string
-          description: Memo.
-        FinancialChargeInd:
-          type: boolean
-          description: Financial Charge Indicator.Used to indicate that the amount
-            is a finance charge.
         RefData:
           $ref: '#/components/schemas/RefDataType'
     OvrdElementType:
@@ -4565,12 +4182,6 @@ components:
           type: string
           description: Transaction Identification. Also known as Trace Number or Sequence
             in some systems.
-        ClientDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: '[FSVR]Client Date. The transaction date/time of the reference
-            transaction as reported by the client.'
-          format: date-time
     PersonNameShortType:
       title: PersonNameShortType
       type: object
@@ -4579,14 +4190,6 @@ components:
           maxLength: 40
           type: string
           description: Family Name.
-        GivenName:
-          maxLength: 40
-          type: string
-          description: Given Name. Person's first name.
-        MiddleName:
-          maxLength: 40
-          type: string
-          description: Middle Name. Person's middle name.
     DebtorDataType:
       title: DebtorDataType
       type: object
@@ -4625,28 +4228,6 @@ components:
         CreditType:
           type: string
           description: Credit Type. Indicates the type of credit transaction.
-        AthId:
-          maxLength: 36
-          type: string
-          description: Authorization Identifier.
-        AdditionalCode:
-          maxLength: 80
-          type: string
-          description: Additional Code. Further defines the transaction with an additional
-            code.
-        EffDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Effective Date. The date that an associated action takes effect.
-          format: date-time
-        ReturnCode:
-          maxLength: 80
-          type: string
-          description: Return Code.
-        ReturnCodeDesc:
-          maxLength: 200
-          type: string
-          description: Return Code Description.
         PostedDt:
           pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
           type: string
@@ -4659,40 +4240,8 @@ components:
           items:
             maxLength: 200
             type: object
-        PatriotActInd:
-          type: boolean
-          description: Patriot Act Indicator. Indicates if this is a suspect transaction
-            that needs to be reported under the Patriot Act.
-        MediaType:
-          type: string
-          description: 'Media Type. Indicates the media the transaction must be recorded
-            on. Allowed Values: Statement – Recorded on a statement, Passbook – Recorded
-            on a Passbook and NoBook – Recorded on a Passbook but passbook not present.'
-        ContributionType:
-          type: string
-          description: Contribution Type. Indicates the type of contribution for Health
-            Savings and Retirement accounts.
-        ContributionYr:
-          $ref: '#/components/schemas/ContributionYrType'
-        TaxIncentiveType:
-          type: string
-          description: Tax Incentive Type. Indicates if the account is a tax incentive
-            account such as a Health Savings Account.
-        DepItemCount:
-          type: integer
-          description: Deposit Item Count.Count of the total number of cash and check
-            items in the transaction.
-          format: int64
-        NonLocalItemCount:
-          type: integer
-          description: Non Local Item Count.
-          format: int64
         AcctRef:
           $ref: '#/components/schemas/AcctRefType'
-        OtherAcctRef:
-          $ref: '#/components/schemas/OtherAcctRefType'
-        AthKeys:
-          $ref: '#/components/schemas/AthKeysType'
         CompositeCurAmt:
           type: array
           description: Composite Currency Amount.
@@ -4704,31 +4253,14 @@ components:
             Cash In Data that comprised the credit transaction.
           items:
             $ref: '#/components/schemas/CashInDataType'
-        CashOutData:
-          type: array
-          description: Cash Out Data. Use to specify Cash Out Data that was dispensed
-            as part of the transaction.
-          items:
-            $ref: '#/components/schemas/CashOutDataType'
         ChkInData:
           type: array
           description: Check In Data. This optional repeating is used to itemize Check
             items that comprised the transaction.
           items:
             $ref: '#/components/schemas/ChkInDataType'
-        OtherFundsInAmt:
-          $ref: '#/components/schemas/OtherFundsInAmtType'
-        OtherFundsOutAmt:
-          $ref: '#/components/schemas/OtherFundsOutAmtType'
-        XferFromAcct:
-          type: array
-          description: Transfer From Account.
-          items:
-            $ref: '#/components/schemas/XferFromAcctType'
         NetworkRefData:
           $ref: '#/components/schemas/NetworkRefDataType'
-        DebtorData:
-          $ref: '#/components/schemas/DebtorDataType'
         PmtData:
           $ref: '#/components/schemas/PmtDataType'
     CreditAddRqType:
@@ -4737,10 +4269,6 @@ components:
       - CreditInfo
       type: object
       properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware
-            is in charge of  auto-acknowledgement of exceptions.
         OvrdExceptionData:
           $ref: '#/components/schemas/OvrdExceptionDataType'
         CreditInfo:
@@ -4817,11 +4345,8 @@ components:
     CreditKeysType:
       title: CreditKeysType
       allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
-          SvcIdent:
-            $ref: '#/components/schemas/SvcIdentType'
           CreditId:
             maxLength: 36
             type: string
@@ -4908,60 +4433,12 @@ components:
       title: ReceiptType
       type: object
       properties:
-        Name:
-          maxLength: 80
-          type: string
-          description: Name.
-        TellerIdent:
-          maxLength: 80
-          type: string
-          description: Teller Identification.
-        OpenDt:
-          type: string
-          description: Open Date.
-          format: date
-        MaturityDt:
-          type: string
-          description: Maturity Date.
-          format: date
-        Rate:
-          type: number
-          description: Rate.
-        TrnAmt:
-          $ref: '#/components/schemas/TrnAmtType'
-        TrnIdent:
-          maxLength: 36
-          type: string
-          description: Transaction Identification. Also known as Trace Number or Sequence
-            in some systems.
-        PostedDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: Posted Date.
-          format: date-time
-        AcctWarning:
-          $ref: '#/components/schemas/AcctWarningType'
         AcctBal:
           type: array
           description: 'Account Balance. Defines balances a financial institution
             account may carry (ex: ledger, available, collected, etc.).'
           items:
             $ref: '#/components/schemas/AcctBalType'
-        ImmediateCreditAmt:
-          $ref: '#/components/schemas/ImmediateCreditAmtType'
-        ReceiptDtl:
-          $ref: '#/components/schemas/ReceiptDtlType'
-        AcctHoldInfo:
-          type: array
-          description: Account Hold Information.
-          items:
-            $ref: '#/components/schemas/AcctHoldInfoType'
-        PassbkItemDetail:
-          type: array
-          description: Passbook Item Detail. Details (e.g. line information) for this
-            passbook item
-          items:
-            $ref: '#/components/schemas/PassbkItemDetailType'
     CreditAddRsType:
       title: CreditAddRsType
       required:
@@ -4970,8 +4447,6 @@ components:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        AcctInfoDtl:
-          $ref: '#/components/schemas/AcctInfoDtlType'
         CreditStatusRec:
           $ref: '#/components/schemas/CreditStatusRecType'
         Receipt:
@@ -5031,20 +4506,6 @@ components:
       - CreditKeys
       type: object
       properties:
-        OvrdAutoAckInd:
-          type: boolean
-          description: Override AutoAcknowledge Indicator. Used when the midleware
-            is in charge of  auto-acknowledgement of exceptions.
-        OvrdExceptionData:
-          $ref: '#/components/schemas/OvrdExceptionDataType'
-        RevReasonCode:
-          type: string
-          description: Reversal Reason Code. Used to specify a reversal reason code.
-            A value in this element indicates this is a previous-day reversal.
-        Desc:
-          maxLength: 200
-          type: string
-          description: Description.
         CreditKeys:
           $ref: '#/components/schemas/CreditKeysType'
         CreditInfo:
@@ -5057,8 +4518,6 @@ components:
       properties:
         Status:
           $ref: '#/components/schemas/StatusType'
-        AcctInfoDtl:
-          $ref: '#/components/schemas/AcctInfoDtlType'
         CreditStatusRec:
           $ref: '#/components/schemas/CreditStatusRecType'
         Receipt:

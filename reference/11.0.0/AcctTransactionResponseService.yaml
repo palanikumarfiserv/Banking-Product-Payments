@@ -392,7 +392,6 @@ components:
     AcctKeysType:
       title: AcctKeysType
       allOf:
-      - $ref: '#/components/schemas/BaseKeysType'
       - type: object
         properties:
           AcctId:
@@ -400,54 +399,12 @@ components:
             type: string
             description: Account Identifier. Uniquely identifies an account held at
               a financial institution.
-          SubAcctId:
-            maxLength: 36
-            type: string
-            description: Sub Account Identifier.
           AcctType:
             type: string
             description: Account Type. Classifies the type of product with which an
               account is associated. This element is required when adding a new account
               and by using this value we can identify if the account is a savings,
               a checking, a time deposit, loan account, etc.
-          CardKeys:
-            type: array
-            description: Card Keys.  Contains data that describes the key of the Card
-              record.
-            items:
-              $ref: '#/components/schemas/CardKeysType'
-          AcctIdent:
-            type: array
-            description: Account Identification. Other account identification used
-              as part of the Account object key in addition to the Account Identifier
-              (AcctId).
-            items:
-              $ref: '#/components/schemas/AcctIdentType'
-          CurCode:
-            type: array
-            description: Currency Code.
-            items:
-              $ref: '#/components/schemas/CurCodeType'
-          FIIdentType:
-            type: array
-            description: Financial Institution Identification Type.
-            items:
-              type: object
-          FIIdent:
-            maxLength: 34
-            type: array
-            description: Financial Institution Identification.
-            items:
-              maxLength: 34
-              type: object
-          BranchIdent:
-            maxLength: 22
-            type: array
-            description: Branch Identification. Other identification used as part
-              of the Branch object key.
-            items:
-              maxLength: 22
-              type: object
     SubjectElementType:
       title: SubjectElementType
       type: object
@@ -558,12 +515,6 @@ components:
           description: Service Provider Name is a globally unique identifier for a
             service provider which indicates the location of the Service Provider
             that gave the error.
-        AdditionalStatus:
-          type: array
-          description: Additional Status aggregate may appear once for each additional
-            status that the server intends to provide.
-          items:
-            $ref: '#/components/schemas/AdditionalStatusType'
     AcctTrnResponseInfoType:
       title: AcctTrnResponseInfoType
       required:
@@ -581,10 +532,6 @@ components:
       title: AcctTrnResponseKeysType
       type: object
       properties:
-        AcctTrnResponseId:
-          maxLength: 36
-          type: string
-          description: Account Transaction Response Identifier.
         AcctKeys:
           $ref: '#/components/schemas/AcctKeysType'
     CurAmtType:
@@ -594,8 +541,6 @@ components:
         Amt:
           type: number
           description: Amount.
-        CurCode:
-          $ref: '#/components/schemas/CurCodeType'
     TrnAmtType:
       title: TrnAmtType
       allOf:
@@ -610,12 +555,6 @@ components:
           type: string
           description: Transaction Identification. Also known as Trace Number or Sequence
             in some systems.
-        ClientDt:
-          pattern: ^\[0-9]{4}-[0-9]{2}-[0-9]{2}(T[0-9]{2}:[0-9]{2}(:[0-9]{2}(\.[0-9]{3})?((-|\+)[0-9]{2}:[0-9]{2})?)?)?$
-          type: string
-          description: '[FSVR]Client Date. The transaction date/time of the reference
-            transaction as reported by the client.'
-          format: date-time
     AcctTrnResponseSelType:
       title: AcctTrnResponseSelType
       type: object
